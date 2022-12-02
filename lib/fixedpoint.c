@@ -348,7 +348,7 @@ void fixed_print(fixedpt i){
 
     ld a, #'.'
     push ix
-    abcall(0x455E)
+    abcall(_VPutMap)
     pop ix
   __endasm;
 
@@ -384,7 +384,7 @@ void fixed_print(fixedpt i){
     ld 5(ix), h
 
     push ix
-    abcall(0x455E)
+    abcall(_VPutMap)
     pop ix
     
 

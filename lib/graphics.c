@@ -1,7 +1,7 @@
 #pragma once
 // SCREEN_BUFFER is the temp ram where you draw to 
 
-#define SCREEN_BUFFER 0x9340
+#define SCREEN_BUFFER plotSScreen
 #define buff (  (char*)SCREEN_BUFFER  )
 #define _LCD_BUSY_QUICK 0x000B
 #define XMAX 96
@@ -12,7 +12,7 @@
 void clearBuffer(){
     __asm
             DI
-            LD    (0x9872), SP
+            LD    (SP_STORE), SP
             LD    SP, #0x9340 + 768    ; 768 byte area
             LD    HL, #0x0000
             LD    B, #48        ; PUSH 48*8=384 times, @ 2 bytes a PUSH = 768 bytes
@@ -27,7 +27,7 @@ void clearBuffer(){
             PUSH  HL
             DJNZ  Loop
 
-            LD    SP, (0x9872)
+            LD    SP, (SP_STORE)
             EI
 
     __endasm;
@@ -104,7 +104,7 @@ void line(char x, char y, char x2, char y2) __naked{
 
 
 			di
-			ld (0x8254),sp
+			ld (SP_STORE),sp
 			ld a,h
 			cp d
 			jp nc,noswapx
@@ -174,7 +174,7 @@ void line(char x, char y, char x2, char y2) __naked{
 		lineret:
 
 
-			ld sp,(0x8254)
+			ld sp,(SP_STORE)
 
 
 			ret
@@ -383,7 +383,7 @@ void setPix(char x, char y){
 
 
 
-// this is NOT FAST AND IT IS NOT SMALL
+// this is not fast, nor small
 #ifdef USE_CIRCLE
 // taken from https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/
 // and modified

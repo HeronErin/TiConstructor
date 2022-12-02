@@ -1,7 +1,6 @@
 #pragma once
 // this is for printing c string, it is not fast, but shouldn't be too large. Feel free not to use it if you need more space, although don't expect to use any other io type stuff.
 
-#define clearScreen() bcall(0x4540)
 
 void setPenRow(char row) __naked{
 	row;
@@ -12,7 +11,7 @@ void setPenRow(char row) __naked{
 		push hl     ; ret value
 		ld a, c
 
-		ld (#0x86D8), a
+		ld (#penRow), a
 
 		ret
 	__endasm;
@@ -26,7 +25,7 @@ void setPenCol(char col) __naked{
 		push hl     ; ret value
 		ld a, c
 
-		ld (#0x86D7), a
+		ld (#penCol), a
 
 		ret
 	__endasm;
@@ -35,8 +34,8 @@ void resetPen() __naked{
 	__asm
 		ld a, #0x00
 
-		ld (#0x86D7), a
-		ld (#0x86D8), a
+		ld (#penCol), a
+		ld (#penRow), a
 		ret
 	__endasm;
 }
@@ -54,7 +53,7 @@ void fputs(char* loc) __naked {
 		ld	a, (bc)
 		or a, a
 		ret z
-		abcall(0x455E)
+		abcall(_VPutMap)
 		inc bc
 		jr the_char_loop_i_need_more_good_names_for_labels
 
@@ -64,24 +63,24 @@ void fputs(char* loc) __naked {
 void println(char* loc){
 	fputs(loc);
 	__asm
-		ld a, (#0x86D8)
+		ld a, (#penRow)
 		ld b, #6
 		add b
-		ld (#0x86D8), a
+		ld (#penRow), a
 
 		xor a, a
-		ld (#0x86D7), a
+		ld (#penCol), a
 	__endasm;
 }
 void newline() __naked{
 	__asm
-		ld a, (#0x86D8)
+		ld a, (#penRow)
 		ld b, #6
 		add b
-		ld (#0x86D8), a
+		ld (#penRow), a
 
 		xor a, a
-		ld (#0x86D7), a
+		ld (#penCol), a
 		ret
 	__endasm;
 }
@@ -94,7 +93,7 @@ void printc(char ch) __naked{
 		push hl 
 		ld a, c
 		push ix
-		abcall(0x455E)
+		abcall(_VPutMap)
 		pop ix
 		ret
 	__endasm;
@@ -120,7 +119,7 @@ void number(int x){
 			ld	a, (hl)
 
 			push ix
-			abcall(0x455E)
+			abcall(_VPutMap)
 			pop ix
 			
     	__endasm;
@@ -129,7 +128,9 @@ void number(int x){
 
 }
 #endif
+
 #ifdef USE_HEXDUMP
+// great for debuging, not so great for games
 const char hexTab[16] = {'0', '1', '2', '3', '4', '5', '6', '7', 
     '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', };
 void hexdump(char v)__naked{
@@ -154,7 +155,7 @@ void hexdump(char v)__naked{
 		ld d, #0
 		add hl, de
 		ld a, (hl)
-		abcall(0x455E)
+		abcall(_VPutMap)
 
 		ld a, c
 		ld	hl, #_hexTab
@@ -163,7 +164,7 @@ void hexdump(char v)__naked{
 		ld d, #0
 		add hl, de
 		ld a, (hl)
-		abcall(0x455E)
+		abcall(_VPutMap)
 		
 
 		pop ix

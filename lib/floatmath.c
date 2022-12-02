@@ -17,11 +17,6 @@
 #define FPS 0x9824
 
 
-// floating point stack
-// not much documentation exists
-// but i can assume its like
-// the normal stack but for ops 
-
 // only odd ops seem to exist
 #define PushOP1()bcall(0x43C9)
 #define PushOP5()bcall(0x43C0)
@@ -129,7 +124,7 @@
 
 
 int OPT1_TO_INT(){ // if greater than 9999 errors
-	bcall(0x4AEF);
+	bcall(_ConvOP1);
 	__asm
 		EX DE, HL
 	__endasm;
@@ -144,10 +139,10 @@ void MoveToOp1(int v){
 
 		EX DE, HL
 	__endasm;
-	bcall(0x417A);
+	bcall(_Mov9ToOP1);
 }
 void MoveOp1To(unsigned int v){
-	unsigned int op =0x8478;
+	unsigned int op =OP1;
 	for (char i = 9; i!=0; i--){
 		*(char*)v = *(char*)op;
 		op++;
@@ -158,7 +153,7 @@ void MoveOp1To(unsigned int v){
 
 #define PRINT_OP1  __asm \
 					ld a, #6 __endasm;\
-					bcall(0x4BF7)
+					bcall(_DispOP1A)
 
 
 // Taken and moded from Xeda112358
@@ -172,7 +167,7 @@ void charToOp1(char x){
         add hl, sp
         ld  a, (hl)
 
-        ld hl,#0x8478
+        ld hl,#OP1
 
 
         ld bc,#0x0700
