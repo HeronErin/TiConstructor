@@ -1,6 +1,5 @@
 #define USE_LINE
 #define USE_CIRCLE
-#include <stdint.h>
 #include "../../lib/essentials.c"
 #include "../../lib/textio.c"
 #include "../../lib/userinput.c"
@@ -22,7 +21,7 @@ void main() {
 	line(3, 5, 10, 5);
 	line(3, 20, 10, 20);
 
-
+	// cube
 	#define X1 30
 	#define Y1 24
 	#define X2 50

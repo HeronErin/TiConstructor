@@ -31,3 +31,25 @@ unsigned int getTime(){
     __endasm;
 }
 #endif
+
+#ifdef USE_WAIT8
+void wait(unsigned char x){ // Wait for amount of time (1/8th of sec)
+    x;
+    __asm
+       ld a,#0x47      ;8 hz
+       out (#0x30),a
+       ld a,#0x00        ; no loop, no interrupt
+       out (#0x31),a
+       ld a,4(ix)       ;16 ticks / 8 hz equals 2 seconds
+       out (#0x32),a
+    wait:
+       in a,(4)
+       bit 5,a       ;bit 5 tells if timer 1
+       jr z,wait     ;is done
+       xor a
+       out (#0x30),a   ;Turn off the timer.
+       out (#0x31),a
+
+   __endasm;
+}
+#endif

@@ -54,18 +54,18 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;../../lib/essentials.c:28: char getKeyId(){
+;../../lib/essentials.c:32: char getKeyId(){
 ;	---------------------------------
 ; Function getKeyId
 ; ---------------------------------
 _getKeyId::
-;../../lib/essentials.c:29: bcall(_kdbScan);
+;../../lib/essentials.c:33: bcall(_kdbScan);
 	rst	40 
 	.dw 0x4015 
-;../../lib/essentials.c:30: return *(char*)(kbdScanCode);
+;../../lib/essentials.c:34: return *(char*)(kbdScanCode);
 	ld	hl, #0x843f
 	ld	l, (hl)
-;../../lib/essentials.c:31: }
+;../../lib/essentials.c:35: }
 	ret
 ;../../lib/textio.c:5: void setPenRow(char row) __naked{
 ;	---------------------------------
@@ -805,17 +805,17 @@ _circle::
 	ld	sp, ix
 	pop	ix
 	ret
-;main.c:9: void main() {
+;main.c:8: void main() {
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;main.c:11: clearScreen(); // prepare screen
+;main.c:10: clearScreen(); // prepare screen
 	rst	40 
 	.dw 0x4540 
-;main.c:12: clearBuffer(); // clear drawing buffer
+;main.c:11: clearBuffer(); // clear drawing buffer
 	call	_clearBuffer
-;main.c:15: line(15, 20, 5, 40);
+;main.c:14: line(15, 20, 5, 40);
 	ld	de, #0x2805
 	push	de
 	ld	de, #0x140f
@@ -823,7 +823,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:16: line(15, 20, 25, 40);
+;main.c:15: line(15, 20, 25, 40);
 	ld	de, #0x2819
 	push	de
 	ld	de, #0x140f
@@ -831,7 +831,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:17: line(5, 40, 25, 40);
+;main.c:16: line(5, 40, 25, 40);
 	ld	de, #0x2819
 	push	de
 	ld	de, #0x2805
@@ -839,7 +839,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:20: line(3, 5, 3, 20);
+;main.c:19: line(3, 5, 3, 20);
 	ld	de, #0x1403
 	push	de
 	ld	de, #0x0503
@@ -847,7 +847,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:21: line(10, 5, 10, 20);
+;main.c:20: line(10, 5, 10, 20);
 	ld	de, #0x140a
 	push	de
 	ld	de, #0x050a
@@ -855,7 +855,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:22: line(3, 5, 10, 5);
+;main.c:21: line(3, 5, 10, 5);
 	ld	de, #0x050a
 	push	de
 	ld	de, #0x0503
@@ -863,7 +863,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:23: line(3, 20, 10, 20);
+;main.c:22: line(3, 20, 10, 20);
 	ld	de, #0x140a
 	push	de
 	ld	de, #0x1403
@@ -871,7 +871,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:31: line(X1, Y1, X2, Y1);
+;main.c:30: line(X1, Y1, X2, Y1);
 	ld	de, #0x1832
 	push	de
 	ld	de, #0x181e
@@ -879,7 +879,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:32: line(X1, Y2, X2, Y2);
+;main.c:31: line(X1, Y2, X2, Y2);
 	ld	de, #0x2c32
 	push	de
 	ld	de, #0x2c1e
@@ -887,7 +887,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:33: line(X1, Y1, X1, Y2);
+;main.c:32: line(X1, Y1, X1, Y2);
 	ld	de, #0x2c1e
 	push	de
 	ld	de, #0x181e
@@ -895,7 +895,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:34: line(X2, Y1, X2, Y2);
+;main.c:33: line(X2, Y1, X2, Y2);
 	ld	de, #0x2c32
 	push	de
 	ld	de, #0x1832
@@ -903,7 +903,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:36: line(X1+OF, Y1+OF, X2+OF, Y1+OF);
+;main.c:35: line(X1+OF, Y1+OF, X2+OF, Y1+OF);
 	ld	de, #0x253f
 	push	de
 	ld	de, #0x252b
@@ -911,7 +911,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:37: line(X1+OF, Y2+OF, X2+OF, Y2+OF);
+;main.c:36: line(X1+OF, Y2+OF, X2+OF, Y2+OF);
 	ld	de, #0x393f
 	push	de
 	ld	de, #0x392b
@@ -919,7 +919,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:38: line(X1+OF, Y1+OF, X1+OF, Y2+OF);
+;main.c:37: line(X1+OF, Y1+OF, X1+OF, Y2+OF);
 	ld	de, #0x392b
 	push	de
 	ld	de, #0x252b
@@ -927,7 +927,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:39: line(X2+OF, Y1+OF, X2+OF, Y2+OF);
+;main.c:38: line(X2+OF, Y1+OF, X2+OF, Y2+OF);
 	ld	de, #0x393f
 	push	de
 	ld	de, #0x253f
@@ -935,7 +935,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:41: line(X1, Y1, X1+OF, Y1+OF);
+;main.c:40: line(X1, Y1, X1+OF, Y1+OF);
 	ld	de, #0x252b
 	push	de
 	ld	de, #0x181e
@@ -943,7 +943,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:42: line(X1, Y2, X1+OF, Y2+OF);
+;main.c:41: line(X1, Y2, X1+OF, Y2+OF);
 	ld	de, #0x392b
 	push	de
 	ld	de, #0x2c1e
@@ -951,7 +951,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:43: line(X2, Y1, X2+OF, Y1+OF);
+;main.c:42: line(X2, Y1, X2+OF, Y1+OF);
 	ld	de, #0x253f
 	push	de
 	ld	de, #0x1832
@@ -959,7 +959,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:44: line(X2, Y2, X2+OF, Y2+OF);
+;main.c:43: line(X2, Y2, X2+OF, Y2+OF);
 	ld	de, #0x393f
 	push	de
 	ld	de, #0x2c32
@@ -967,7 +967,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:47: circle(40, 10, 10);
+;main.c:46: circle(40, 10, 10);
 	ld	de, #0x0a0a
 	push	de
 	ld	a, #0x28
@@ -976,7 +976,7 @@ _main::
 	call	_circle
 	pop	af
 	inc	sp
-;main.c:51: circle(70, 10, 8);
+;main.c:50: circle(70, 10, 8);
 	ld	de, #0x080a
 	push	de
 	ld	a, #0x46
@@ -985,7 +985,7 @@ _main::
 	call	_circle
 	pop	af
 	inc	sp
-;main.c:52: circle(XMAX-10, 40, 8);
+;main.c:51: circle(XMAX-10, 40, 8);
 	ld	de, #0x0828
 	push	de
 	ld	a, #0x56
@@ -994,7 +994,7 @@ _main::
 	call	_circle
 	pop	af
 	inc	sp
-;main.c:53: line(70+8, 10, XMAX-10+9, 40);
+;main.c:52: line(70+8, 10, XMAX-10+9, 40);
 	ld	de, #0x285f
 	push	de
 	ld	de, #0x0a4e
@@ -1002,7 +1002,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:54: line(70-8, 10, XMAX-10-9, 40);
+;main.c:53: line(70-8, 10, XMAX-10-9, 40);
 	ld	de, #0x284d
 	push	de
 	ld	de, #0x0a3e
@@ -1010,12 +1010,12 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:57: swap();
+;main.c:56: swap();
 	call	_swap
-;main.c:63: PressAnyKey();
+;main.c:62: PressAnyKey();
 	rst	40 
 	.dw 0x4972 
-;main.c:65: }
+;main.c:64: }
 	ret
 	.area _CODE
 	.area _INITIALIZER

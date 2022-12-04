@@ -37,7 +37,9 @@ sh build_app.sh examples/helloworld/ helloWorld
 ## How this works
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is not something that was simple to figure out, there is no unified guide to the ti84/ti83+. But here is my explanation of what this toolkit does. SDCC compiles c code to z80 assembly and _assembles_ it into a binary file. Then if you are making a program binpac8x.py will pack it into a program file (.8xp). If you are making an app a buildid is generated for you, my script generates a custom header for you, and rabbitsign will sign it with the freeware key and converts it to an app file (.8xk). But thanks to the work of me and the giants whose shoulders I stand on, that is all abstracted away from you with a single line build command. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For you, the developer, I gave you a few files in the lib/ forlder, these are some useful tools for what ever you are making. Since you are often trying to keep build sizes down, many functions require you to enable them with `#define USE_FUNCTION_NAME` after you `#include` the source file. I recommend you look at the source code of the library itself for the exact `#include`s you need to use. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For you, the developer, I gave you a few files in the lib/ forlder, these are some useful tools for what ever you are making. Since you are often trying to keep build sizes down, many functions require you to enable them with `#define USE_FUNCTION_NAME` after you `#include` the source file. I recommend you look at the source code of the library itself for the exact #includes you need to use. 
+
+
 
 
 *Ps. Don't remove the .buildid files, you need to keep the same .buildid everytime you update an app on your calculator*

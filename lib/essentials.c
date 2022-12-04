@@ -19,6 +19,9 @@
 #define SP_STORE 0x9872
 
 
+
+
+
 #define clearScreen() bcall(_ClrLCDFull)
 // bcall for c
 #define bcall(__LABEL__) \
@@ -29,19 +32,29 @@
 #define abcall(__LABEL__) \
     rst 40 \
     .dw __LABEL__
-char getKeyId(){
-    bcall(_kdbScan);
-    return *(char*)(kbdScanCode);
-}
+
+#define lastPressedKey() (*(char*)(kbdScanCode))
+#define scanKeys() bcall(_kdbScan)
+
+
+#define JpOffset(x) ((x)-INTER_START + 0x9999)
 
 
 
 
+//----> Safe Memory Areas
+// saferam1 = 768 bytes (APDRAM)
+// saferam2 = 531 bytes (statRAM)
+// saferam3 = 128 bytes (textMem)
+// saferam4 = 66 bytes (OpXs)
+// saferam5 = 10 bytes (iMathPtrs)
 
-
-
-
-
+#define saferam1   0x9872
+#define saferam2   0x8A3A
+#define saferam3   0x8508
+#define saferam4   0x8478
+#define saferamp   0x9872
+#define saferamp2   0x8251
 
 
 

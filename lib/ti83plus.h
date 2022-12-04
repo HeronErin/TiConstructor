@@ -3570,6 +3570,7 @@
 #define cxGroup			 cxNewApps+0 //1st new app.
 #define cxUnGroup		 cxNewApps+1 //2nd new app.
 #define lastNewApp		 cxUnGroup //last new app for this ver
+// key scancodes
 #define skDown			 0x01 
 #define skLeft			 0x02 
 #define skRight			 0x03 
