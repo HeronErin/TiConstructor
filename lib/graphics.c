@@ -13,7 +13,7 @@ void clearBuffer(){
     __asm
             DI
             LD    (SP_STORE), SP
-            LD    SP, #0x9340 + 768    ; 768 byte area
+            LD    SP, #plotSScreen + 768    ; 768 byte area
             LD    HL, #0x0000
             LD    B, #48        ; PUSH 48*8=384 times, @ 2 bytes a PUSH = 768 bytes
         Loop:

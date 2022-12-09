@@ -6,10 +6,14 @@
    .org #0x9D93
 
    .dw #0x6DBB
-   
+   ld hl, #ENDRR
+   push hl
    call gsinit
    jp _main
-   .org 0x9d9b ;9d9b
+ENDRR:
+   im 1
+   ret
+   
    .area _HOME
    .area _CODE
    .area _GSINIT

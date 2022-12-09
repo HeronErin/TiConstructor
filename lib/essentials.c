@@ -16,7 +16,7 @@
 #define aSaveA .db #0x08 // ex af, af' and only takes 4 t-states
 
 
-#define SP_STORE 0x9872
+#define SP_STORE 0x980C
 
 
 

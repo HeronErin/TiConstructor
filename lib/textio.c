@@ -32,7 +32,7 @@ void setPenCol(char col) __naked{
 }
 void resetPen() __naked{
 	__asm
-		ld a, #0x00
+		xor a, a
 
 		ld (#penCol), a
 		ld (#penRow), a
@@ -132,7 +132,7 @@ void number(int x){
 #ifdef USE_HEXDUMP
 // great for debuging, not so great for games
 const char hexTab[16] = {'0', '1', '2', '3', '4', '5', '6', '7', 
-    '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', };
+    '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', };
 void hexdump(char v)__naked{
 	v;
 	__asm
