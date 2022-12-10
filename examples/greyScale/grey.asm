@@ -9,6 +9,7 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _make_gradient
 	.globl _clearGreyScaleBuffer
 	.globl ______copied_to_position
 	.globl __________SET_INTERUPTS
@@ -271,15 +272,21 @@ _wait::
 ;../../lib/misc.c:54: }
 	pop	ix
 	ret
-;../../lib/greyscale.c:57: void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times per secound (depending on the interupt mask and cpu clock setting) 
+;../../lib/greyscale.c:95: void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times per secound (depending on the interupt mask and cpu clock setting) 
 ;	---------------------------------
 ; Function grey_interupt
 ; ---------------------------------
 _grey_interupt::
-;../../lib/greyscale.c:59: scanKeys();
+;../../lib/greyscale.c:97: scanKeys();
 	rst	40 
 	.dw 0x4015 
-;../../lib/greyscale.c:170: __endasm;
+;../../lib/greyscale.c:211: __endasm;
+	in	a, (4)
+	bit	3, a
+	jp	nz, NO_EXIT
+	im	1
+	ret
+	  NO_EXIT:
 	in	a, (4)
 	bit	6, a
 	ret	z
@@ -289,12 +296,17 @@ _grey_interupt::
 	out	(0x34), a
 	ld	a, (0x85BE)
 	out	(0x35), a
+	ld	a, (0x8447)
+	ld	b, a
 	ld	a, ((0x85BE +1))
+	cp	b
+	jp	z, AFTER_CONTRAST
+	ld	(0x8447), a
 	cp	#0x25
 	ret	nc
 	add	a, #0xD8
-	CALL	0x000B
 	out	(0x10), a
+	  AFTER_CONTRAST:
 	ld	b, #0
 	ld	a, ((((0x85BE +1)+1)+1))
 	rra
@@ -305,57 +317,48 @@ _grey_interupt::
 	ld	a, b
 	rla
 	ld	((((0x85BE +1)+1)+1)), a
+	and	a, c
+	bit	0, a
+	ret	nz
+	ld	hl, # 0x9872
 	bit	0, c
-	jr	z, 00002$
-	ld	c, #0xFF
-	jr	00003$
-	  00002$:
-	ld	c, #0
-	  00003$:
-	CALL	0x000B ; set row
-	LD	A, #0x89
-	OUT	(0x10), A
+	jr	z, LIGHT_GREY
+	ld	hl, # 0x9340
+	  LIGHT_GREY:
+	ld	c,#0x10
+	ld	a, ((((((0x85BE +1)+1)+1)+1)+1))
+	ld	e, a
+	  WAIT_LOOP_FOR_Y_INC_MODE:
+	.db	0xED, 0x70
+	jp	m, WAIT_LOOP_FOR_Y_INC_MODE
 	CALL	0x000B
-	LD	A, #0x21 ; reset col
+	LD	A, #0x07 ; set y inc mode
 	OUT	(0x10), A
-	ld	a, c
-	ld	b, #20
-	  00004$:
+	ld	a, (((((0x85BE +1)+1)+1)+1))
+	  rows:
+	.db	0xED, 0x70
+	jp	m, rows
+	out	(0x10), a
+	ld	d, a
 	CALL	0x000B
+	LD	A, (((((((0x85BE +1)+1)+1)+1)+1)+1)) ; reset col
+	OUT	(0x10), A
+	ld	a, ((((((((0x85BE +1)+1)+1)+1)+1)+1)+1))
+	ld	b, a
+	      row:
+	ld	a, (hl)
+	inc	hl
+	       row_waiting:
+	.db	0xED, 0x70
+	jp	m, row_waiting
 	out	(0x11), a
-	dec	b
-	jp	nz, (00004$)
-	CALL	0x000B ; set row
-	LD	A, #0x89
-	OUT	(0x10), A
-	CALL	0x000B
-	LD	A, #0x22 ; reset col
-	OUT	(0x10), A
-	ld	a, c
-	cpl
-	     00006$:
-	ld	b, #20
-	  00005$:
-	CALL	0x000B
-	out	(0x11), a
-	dec	b
-	jp	nz, (00005$)
-	CALL	0x000B ; set row
-	LD	A, #0x89
-	OUT	(0x10), A
-	CALL	0x000B
-	LD	A, #0x20 ; reset col
-	OUT	(0x10), A
-	xor	a, a
-	dec	a
-	ld	b, #20
-	  00015$:
-	CALL	0x000B
-	out	(0x11), a
-	dec	b
-	jp	nz, (00015$)
+	djnz	row
+	ld	a, d
+	inc	a
+	cp	e
+	jp	nz, rows
 	ret
-;../../lib/greyscale.c:171: }
+;../../lib/greyscale.c:212: }
 ;../../lib/interupts.c:41: void _________SET_INTERUPTS(){
 ;	---------------------------------
 ; Function _________SET_INTERUPTS
@@ -430,12 +433,12 @@ ______copied_to_position::
 	ret
 	  EndLoadInterupt:
 ;../../lib/interupts.c:135: }
-;../../lib/greyscale.c:180: void clearGreyScaleBuffer(){
+;../../lib/greyscale.c:221: void clearGreyScaleBuffer(){
 ;	---------------------------------
 ; Function clearGreyScaleBuffer
 ; ---------------------------------
 _clearGreyScaleBuffer::
-;../../lib/greyscale.c:209: __endasm;
+;../../lib/greyscale.c:250: __endasm;
 	DI
 	LD	(0x980C), SP
 	LD	SP, #0x9340 + 768 ; 768 byte area
@@ -453,28 +456,124 @@ _clearGreyScaleBuffer::
 	PUSH	HL
 	PUSH	HL
 	DJNZ	Loop
-	LD	SP, #0x9340 + 768 ; 768 byte area
+	LD	SP, #0x9872 + 768 ; 768 byte area
 	inc	c
 	jp	z, WIPE_LOC
 	             ENDOFWIPE:
 	LD	SP, (0x980C)
 	EI
-;../../lib/greyscale.c:210: }
+;../../lib/greyscale.c:251: }
 	ret
-;main.c:15: void main() {
+;main.c:13: void make_gradient(){
+;	---------------------------------
+; Function make_gradient
+; ---------------------------------
+_make_gradient::
+	push	ix
+	ld	ix,#0
+	add	ix,sp
+	push	af
+	push	af
+;main.c:16: for (char b = YMAX-8; b !=0; b--){
+	ld	hl, #0x9340
+	ex	(sp), hl
+	ld	-2 (ix), #0x72
+	ld	-1 (ix), #0x98
+	ld	c, #0x38
+00103$:
+	ld	a, c
+	or	a, a
+	jr	Z, 00105$
+;main.c:17: *((char*)light) = 0xFF;
+	pop	de
+	push	de
+	ld	a, #0xff
+	ld	(de), a
+;main.c:18: *((char*)light+1) = 0xFF;
+	ld	l, e
+	ld	h, d
+	inc	hl
+	ld	(hl), #0xff
+;main.c:19: *((char*)dark) = 0xFF;
+	ld	a, -2 (ix)
+	ld	b, -1 (ix)
+	ld	l, a
+	ld	h, b
+	ld	(hl), #0xff
+;main.c:20: *((char*)dark+1) = 0xFF;
+	ld	l, a
+	ld	h, b
+	inc	hl
+	ld	(hl), #0xff
+;main.c:21: *((char*)dark+2) = 0xFF;
+	ld	l, a
+	ld	h, b
+	inc	hl
+	inc	hl
+	ld	(hl), #0xff
+;main.c:22: *((char*)dark+3) = 0xFF;
+	ld	l, a
+	ld	h, b
+	inc	hl
+	inc	hl
+	inc	hl
+	ld	(hl), #0xff
+;main.c:23: *((char*)light+4) = 0xFF;
+	ld	hl, #0x0004
+	add	hl, de
+	ld	(hl), #0xff
+;main.c:24: *((char*)light+5) = 0xFF;
+	ld	hl, #0x0005
+	add	hl, de
+	ld	(hl), #0xff
+;main.c:25: light+=6;
+	ld	a, -4 (ix)
+	add	a, #0x06
+	ld	-4 (ix), a
+	jr	NC, 00118$
+	inc	-3 (ix)
+00118$:
+;main.c:26: dark+=6;
+	ld	a, -2 (ix)
+	add	a, #0x06
+	ld	-2 (ix), a
+	jr	NC, 00119$
+	inc	-1 (ix)
+00119$:
+;main.c:16: for (char b = YMAX-8; b !=0; b--){
+	dec	c
+	jr	00103$
+00105$:
+;main.c:28: }
+	ld	sp, ix
+	pop	ix
+	ret
+;main.c:31: void main() {
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-;main.c:16: INIT_GREYSCALE();
+;main.c:33: clearGreyScaleBuffer();
+	call	_clearGreyScaleBuffer
+;main.c:34: INIT_GREYSCALE();
 	ld	hl, #0x85c0
 	ld	(hl), #0x6d
 	ld	l, #0xbf
-	ld	(hl), #0x17
-	ld	l, #0xbe
-	ld	(hl), #0xa0
+	ld	(hl), #0x15
+	ld	hl, #0x8447
+	ld	(hl), #0x00
+	ld	hl, #0x85be
+	ld	(hl), #0x9f
 	ld	l, #0xc1
 	ld	(hl), #0x01
+	ld	l, #0xc2
+	ld	(hl), #0x80
+	ld	l, #0xc4
+	ld	(hl), #0x20
+	ld	l, #0xc3
+	ld	(hl), #0xbf
+	ld	l, #0xc5
+	ld	(hl), #0x0c
 	ld de, # (ON_EXIT-LoadInterrupt+0x8E2C) 
 	push de 
 	call	__________SET_INTERUPTS
@@ -486,71 +585,82 @@ _main::
 	out (0x34), a 
 	ld a, (0x85BE) 
 	out (0x35), a 
-;main.c:17: setCpuSpeed(3);
+;main.c:35: *((char*)START_ROW)=ROW_CONST+8;
+	ld	hl, #0x85c2
+	ld	(hl), #0x88
+;main.c:36: *((char*)MAX_COL)=6;
+	ld	l, #0xc5
+	ld	(hl), #0x06
+;main.c:41: clearScreen();
+	rst	40 
+	.dw 0x4540 
+;main.c:42: setCpuSpeed(3);
 	ld	a, #0x03
 	push	af
 	inc	sp
 	call	_setCpuSpeed
 	inc	sp
-;main.c:21: clearScreen();
-	rst	40 
-	.dw 0x4540 
-;main.c:23: while (1){
+;main.c:43: make_gradient();
+	call	_make_gradient
+;main.c:45: while (1){
 00116$:
-;main.c:24: wait(4);
+;main.c:46: wait(4);
 	ld	a, #0x04
 	push	af
 	inc	sp
 	call	_wait
 	inc	sp
-;main.c:26: if (skClear == lastPressedKey())
+;main.c:48: scanKeys();
+	rst	40 
+	.dw 0x4015 
+;main.c:49: if (skClear == lastPressedKey())
 	ld	a, (#0x843f)
 	cp	a, #0x0f
 	jr	Z, 00117$
-;main.c:28: else if (skLeft == lastPressedKey()){
+;main.c:51: else if (skLeft == lastPressedKey()){
 	cp	a, #0x02
 	jr	NZ, 00110$
-;main.c:29: *(char*)WAIT_LOC -=1;
+;main.c:52: *(char*)WAIT_LOC -=1;
 	ld	a, (#0x85be)
 	dec	a
 	ld	(#0x85be),a
 	jr	00114$
 00110$:
-;main.c:31: else if (skRight == lastPressedKey()){
+;main.c:54: else if (skRight == lastPressedKey()){
 	cp	a, #0x03
 	jr	NZ, 00107$
-;main.c:32: *(char*)WAIT_LOC +=1;
+;main.c:55: *(char*)WAIT_LOC +=1;
 	ld	a, (#0x85be)
 	inc	a
 	ld	(#0x85be),a
 	jr	00114$
 00107$:
-;main.c:34: else if (skUp == lastPressedKey()){
+;main.c:57: else if (skUp == lastPressedKey()){
 	cp	a, #0x04
 	jr	NZ, 00104$
-;main.c:35: *(char*)CONTRAST_LOC +=1;
+;main.c:58: *(char*)CONTRAST_LOC +=1;
 	ld	a, (#0x85bf)
 	inc	a
 	ld	(#0x85bf),a
 	jr	00114$
 00104$:
-;main.c:37: else if (skDown == lastPressedKey()){
+;main.c:60: else if (skDown == lastPressedKey()){
 	dec	a
 	jr	NZ, 00114$
-;main.c:38: *(char*)CONTRAST_LOC -=1;
+;main.c:61: *(char*)CONTRAST_LOC -=1;
 	ld	a, (#0x85bf)
 	dec	a
 	ld	(#0x85bf),a
 00114$:
-;main.c:43: resetPen();
+;main.c:66: resetPen();
 	call	_resetPen
-;main.c:44: hexdump(*(char*)WAIT_LOC);
+;main.c:67: hexdump(*(char*)WAIT_LOC);
 	ld	a, (#0x85be)
 	push	af
 	inc	sp
 	call	_hexdump
 	inc	sp
-;main.c:45: hexdump(*(char*)CONTRAST_LOC);
+;main.c:68: hexdump(*(char*)CONTRAST_LOC);
 	ld	a, (#0x85bf)
 	push	af
 	inc	sp
@@ -558,13 +668,13 @@ _main::
 	inc	sp
 	jr	00116$
 00117$:
-;main.c:50: setCpuSpeed(0);
+;main.c:74: setCpuSpeed(0);
 	xor	a, a
 	push	af
 	inc	sp
 	call	_setCpuSpeed
 	inc	sp
-;main.c:52: }	
+;main.c:76: }	
 	ret
 	.area _CODE
 	.area _INITIALIZER

@@ -1,11 +1,41 @@
 #pragma once
 #define _LCD_BUSY_QUICK 0x000B
 
+
+// Warnings: This _may_ take up 90% of the cpu time and should be used with cpu turbo (setCpuSpeed(3))
+// Look at the example in examples/greyScale
+// Usage:
+
+// you might want to know that there is an emergency killswitch built in, if you press the on button it will stop the grey scale,
+// but you can disable the killswitch with #define DISABLE_ON_BUTTON_KILL before you include this file
+
+
+
+// Greyscale uses interupts so no need for a swap (don't even try to use swap)
+// First put your image in LIGHT_GREY_LOC and DARK_GREY_LOC, since there is 4 different color options (off, light grey, dark grey, and black)
+// you need need 2 bits per pixel (one in LIGHT_GREY_LOC and the other in DARK_GREY_LOC), both bits are set for black and both are zero for off
+// Use clearGreyScaleBuffer to clear these two buffers quickly
+
+// Your first instruction should be clearGreyScaleBuffer() followed by INIT_GREYSCALE()
+
+// Next you may to set your drawing settings (since default values are set in INIT_GREYSCALE)
+// this can be done in C as follows:
+//						 *((char*)START_ROW) = ROW_CONST;
+//						 *((char*)START_COL) = COL_START_CONST;
+//						 
+//						 *((char*)END_ROW) = ROW_END_CONST;
+//						 *((char*)MAX_COL) = DEFAULT_MAX_COL; // you must change your XMAX (or equivalent) along with your DEFAULT_MAX_COL, otherwise things tend to break
+//
+//
+// It is recommended to add/subtrace to/from the default values due to some of them being offseted values (the setting for row 0 is 0x80 and column 0 is 0x20)
+
+// Ps. The emulator dosn't work with greyscale well
+
 #define __hs #
 
 #define WAIT_LOC 0x85BE
 #define CONTRAST_LOC (WAIT_LOC+1)
-#define GRAY_CYCLE (CONTRAST_LOC+1)
+#define GRAY_CYCLE (CONTRAST_LOC+1) // 0 - 0x25
 #define GRAY_CYCLE_CARRY (GRAY_CYCLE+1)
 
 #define START_ROW (GRAY_CYCLE_CARRY+1)
@@ -15,8 +45,8 @@
 
 // IF YOU CHANGE COL, YOU MUST CHANGE THE XMAX, OTHERWISE THE IMAGE IS MESSED UP
 // #define XMAX (endcol - startcol)*8
-#define START_COL (WAIT_LOC+5)
-#define MAX_COL (WAIT_LOC+6)
+#define START_COL (END_ROW+1)
+#define MAX_COL (START_COL+1)
 
 #define DEFAULT_MAX_COL 12
 
@@ -29,7 +59,7 @@
 
 
 #define LIGHT_GREY_LOC plotSScreen
-#define DARK_GREY_LOC plotSScreen
+#define DARK_GREY_LOC appBackUpScreen
 
 
 
@@ -37,9 +67,17 @@
 #define YMAX 64
 
 #define INIT_GREYSCALE() *((char*)GRAY_CYCLE) = 0b01101101 ;\
-						 *((char*)CONTRAST_LOC) = 0x17;\
-						 *(char*)WAIT_LOC = 0xA0;\
+						 *((char*)CONTRAST_LOC) = 0x15;\
+						 *((char*)contrast) = 0;\
+						 *(char*)WAIT_LOC = 0x9F;\
 						 *((char*)GRAY_CYCLE_CARRY) = 1;\
+						 \
+						 \
+						 *((char*)START_ROW) = ROW_CONST;\
+						 *((char*)START_COL) = COL_START_CONST;\
+						 \
+	 					 *((char*)END_ROW) = ROW_END_CONST;\
+						 *((char*)MAX_COL) = DEFAULT_MAX_COL;\
 						 SET_INTERUPTS(); __asm\
 						 \
 							ld	a, __hs 0x40 \
@@ -58,6 +96,16 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
   						 // and the z80 only has ome core
 	scanKeys();
 	__asm
+
+		#ifndef DISABLE_ON_BUTTON_KILL
+		in a, (4) // port 4 bit 3 tests if on button is pressed
+		bit 3, a
+		jp nz, NO_EXIT
+		im 1
+		ret
+		#endif
+
+		NO_EXIT:
 		// test if time is up
 		in a, (4)
 		bit 6, a
@@ -72,13 +120,19 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		out	(0x35), a
 
 		// handle constrast
+		ld a, (contrast)
+		ld b, a
 		ld a, (CONTRAST_LOC)
+		cp b
+		jp z, AFTER_CONTRAST
+		ld (contrast), a
+
 		cp #0x25
 		ret nc
 		add a, #0xD8
-		CALL   _LCD_BUSY_QUICK
-		out (0x10), a
 
+		out (0x10), a
+		AFTER_CONTRAST:
 
 
 		// rotate grey cycle byte
@@ -88,80 +142,67 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		ld a, (GRAY_CYCLE)
 		rla
 		ld c, a
-
+		
 		ld (GRAY_CYCLE), a
 		ld a, b
 		rla
 		ld (GRAY_CYCLE_CARRY), a
 		
+		// Don't need to update display the same image twice in a row
+		and a, c
+		bit 0, a
+		ret nz
+
+
+
+		ld hl, # DARK_GREY_LOC
 		bit 0, c
-		jr z, 00002$
-		ld c, #0xFF
-		jr 00003$
-		00002$:
-		ld c, #0
-		00003$:
+		jr z, LIGHT_GREY
+		ld hl, # LIGHT_GREY_LOC
+		LIGHT_GREY:
 
 
 
-	    CALL   _LCD_BUSY_QUICK   ; set row
-	    LD     A, #0x89
-	    OUT    (0x10), A
 
-	    CALL   _LCD_BUSY_QUICK
-	    LD     A, #0x21          ; reset col
-	    OUT    (0x10), A
+		ld c,#0x10
+		ld a, (END_ROW)
+		ld e, a
 
-		
-
-		ld a, c
-		ld b, #20
-		00004$:
+		WAIT_LOOP_FOR_Y_INC_MODE:
+			.db 0xED, 0x70 // in (c) // aka gets input from c, tests it, sets flags
+			jp m, WAIT_LOOP_FOR_Y_INC_MODE // if m flag, still needs to wait
 		CALL   _LCD_BUSY_QUICK
-
-		out (0x11), a
-		dec b
-		jp nz, (00004$)
-
-
-
-
-
-
-	    CALL   _LCD_BUSY_QUICK   ; set row
-	    LD     A, #0x89
-	    OUT    (0x10), A
-		CALL   _LCD_BUSY_QUICK
-		LD     A, #0x22          ; reset col
+	    LD     A, #0x07           ; set y inc mode
 	    OUT    (0x10), A
 
-	    ld a, c
-	    cpl
+		ld a, (START_ROW)
+		rows:
+			.db 0xED, 0x70 // in (c) // aka gets input from c, tests it, sets flags
+			jp m, rows // if m flag, still needs to wait
+			out (0x10), a
+			ld d, a
+		    CALL   _LCD_BUSY_QUICK
+		    LD     A, (START_COL)          ; reset col
+		    OUT    (0x10), A
 
-	    00006$:
-	    ld b, #20
-		00005$:
-		CALL   _LCD_BUSY_QUICK
-		out (0x11), a
-		dec b
-		jp nz, (00005$)
+		    ld a, (MAX_COL)
+		    ld b, a
+		    row:
+		    	ld a, (hl)
+		    	inc hl
+		    	row_waiting:
+		    		.db 0xED, 0x70 // in (c) // aka gets input from c, tests it, sets flags
+		    		jp m, row_waiting // if m flag, still needs to wait
+		    	out (0x11), a
+		    	djnz row
 
 
-	    CALL   _LCD_BUSY_QUICK   ; set row
-	    LD     A, #0x89
-	    OUT    (0x10), A
-		CALL   _LCD_BUSY_QUICK
-		LD     A, #0x20          ; reset col
-	    OUT    (0x10), A
-		xor a, a
-		dec a
-	    ld b, #20
-		00015$:
-		CALL   _LCD_BUSY_QUICK
-		out (0x11), a
 
-		dec b
-		jp nz, (00015$)
+		    ld a, d
+		    inc a
+			cp e
+			jp nz, rows
+
 
 
 
