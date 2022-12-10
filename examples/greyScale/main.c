@@ -29,7 +29,7 @@ void make_gradient(){
 
 
 void main() {
-	// setCpuSpeed(3);
+	setCpuSpeed(3);
 	clearGreyScaleBuffer();
 	INIT_GREYSCALE();
 	*((char*)START_ROW)=ROW_CONST+8;
