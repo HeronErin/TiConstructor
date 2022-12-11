@@ -32,12 +32,12 @@ void main() {
 	setCpuSpeed(3);
 	clearGreyScaleBuffer();
 	INIT_GREYSCALE();
+
+
 	*((char*)START_ROW)=ROW_CONST+8;
 	*((char*)MAX_COL)=6;
 
 
-	// lastC=0;
-	// lastW=0;
 	clearScreen();
 	setCpuSpeed(3);
 	make_gradient();
@@ -60,14 +60,11 @@ void main() {
 		else if (skDown == lastPressedKey()){
 			*(char*)CONTRAST_LOC -=1;
 		}
-		// if (( *(char*)WAIT_LOC != lastW ) | ( *(char*)CONTRAST_LOC != lastC ) ){
-		// 	lastC=*(char*)CONTRAST_LOC;
-		// 	lastW=*(char*)WAIT_LOC ;
-			resetPen();
-			hexdump(*(char*)WAIT_LOC);
-			hexdump(*(char*)CONTRAST_LOC);
-		// 	// drr();
-		// }
+
+		resetPen();
+		hexdump(*(char*)WAIT_LOC);
+		hexdump(*(char*)CONTRAST_LOC);
+
 		
 	}
 
