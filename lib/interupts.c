@@ -126,7 +126,16 @@ void _____copied_to_position()__naked{
 			di
 			im 1 
 			ld a, __hs INTRPT_MASK 
-			out (3), a 
+			out (3), a
+
+			// useful for greyscale
+			#ifdef ADDED_ON_EXIT
+			__endasm;
+			ADDED_ON_EXIT();
+			__asm
+			#endif
+
+
 			ei 
 			ret 
 		

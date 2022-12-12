@@ -53,11 +53,13 @@ char* getOrCreateVar(char* name, int size)__naked{
 
 
 		di
+
 		exx
 		push ix
 		abcall(_Arc_Unarc)
 		pop ix
-		exx 
+		exx
+
 		ei
 		jp _getOrCreateVar
 
@@ -93,11 +95,13 @@ void archive(char* name)__naked{
 
 		rst 0x20 ; Mov9ToOP1
 		di
+
 		exx
 		push ix
 		abcall(_Arc_Unarc)
 		pop ix
-		exx 
+		exx
+
 		ei
 		ret
 

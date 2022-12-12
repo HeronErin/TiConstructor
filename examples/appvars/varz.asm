@@ -249,7 +249,7 @@ _hexTab:
 ; Function getOrCreateVar
 ; ---------------------------------
 _getOrCreateVar::
-;../../lib/variables.c:82: __endasm;
+;../../lib/variables.c:84: __endasm;
 	pop	de
 	pop	hl
 	push	hl
@@ -263,12 +263,14 @@ _getOrCreateVar::
 	cp	b
 	jr	z,unarchived
 	di
+	rst	0x38
 	exx
 	push	ix
 	rst	40 
 	.dw 0x4FD8
 	pop	ix
 	exx
+	rst	0x38
 	ei
 	jp	_getOrCreateVar
 	  unarchived:
@@ -283,13 +285,13 @@ _getOrCreateVar::
 	rst	40 
 	.dw 0x4E6A
 	jp	_getOrCreateVar
-;../../lib/variables.c:83: }
-;../../lib/variables.c:87: void archive(char* name)__naked{
+;../../lib/variables.c:85: }
+;../../lib/variables.c:89: void archive(char* name)__naked{
 ;	---------------------------------
 ; Function archive
 ; ---------------------------------
 _archive::
-;../../lib/variables.c:104: __endasm;
+;../../lib/variables.c:106: __endasm;
 	pop	de
 	pop	hl
 	push	hl
@@ -304,13 +306,13 @@ _archive::
 	exx
 	ei
 	ret
-;../../lib/variables.c:106: }
-;../../lib/variables.c:107: void delete(char* name)__naked{
+;../../lib/variables.c:108: }
+;../../lib/variables.c:109: void delete(char* name)__naked{
 ;	---------------------------------
 ; Function delete
 ; ---------------------------------
 _delete::
-;../../lib/variables.c:118: __endasm;
+;../../lib/variables.c:120: __endasm;
 	pop	de
 	pop	hl
 	push	hl
@@ -321,7 +323,7 @@ _delete::
 	rst	40 
 	.dw 0x4351
 	ret
-;../../lib/variables.c:119: }
+;../../lib/variables.c:121: }
 ;main.c:15: void main() {
 ;	---------------------------------
 ; Function main

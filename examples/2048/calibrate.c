@@ -1,16 +1,4 @@
-#define USE_WAIT8
-#define USE_CPU_SPEED
-#define USE_HEXDUMP
-#include "../../lib/essentials.c"
-#include "../../lib/textio.c"
-#include "../../lib/userinput.c"
-#include "../../lib/misc.c"
-
-
-#include "../../lib/greyscale.c"
-
-
-
+#pragma once
 
 void make_gradient(){
 	int light = LIGHT_GREY_LOC;
@@ -30,19 +18,19 @@ void make_gradient(){
 }
 
 
-void main() {
-	setCpuSpeed(3);
+void calibration_menu(char* settings_var){
+	*(char*)WAIT_LOC     = *(settings_var+1);
+	*(char*)CONTRAST_LOC = *(settings_var+2);
 	clearGreyScaleBuffer();
-	INIT_GREYSCALE();
-
+	make_gradient();
 
 	*((char*)START_ROW)=ROW_CONST+8;
+	*((char*)START_COL) = COL_START_CONST;
+
+	*((char*)END_ROW) = ROW_END_CONST;
 	*((char*)MAX_COL)=6;
 
-
-	clearScreen();
-	setCpuSpeed(3);
-	make_gradient();
+	
 
 	while (1){
 		wait(4);
@@ -52,24 +40,27 @@ void main() {
 			break;
 		else if (skLeft == lastPressedKey()){
 			*(char*)WAIT_LOC -=1;
+			*(settings_var+1) = *(char*)WAIT_LOC     ;
 		}
 		else if (skRight == lastPressedKey()){
 			*(char*)WAIT_LOC +=1;
+			*(settings_var+1) = *(char*)WAIT_LOC     ;
 		}
 		else if (skUp == lastPressedKey()){
 			*(char*)CONTRAST_LOC +=1;
+			*(settings_var+2) = *(char*)CONTRAST_LOC ;
 		}
 		else if (skDown == lastPressedKey()){
 			*(char*)CONTRAST_LOC -=1;
+			*(settings_var+2) = *(char*)CONTRAST_LOC ;
 		}
 
 		resetPen();
-		hexdump(*(char*)WAIT_LOC);
-		hexdump(*(char*)CONTRAST_LOC);
-
+		hexdump( *(settings_var+1) );
+		hexdump( *(settings_var+2) );
 		
 	}
+	
+	
 
-	setCpuSpeed(0);
-
-}	
+}

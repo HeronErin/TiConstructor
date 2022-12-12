@@ -31,6 +31,11 @@
 
 // Ps. The emulator dosn't work with greyscale well
 
+// Also if you use an appvar for greyscale settings use the name "greycfg" and use this structor [0x69, WAIT_TIME, CONTRAST, 0x69] 
+// 0x69 is for integrity checking (Im not immature at all lol)                        see the 2048 in examples/
+
+
+
 #define __hs #
 
 #define WAIT_LOC 0x85BE
@@ -47,6 +52,9 @@
 // #define XMAX (endcol - startcol)*8
 #define START_COL (END_ROW+1)
 #define MAX_COL (START_COL+1)
+
+
+#define SAVE_CONTRAST 0x9D88
 
 #define DEFAULT_MAX_COL 12
 
@@ -66,8 +74,12 @@
 #define XMAX 96
 #define YMAX 64
 
+
+
+// Don't change anything here, change it after, for example change WAIT_LOC right after INIT_GREYSCALE is called
 #define INIT_GREYSCALE() *((char*)GRAY_CYCLE) = 0b01101101 ;\
 						 *((char*)CONTRAST_LOC) = 0x15;\
+						 *((char*)SAVE_CONTRAST) = *((char*)contrast);\
 						 *((char*)contrast) = 0;\
 						 *(char*)WAIT_LOC = 0x9F;\
 						 *((char*)GRAY_CYCLE_CARRY) = 1;\
@@ -87,9 +99,15 @@
 							ld	a, (WAIT_LOC) \
 							out	(0x35), a \
 							__endasm
-						
 
-
+// Keeps normal contrast setting
+#define ADDED_ON_EXIT() 	__asm\
+		ld a, (SAVE_CONTRAST)\
+		ld (contrast), a\
+		add a, __hs 0xD8\
+		out (0x10), a\
+		ret\
+	__endasm
 
 // called during interupts
 void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times per secound (depending on the interupt mask and cpu clock setting) 
@@ -249,3 +267,7 @@ void clearGreyScaleBuffer(){
 
     __endasm;
 }
+
+
+
+
