@@ -7,6 +7,7 @@
 #include "../../lib/misc.c"
 
 
+
 #include "../../lib/greyscale.c"
 
 
@@ -46,6 +47,7 @@ void main() {
 
 	while (1){
 		wait(4);
+
 		
 		scanKeys();
 		if (skClear == lastPressedKey())

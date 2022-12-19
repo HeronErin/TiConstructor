@@ -18,7 +18,7 @@
 
 #define SP_STORE 0x980C
 
-
+#define spriteTemp 0x84F3
 
 
 

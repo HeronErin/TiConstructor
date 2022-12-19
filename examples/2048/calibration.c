@@ -1,5 +1,6 @@
 #pragma once
 
+
 void make_gradient(){
 	int light = LIGHT_GREY_LOC;
 	int dark = DARK_GREY_LOC;
@@ -17,20 +18,28 @@ void make_gradient(){
 	}
 }
 
-
-void calibration_menu(char* settings_var){
-	*(char*)WAIT_LOC     = *(settings_var+1);
-	*(char*)CONTRAST_LOC = *(settings_var+2);
+void calibration_loop(){
 	clearGreyScaleBuffer();
 	make_gradient();
+	__asm
+		ld a, (START_ROW)
+		ld b, a
+		ld a, (START_COL)
+		ld c, a
+		push bc
 
-	*((char*)START_ROW)=ROW_CONST+8;
+		ld a, (END_ROW)
+		ld b, a
+		ld a, (MAX_COL)
+		ld c, a
+		push bc
+	__endasm;
+
+	*((char*)START_ROW) = ROW_CONST+8;
 	*((char*)START_COL) = COL_START_CONST;
 
 	*((char*)END_ROW) = ROW_END_CONST;
-	*((char*)MAX_COL)=6;
-
-	
+	*((char*)MAX_COL) = 6;
 
 	while (1){
 		wait(4);
@@ -38,29 +47,42 @@ void calibration_menu(char* settings_var){
 		scanKeys();
 		if (skClear == lastPressedKey())
 			break;
+		else if (skMode == lastPressedKey())
+			break;
 		else if (skLeft == lastPressedKey()){
 			*(char*)WAIT_LOC -=1;
-			*(settings_var+1) = *(char*)WAIT_LOC     ;
 		}
 		else if (skRight == lastPressedKey()){
 			*(char*)WAIT_LOC +=1;
-			*(settings_var+1) = *(char*)WAIT_LOC     ;
 		}
 		else if (skUp == lastPressedKey()){
 			*(char*)CONTRAST_LOC +=1;
-			*(settings_var+2) = *(char*)CONTRAST_LOC ;
 		}
 		else if (skDown == lastPressedKey()){
 			*(char*)CONTRAST_LOC -=1;
-			*(settings_var+2) = *(char*)CONTRAST_LOC ;
 		}
 
 		resetPen();
-		hexdump( *(settings_var+1) );
-		hexdump( *(settings_var+2) );
+		hexdump(*(char*)WAIT_LOC);
+		hexdump(*(char*)CONTRAST_LOC);
+
 		
 	}
-	
-	
+	char* dataLoc=getOrCreateVar(dataName, 20)+2;
+	dataLoc[1] = *(char*)WAIT_LOC ;
+	dataLoc[2] = *(char*)CONTRAST_LOC ;
+	clearGreyScaleBuffer();
+	__asm
+		pop bc
+		ld a, b
+		ld (END_ROW), a
+		ld a, c
+		ld (MAX_COL), a
 
+		pop bc
+		ld a, b
+		ld (START_ROW), a
+		ld a, c
+		ld (START_COL), a
+	__endasm;
 }

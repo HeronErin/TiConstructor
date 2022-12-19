@@ -68,7 +68,8 @@
 
 #define LIGHT_GREY_LOC plotSScreen
 #define DARK_GREY_LOC appBackUpScreen
-
+// #define LIGHT_GREY_LOC plotSScreen
+// #define DARK_GREY_LOC plotSScreen
 
 
 #define XMAX 96
@@ -186,17 +187,13 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		ld a, (END_ROW)
 		ld e, a
 
-		WAIT_LOOP_FOR_Y_INC_MODE:
-			.db 0xED, 0x70 // in (c) // aka gets input from c, tests it, sets flags
-			jp m, WAIT_LOOP_FOR_Y_INC_MODE // if m flag, still needs to wait
 		CALL   _LCD_BUSY_QUICK
 	    LD     A, #0x07           ; set y inc mode
 	    OUT    (0x10), A
 
 		ld a, (START_ROW)
 		rows:
-			.db 0xED, 0x70 // in (c) // aka gets input from c, tests it, sets flags
-			jp m, rows // if m flag, still needs to wait
+			CALL   _LCD_BUSY_QUICK
 			out (0x10), a
 			ld d, a
 		    CALL   _LCD_BUSY_QUICK
@@ -208,9 +205,7 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		    row:
 		    	ld a, (hl)
 		    	inc hl
-		    	row_waiting:
-		    		.db 0xED, 0x70 // in (c) // aka gets input from c, tests it, sets flags
-		    		jp m, row_waiting // if m flag, still needs to wait
+		    	CALL   _LCD_BUSY_QUICK
 		    	out (0x11), a
 		    	djnz row
 

@@ -7,7 +7,7 @@
 #define XMAX 96
 #define YMAX 64
 
-
+#ifndef NO_USE_CLEAR
 // taken from https://taricorp.gitlab.io/83pa28d/lesson/day10.html
 void clearBuffer(){
     __asm
@@ -32,7 +32,8 @@ void clearBuffer(){
 
     __endasm;
 }
-
+#endif
+#ifndef NO_USE_SWAP
 // fast enough way to display SCREEN_BUFFER on lcd
 void swap(){
     __asm
@@ -78,7 +79,7 @@ void swap(){
     __endasm;
     
 }
-
+#endif
 
 #ifdef USE_LINE
 // taken from https://www.ticalc.org/pub/83plus/asm/source/routines/dline.zip
@@ -427,3 +428,5 @@ void circle(char xc, char yc, char r)
     }
 }
 #endif
+
+
