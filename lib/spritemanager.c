@@ -4,8 +4,16 @@
 #endif
 
 #ifndef X_LINE
-#define X_LINE 12 
+#define X_LINE 12  // XMAX / 8
 #endif
+
+#ifndef Y_MULT // asm to multiply hl by X_LINE
+#define Y_MULT 		add	hl,de \
+				   	add	hl,de \
+				   	add	hl,hl \
+				   	add	hl,hl 
+#endif
+
 
 #ifdef GREYSCALE_SPRITES
 #define USE_APPBACKUP_ION
@@ -32,10 +40,11 @@ void ionPutSprite()__naked{
 		   	ld	e,l
 		   	ld	h,#00
 		   	ld	d,h
-		   	add	hl,de
-		   	add	hl,de
-		   	add	hl,hl
-		   	add	hl,hl               ;Find the Y displacement offset 
+		   	
+		   	// hl, de = 16 bit y. Must mult by X_LINE
+		   	Y_MULT            ;Find the Y displacement offset 
+
+
 		   	ld	e,a
 		   	and	#07               ;Find the bit number
 		   	ld	c,a
@@ -81,10 +90,11 @@ void appBackupIonPutSprite()__naked{      ///////// 4 5 6 (7, 8)
 		   	ld	e,l
 		   	ld	h,#00
 		   	ld	d,h
-		   	add	hl,de
-		   	add	hl,de
-		   	add	hl,hl
-		   	add	hl,hl               ;Find the Y displacement offset 
+
+		   	// hl, de = 16 bit y. Must mult by X_LINE
+		   	Y_MULT            ;Find the Y displacement offset 
+
+
 		   	ld	e,a
 		   	and	#07               ;Find the bit number
 		   	ld	c,a

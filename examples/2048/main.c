@@ -11,7 +11,12 @@
 // #define NO_USE_SWAP
 // #define NO_USE_CLEAR
 
-#define X_LINE 6
+#define X_LINE 8
+#define Y_MULT 		add	hl,hl \
+				   	ld e, l   \
+				   	add	hl,hl \
+				   	add	hl,de \
+				   	add	hl,de 
 #define GREYSCALE_SPRITES
 #include "../../lib/spritemanager.c"
 
@@ -71,25 +76,29 @@ void real_main(){
 
 
 	INIT_GREYSCALE();
-
+	
 	*(char*)WAIT_LOC = *(char*)(0x85A6);
 	*(char*)CONTRAST_LOC = *(char*)(0x85A6+1);
 	
 	setCpuSpeed(3);
 	// greyPutSprite(10, 5, Untitled4_WIDTH, Untitled4_HEIGHT, Untitled4_DATA);
 
-	*((char*)MAX_COL)=6;
-	*((char*)START_COL) = COL_START_CONST+2;
+	*((char*)MAX_COL)=8;
+	*((char*)START_COL) = COL_START_CONST+1;
 
-	*((char*)START_ROW) = ROW_CONST+8;
-	*((char*)END_ROW) = ROW_END_CONST-8;
+	*((char*)START_ROW) = ROW_CONST;
+	*((char*)END_ROW) = ROW_END_CONST;
 
-	greyPutSprite(0,  0, ONE_WIDTH, ONE_HEIGHT, ONE_DATA);
+
+	greyPutSprite(0, 0, ONE_WIDTH, ONE_HEIGHT, ONE_DATA);
 	greyPutSprite(16, 0, two_WIDTH, two_HEIGHT, two_DATA);
 	greyPutSprite(32, 0, four_WIDTH, four_HEIGHT, four_DATA);
-	greyPutSprite(0, 8, sixteen_WIDTH, sixteen_HEIGHT, sixteen_DATA);
-	greyPutSprite(16, 8, thirtytwo_WIDTH, thirtytwo_HEIGHT, thirtytwo_DATA);
-	greyPutSprite(32, 8, sixtyfour_WIDTH, sixtyfour_HEIGHT, sixtyfour_DATA);
+
+	greyPutSprite(0, 16, sixteen_WIDTH, sixteen_HEIGHT, sixteen_DATA);
+	greyPutSprite(16, 16, thirtytwo_WIDTH, thirtytwo_HEIGHT, thirtytwo_DATA);
+	greyPutSprite(32, 16, sixtyfour_WIDTH, sixtyfour_HEIGHT, sixtyfour_DATA);
+
+	greyPutSprite(32+16, 32+16, ONE_WIDTH, ONE_HEIGHT, ONE_DATA);
 
 	while (1){
 		wait(4);
@@ -105,9 +114,9 @@ void real_main(){
 			greyPutSprite(0, 0, ONE_WIDTH, ONE_HEIGHT, ONE_DATA);
 			greyPutSprite(16, 0, two_WIDTH, two_HEIGHT, two_DATA);
 			greyPutSprite(32, 0, four_WIDTH, four_HEIGHT, four_DATA);
-			greyPutSprite(0, 8, sixteen_WIDTH, sixteen_HEIGHT, sixteen_DATA);
-			greyPutSprite(16, 8, thirtytwo_WIDTH, thirtytwo_HEIGHT, thirtytwo_DATA);
-			greyPutSprite(32, 8, sixtyfour_WIDTH, sixtyfour_HEIGHT, sixtyfour_DATA);
+			// greyPutSprite(0, 8, sixteen_WIDTH, sixteen_HEIGHT, sixteen_DATA);
+			// greyPutSprite(16, 8, thirtytwo_WIDTH, thirtytwo_HEIGHT, thirtytwo_DATA);
+			// greyPutSprite(32, 8, sixtyfour_WIDTH, sixtyfour_HEIGHT, sixtyfour_DATA);
 		}
 
 	}

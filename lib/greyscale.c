@@ -187,16 +187,16 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		ld a, (END_ROW)
 		ld e, a
 
-		CALL   _LCD_BUSY_QUICK
+		// CALL   _LCD_BUSY_QUICK
 	    LD     A, #0x07           ; set y inc mode
 	    OUT    (0x10), A
 
 		ld a, (START_ROW)
 		rows:
-			CALL   _LCD_BUSY_QUICK
+			// CALL   _LCD_BUSY_QUICK
 			out (0x10), a
 			ld d, a
-		    CALL   _LCD_BUSY_QUICK
+		    // CALL   _LCD_BUSY_QUICK
 		    LD     A, (START_COL)          ; reset col
 		    OUT    (0x10), A
 
@@ -205,7 +205,7 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		    row:
 		    	ld a, (hl)
 		    	inc hl
-		    	CALL   _LCD_BUSY_QUICK
+		    	// CALL   _LCD_BUSY_QUICK
 		    	out (0x11), a
 		    	djnz row
 

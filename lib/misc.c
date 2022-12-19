@@ -53,3 +53,20 @@ void wait(unsigned char x){ // Wait for amount of time (1/8th of sec)
    __endasm;
 }
 #endif
+
+
+
+#ifdef USE_ISQRT
+// int square root
+char isqrt(unsigned int val) {
+    unsigned int temp;
+    unsigned char bshft = 7, b = 0x80, g=0;
+    do {
+        if (val >= (temp = (((g << 1) + b)<<bshft--))) {
+           g += b;
+           val -= temp;
+        }
+    } while (b >>= 1);
+    return g;
+}
+#endif

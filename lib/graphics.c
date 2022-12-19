@@ -35,12 +35,56 @@ void clearBuffer(){
 #endif
 #ifndef NO_USE_SWAP
 // fast enough way to display SCREEN_BUFFER on lcd
+// void swap(){
+//     __asm
+// 	    di
+// 	    ld hl, #SCREEN_BUFFER
+
+// 	    CALL   _LCD_BUSY_QUICK  
+// 	    LD     A, #0x07           ; set y inc moce
+// 	    OUT    (0x10), A
+
+
+// 	    LD     c, #0x80
+
+	    
+// 	YLOOPR:
+// 	    CALL   _LCD_BUSY_QUICK   ; set row
+// 	    LD     A, c
+// 	    OUT    (0x10), A
+
+// 	    CALL   _LCD_BUSY_QUICK
+// 	    LD     A, #0x20          ; reset col
+// 	    OUT    (0x10), A
+
+
+// 	    ld b, #12
+
+
+// 	XLOOPR:
+// 	    CALL   _LCD_BUSY_QUICK
+// 	    ld a, (hl)
+// 	    out (0x11), a
+
+// 	    inc hl
+// 	    djnz XLOOPR
+
+
+
+// 	    inc c
+// 	    ld a, c
+// 	    cp #0xBF
+// 	    jp nz, YLOOPR
+// 	    ei
+//     __endasm;
+    
+// }
 void swap(){
     __asm
 	    di
 	    ld hl, #SCREEN_BUFFER
 
-	    CALL   _LCD_BUSY_QUICK  
+	    // CALL   _LCD_BUSY_QUICK  
 	    LD     A, #0x07           ; set y inc moce
 	    OUT    (0x10), A
 
@@ -49,11 +93,11 @@ void swap(){
 
 	    
 	YLOOPR:
-	    CALL   _LCD_BUSY_QUICK   ; set row
+	    // CALL   _LCD_BUSY_QUICK   ; set row
 	    LD     A, c
 	    OUT    (0x10), A
 
-	    CALL   _LCD_BUSY_QUICK
+	    // CALL   _LCD_BUSY_QUICK
 	    LD     A, #0x20          ; reset col
 	    OUT    (0x10), A
 
@@ -62,7 +106,7 @@ void swap(){
 
 
 	XLOOPR:
-	    CALL   _LCD_BUSY_QUICK
+	    // CALL   _LCD_BUSY_QUICK
 	    ld a, (hl)
 	    out (0x11), a
 
