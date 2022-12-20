@@ -22,16 +22,16 @@
 		* OR wget/curl https://master.dl.sourceforge.net/project/sdcc/sdcc-linux-amd64/4.1.0/sdcc-4.1.0-amd64-unknown-linux2.5.tar.bz2?viasf=1
 	* Extract and install with `tar -xvjf sdcc-4.1.0-* && sudo cp sdcc/bin/* /usr/bin/ && sudo cp -r sdcc/share/* /usr/share/`
 	* Remove the sdcc folder as it is nolonger needed `rm -rf sdcc`
-4. If you are using Ubuntu you need to use the rabbitsign ubuntu versing `rm other_files/rabbitsign && mv other_files/rabbitsign_ubuntu_build other_files/rabbitsign`
+4. If you are using Ubuntu you need to use the rabbitsign ubuntu versing `rm other_files/rabbitsign && mv other_files/rabbitsign_ubuntu_build other_files/rabbitsign && chmod +x other_files/rabbitsign`
 5.  Test it out
 
 ```bash
-sh build_prog.sh examples/helloworld/ helloWorld
+bash build_prog.sh examples/helloworld/ helloWorld
 ```
 or
 
 ```bash
-sh build_app.sh examples/helloworld/ helloWorld
+bash build_app.sh examples/helloworld/ helloWorld
 ```
 
 
