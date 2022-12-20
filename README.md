@@ -15,14 +15,16 @@
 
 ## How to install
 
-1. First im going to assume you are using linux, or at least set up [WSL.](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview)
+1. First im going to assume you are using linux, or at least set up [WSL.](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) Although if you don't want to install anything you can try out github codespaces and skip the clone step, but everytime you build you need to download file.
 2. Clone this repo with: `git clone https://github.com/HeronErin/TiConstructor.git`
 3. Install SDCC version 4.1
 	* Download SDCC version 4.1 from [This Url](https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.1.0/sdcc-4.1.0-amd64-unknown-linux2.5.tar.bz2/download?use_mirror=master&download=&failedmirror=cfhcable.dl.sourceforge.net)
 		* OR wget/curl https://master.dl.sourceforge.net/project/sdcc/sdcc-linux-amd64/4.1.0/sdcc-4.1.0-amd64-unknown-linux2.5.tar.bz2?viasf=1
 	* Extract and install with `tar -xvjf sdcc-4.1.0-* && sudo cp sdcc/bin/* /usr/bin/ && sudo cp -r sdcc/share/* /usr/share/`
+	* Remove the sdcc folder as it is nolonger needed `rm -rf sdcc`
 4. If you are using Ubuntu you need to use the rabbitsign ubuntu versing `rm other_files/rabbitsign && mv other_files/rabbitsign_ubuntu_build other_files/rabbitsign`
 5.  Test it out
+
 ```bash
 sh build_prog.sh examples/helloworld/ helloWorld
 ```
