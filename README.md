@@ -14,16 +14,15 @@
 
 
 ## How to install
-_This is not a step by step guide, you need to do some troubleshooting_
 
-
-1. Download [SDCC version 4.1](https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.1.0/sdcc-4.1.0-amd64-unknown-linux2.5.tar.bz2/download?use_mirror=master&download=&failedmirror=cfhcable.dl.sourceforge.net), other version don't work. Make sure it is installed in a way that you can run `sdcc -v` from any directory on your system.
-2. Git clone this repo
-3. Try to build helloworld to test your environment
-
-## How to build
-Assuming you set up your environment correctly it should be as easy as going to the git repo directory in a terminal and running one of the following commands:
-
+1. First im going to assume you are using linux, or at least set up [WSL.](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview)
+2. Clone this repo with: `git clone https://github.com/HeronErin/TiConstructor.git`
+3. Install SDCC version 4.1
+	* Download SDCC version 4.1 from [This Url](https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.1.0/sdcc-4.1.0-amd64-unknown-linux2.5.tar.bz2/download?use_mirror=master&download=&failedmirror=cfhcable.dl.sourceforge.net)
+		* OR wget/curl https://master.dl.sourceforge.net/project/sdcc/sdcc-linux-amd64/4.1.0/sdcc-4.1.0-amd64-unknown-linux2.5.tar.bz2?viasf=1
+	* Extract and install with `tar -xvjf sdcc-4.1.0-* && sudo cp sdcc/bin/* /usr/bin/ && sudo cp -r sdcc/share/* /usr/share/`
+4. If you are using Ubuntu you need to use the rabbitsign ubuntu versing `rm other_files/rabbitsign && mv other_files/rabbitsign_ubuntu_build other_files/rabbitsign`
+5.  Test it out
 ```bash
 sh build_prog.sh examples/helloworld/ helloWorld
 ```
@@ -33,6 +32,9 @@ or
 sh build_app.sh examples/helloworld/ helloWorld
 ```
 
+
+
+Now that you have a working build system, install tilp (or TI Connect for windows) and send the file to your calc. 
 
 ## How this works
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is not something that was simple to figure out, there is no unified guide to the ti84/ti83+. But here is my explanation of what this toolkit does. SDCC compiles c code to z80 assembly and _assembles_ it into a binary file. Then if you are making a program binpac8x.py will pack it into a program file (.8xp). If you are making an app a buildid is generated for you, my script generates a custom header for you, and rabbitsign will sign it with the freeware key and converts it to an app file (.8xk). But thanks to the work of me and the giants whose shoulders I stand on, that is all abstracted away from you with a single line build command. 
