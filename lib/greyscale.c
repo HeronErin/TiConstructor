@@ -210,6 +210,8 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 			#ifndef NO_MICRO_WAIT
 			push ix // waste time
 			pop ix
+			nop
+			nop
 			#endif
 
 
