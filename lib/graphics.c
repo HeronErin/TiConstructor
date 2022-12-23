@@ -1,7 +1,35 @@
 #pragma once
 // SCREEN_BUFFER is the temp ram where you draw to 
 
-#define SCREEN_BUFFER plotSScreen
+#ifndef G_SCREEN_BUFFER
+#define G_SCREEN_BUFFER plotSScreen
+#endif
+
+#ifndef G_COL_START
+#define G_COL_START 0x20
+#endif
+
+#ifndef G_START_ROW
+#define G_START_ROW 0x80
+#endif
+
+#ifndef G_ROW_END
+#define G_ROW_END 0xBF
+#endif
+
+#ifndef G_MAX_ROW
+#define G_MAX_ROW 12
+#endif
+
+#ifndef G_BLOB_END
+#define G_BLOB_END 768
+#endif
+
+#ifndef G_CLEAR_BUFFER_CO
+#define G_CLEAR_BUFFER_CO 48
+#endif
+
+
 #define buff (  (char*)SCREEN_BUFFER  )
 #define _LCD_BUSY_QUICK 0x000B
 #define XMAX 96
@@ -13,10 +41,10 @@ void clearBuffer(){
     __asm
             DI
             LD    (SP_STORE), SP
-            LD    SP, #plotSScreen + 768    ; 768 byte area
+            LD    SP, #G_SCREEN_BUFFER + G_BLOB_END    ; 768 byte area
             LD    HL, #0x0000
-            LD    B, #48        ; PUSH 48*8=384 times, @ 2 bytes a PUSH = 768 bytes
-        Loop:
+            LD    B, #G_CLEAR_BUFFER_CO        ; PUSH 48*8=384 times, @ 2 bytes a PUSH = 768 bytes
+        CLEAR_LOOP:
             PUSH  HL          ; Do multiple PUSHes in the loop to save cycles
             PUSH  HL
             PUSH  HL
@@ -25,7 +53,7 @@ void clearBuffer(){
             PUSH  HL
             PUSH  HL
             PUSH  HL
-            DJNZ  Loop
+            DJNZ  CLEAR_LOOP
 
             LD    SP, (SP_STORE)
             EI
@@ -35,94 +63,51 @@ void clearBuffer(){
 #endif
 #ifndef NO_USE_SWAP
 // fast enough way to display SCREEN_BUFFER on lcd
-// void swap(){
-//     __asm
-// 	    di
-// 	    ld hl, #SCREEN_BUFFER
-
-// 	    CALL   _LCD_BUSY_QUICK  
-// 	    LD     A, #0x07           ; set y inc moce
-// 	    OUT    (0x10), A
-
-
-// 	    LD     c, #0x80
-
-	    
-// 	YLOOPR:
-// 	    CALL   _LCD_BUSY_QUICK   ; set row
-// 	    LD     A, c
-// 	    OUT    (0x10), A
-
-// 	    CALL   _LCD_BUSY_QUICK
-// 	    LD     A, #0x20          ; reset col
-// 	    OUT    (0x10), A
-
-
-// 	    ld b, #12
-
-
-// 	XLOOPR:
-// 	    CALL   _LCD_BUSY_QUICK
-// 	    ld a, (hl)
-// 	    out (0x11), a
-
-// 	    inc hl
-// 	    djnz XLOOPR
-
-
-
-// 	    inc c
-// 	    ld a, c
-// 	    cp #0xBF
-// 	    jp nz, YLOOPR
-// 	    ei
-//     __endasm;
-    
-// }
 void swap(){
     __asm
 	    di
-	    ld hl, #SCREEN_BUFFER
+	    ld hl, #G_SCREEN_BUFFER
 
-	    // CALL   _LCD_BUSY_QUICK  
+	    CALL   _LCD_BUSY_QUICK  
 	    LD     A, #0x07           ; set y inc moce
 	    OUT    (0x10), A
 
 
-	    LD     c, #0x80
+	    LD     c, #G_START_ROW
 
 	    
-	YLOOPR:
-	    // CALL   _LCD_BUSY_QUICK   ; set row
+	YLOOPR__:
+	    CALL   _LCD_BUSY_QUICK   ; set row
 	    LD     A, c
 	    OUT    (0x10), A
 
-	    // CALL   _LCD_BUSY_QUICK
-	    LD     A, #0x20          ; reset col
+	    CALL   _LCD_BUSY_QUICK
+	    LD     A, #G_COL_START          ; reset col
 	    OUT    (0x10), A
 
 
-	    ld b, #12
+	    ld b, #G_MAX_ROW
 
 
-	XLOOPR:
-	    // CALL   _LCD_BUSY_QUICK
+	XLOOPR__:
+	    CALL   _LCD_BUSY_QUICK
 	    ld a, (hl)
 	    out (0x11), a
 
 	    inc hl
-	    djnz XLOOPR
+	    djnz XLOOPR__
 
 
 
 	    inc c
 	    ld a, c
-	    cp #0xBF
-	    jp nz, YLOOPR
+	    cp #G_ROW_END
+	    jp nz, YLOOPR__
 	    ei
     __endasm;
     
 }
+
 #endif
 
 #ifdef USE_LINE
@@ -196,7 +181,7 @@ void line(char x, char y, char x2, char y2) __naked{
 			srl e
 			srl e
 			add hl,de
-			ld de,#SCREEN_BUFFER
+			ld de,#G_SCREEN_BUFFER
 			add hl,de
 			add a,a
 			ld e,a

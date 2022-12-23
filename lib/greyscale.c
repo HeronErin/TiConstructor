@@ -187,16 +187,42 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		ld a, (END_ROW)
 		ld e, a
 
+		#ifndef NO_MICRO_WAIT
+	    in a, (0x20)
+	    push af
+	   	xor a, a
+	   	out (0x20), a
+	   	#endif
+
 		// CALL   _LCD_BUSY_QUICK
 	    LD     A, #0x07           ; set y inc mode
 	    OUT    (0x10), A
 
+	    #ifndef NO_MICRO_WAIT
+		push bc // waste time
+		pop bc
+		#endif
+
+
+
 		ld a, (START_ROW)
 		rows:
-			// CALL   _LCD_BUSY_QUICK
+			#ifndef NO_MICRO_WAIT
+			push ix // waste time
+			pop ix
+			#endif
+
+
 			out (0x10), a
 			ld d, a
-		    // CALL   _LCD_BUSY_QUICK
+
+			#ifndef NO_MICRO_WAIT
+			push ix // waste time
+			pop ix
+			push bc
+			pop bc
+			#endif
+
 		    LD     A, (START_COL)          ; reset col
 		    OUT    (0x10), A
 
@@ -206,8 +232,18 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 		    	ld a, (hl)
 		    	inc hl
 		    	// CALL   _LCD_BUSY_QUICK
+		    	#ifndef NO_MICRO_WAIT
+				push ix // waste time
+				pop ix
+				push bc
+				pop bc
+				push bc
+				pop bc
+				#endif
+
 		    	out (0x11), a
 		    	djnz row
+
 
 
 
@@ -216,11 +252,20 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 			cp e
 			jp nz, rows
 
+		#ifndef NO_MICRO_WAIT
+		pop af
+		out (0x20), a
+		#endif
+		__endasm;
 
 
+		#ifdef ON_GREY_RENDER
+		ON_GREY_RENDER();
+		#endif
 
+
+	__asm;
 		ret
-
 	__endasm;
 }
 

@@ -5,7 +5,7 @@ if len(sys.argv) != 3:
 	print("Must have 2 arguments! \npython png2sprite.py IMAGE.png [mono or grey]")
 	exit()
 
-GREYSCALE=False if sys.argv[-1].lower() == "mono" else True
+
 name = os.path.basename(sys.argv[1]).split(".")[0]
 
 i = Image.open(sys.argv[1]).convert('L')
@@ -15,7 +15,7 @@ if i.width%8!=0:
 	print(f"WARNING: {i.width} is not a multiple of 8! Assuming size of {upsize}")
 else:
 	upsize -=8
-if GREYSCALE:
+if sys.argv[-1].lower() == "grey":
 
 	light_grey = ["0b"]*(upsize//8)
 	dark_grey = ["0b"]*(upsize//8)
@@ -25,7 +25,7 @@ if GREYSCALE:
 	for y in range(i.height):
 		for mx in range(len(bitcount)):
 			for x in range(8):
-				px = 0
+				px = 255
 				try:
 					px = i.getpixel((x+ (mx*8), y))  
 				except IndexError: pass
@@ -48,7 +48,7 @@ if GREYSCALE:
 	print(f"#define {name}_WIDTH {upsize}/8")
 	print(f"#define {name}_HEIGHT {i.height}")
 	print(f"// greyPutSprite(x, y, {name}_WIDTH, {name}_HEIGHT, {name}_DATA);")
-else:
+elif sys.argv[-1].lower() == "mono":
 	bitcount = [0]*(upsize//8+1)
 	out=["0b"]*(upsize//8+1)
 	for y in range(i.height):
@@ -68,3 +68,23 @@ else:
 	print(f"#define {name}_WIDTH {upsize}/8")
 	print(f"#define {name}_HEIGHT {i.height}")
 	print(f"// fullPutSprite(x, y, {name}_WIDTH, {name}_HEIGHT, {name}_DATA);")
+elif sys.argv[-1].lower() == "monolog":
+	bitcount = 0
+	out="0b"
+	for y in range(i.height):
+		for x in range(upsize):
+			px = 0
+			try:
+				px = i.getpixel((x, y)) 
+			except IndexError: pass
+			num = int(1-round(px/256))
+			# print(mx, bitcount)
+			bitcount+=1
+			out+=str(num)
+			if bitcount%8==0:
+				out+=", 0b"
+	print("const char "+name+"_DATA[] ={" + out[:-4]  + "};")
+	print(f"#define G_MAX_ROW {upsize}/8")
+	print(f"#define G_ROW_END  0x80 + {i.height}")
+	print(f"#define G_SCREEN_BUFFER _{name}_DATA")
+	print("#define NO_USE_CLEAR")
