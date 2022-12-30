@@ -52,6 +52,7 @@
 
 #define some_vars ( animation_values + (4*4*2) +1 )
 #define score_changed  *((char*)some_vars)
+#define moved_flag  *((char*)some_vars+4)
 #include "calibration.c"
 
 
@@ -143,10 +144,11 @@ void animate_board()__naked{
 			ld e, #2
 			jp p, SUB_ANIM
 			add a, #3
+			cp #3
 			jp nc, AFTER_ZERO
 			xor a, a
 			jp AFTER_ZERO
-			
+
 			SUB_ANIM:
 			sub a, #3
 			jp nc, AFTER_ZERO
@@ -211,12 +213,18 @@ void renderBoard(){
 
 				ld a, (ix)
 				add d
+				cp #64-15
+				jp nc, AFTER_X_SET_ANIMATION
 				ld d, a
+				AFTER_X_SET_ANIMATION:
 				inc ix
 
 				ld a, (ix)
 				add e
+				cp #96-15
+				jp nc, AFTER_Y_SET_ANIMATION
 				ld e, a
+				AFTER_Y_SET_ANIMATION:
 				inc ix
 				
 				push	de
@@ -311,9 +319,13 @@ void random_spawn(){
 
 		ld a, r // r is the amount of cycles the calc has been running, great for a fast random(ish) num
 		
-		and a, #1
-		inc a
-		ld b, a  // b = 1 or 2 (amount of tiles to spawn)
+		ld b, #2
+		and a, #3
+		jp z, AFTER_SET
+		dec b
+		AFTER_SET:
+		
+		
 
 
 		ld e, #18
@@ -364,135 +376,78 @@ void random_spawn(){
 	__endasm;
 }
 
-void rotLeft()__naked{
-	__asm
-		push ix
 
 
+void moveAlong(char* (*direction)(char,char), char aoff, char aoff2)
+{
+    for (char slice = 0; slice != 4; ++slice) {
+    	char redoFlag = 0;
+    	TOP:
+    	for (char j = 1; j != 4; j++){
+    		char* v = direction(slice, j);
+    		char* v2 = direction(slice, j-1);
+    		if (*v2 == 0){
+    			if (*v != 0){
+    				// char* av = animation_values + ( ( (int)v-gameData )*2 ) + aoff;
+    				// char* av2 = animation_values + ( ( (int)v2-gameData )*2 ) + aoff;
+    				// *(av) = (*av2)+aoff2;
 
-		ld hl, # animation_values
-		inc hl
-		push hl
-		pop ix
+	    			*v2 = *v;
+	    			*v = 0;
 
-		ld hl, # gameData
+	    			moved_flag = 1;
+	    			goto TOP;
+    			}
+    		
+    		}
+    	}
+    	if (redoFlag == 2) continue ; 
+    	for (char j = 1; j != 4; j++){
+    		char* v = direction(slice, j);
+    		char* v2 = direction(slice, j-1);
+    		if (*v2 != 0){
+    			if (*v == *v2){
+	    			*v2 +=1;
+	    			*v = 0;
+	    			redoFlag = 1;
+	    			moved_flag = 1;
+    			}
+    		
+    		}
+    	}
+    	if (redoFlag == 1){
+    		redoFlag = 2;
+    		goto TOP;
+    	}
 
-		ld c, #4
-		ROW_LOOP_LEFT:
-			
-			push ix
-			push hl
-			ld de, #COL_MOVE_LEFT_MLOOP
-			push de
-
-			ld d, #1
-
-			ld b, #3
-			COL_LOOP_LEFT:
-				ld a, (hl)
-				inc hl
-				
-				inc a
-				dec a
-				jp z, LEFT_COL_END_LOOP
-
-
-				ld e, (hl)
-				cp e
-				jp nz, LEFT_COL_END_LOOP
-
-				inc a
-				dec hl
-				ld (hl), a
-				inc hl
-				xor a, a
-				ld (hl), a
-
-				inc d
-
-				LEFT_COL_END_LOOP:
-				djnz COL_LOOP_LEFT
-				ret
-			
+    	
 
 
-			COL_MOVE_LEFT_MLOOP:
-				pop hl
-				pop ix
-				push ix
-				push hl
-				
-
-				ld b, #3
-				COL_MOVE_LEFT_LOOP:
-
-					ld a, (hl)
-					inc hl
-
-					inc a
-					dec a
-					jp nz, COL_MOVE_LEFT_END_LOOP
-
-					ld e, (hl)
-					inc e
-					dec e
-					jp z, COL_MOVE_LEFT_END_LOOP
-
-					xor a, a
-					ld (hl), a
-					dec hl
-					ld (hl), e
-					
-					// ld a, 2(ix)
-					ld a, #-15
-					// add a, #15
-					ld (ix), a
-
-					jp COL_MOVE_LEFT_MLOOP
-
-
-					COL_MOVE_LEFT_END_LOOP:
-					inc ix
-					inc ix
-					djnz COL_MOVE_LEFT_LOOP
-
-				pop hl
-				pop ix
-				push hl
-
-				dec d
-				jp nz, MRG
-
-
-				ld de, #MRG
-				ld b, #3
-
-				push de
-				jp COL_LOOP_LEFT
-
-
-				MRG:
-				pop hl
-				ld de, #4
-				add hl, de
-				ld de, #8
-				add ix, de
-			dec c
-			jp nz, ROW_LOOP_LEFT
-
-
-
-
-
-
-
-
-		pop ix
-		ret
-	__endasm;
-
+    
+    	}
+}
+char* toTheRight(char slice, char element)
+{
+	slice+=slice;
+	slice+=slice;
+    return gameData + slice+element;
 }
 
+char*  toTheLeft(char slice, char element)
+{
+	return toTheRight(slice, 4-1-element);
+}
+
+char*  upwards(char slice, char element)
+{
+	return toTheRight(4 - 1 - element, slice);
+    // return board[N - 1 - element][slice];
+}
+
+char*  downwards(char slice, char element)
+{
+    return toTheRight(element, slice);
+}
 
 
 void real_main(){
@@ -583,12 +538,46 @@ void real_main(){
 		}
 
 
-
+		moved_flag = 0;
 		scanKeys();
 		if (skClear == lastPressedKey())
 			break;
 		else if (skLeft == lastPressedKey()){
-			rotLeft();
+			moveAlong(&toTheRight, 1, 14);
+
+		}
+		else if (skRight == lastPressedKey()){
+			moveAlong(&toTheLeft, 1, -14);
+
+		}
+		else if (skUp == lastPressedKey()){
+			moveAlong(&downwards, 0, 14);
+
+		}
+		else if (skDown == lastPressedKey()){
+			moveAlong(&upwards, 0, -14);
+
+		}
+		else if (sk1 == lastPressedKey()){
+			__asm
+				ld a, #-15
+				ld hl, #animation_values
+				ld (hl), a
+				ld de, #animation_values+1
+				ld bc, #32
+				ldir
+			__endasm;
+		}
+
+		else if (skMode == lastPressedKey()){
+			clearScreen();
+			calibration_loop();
+			clearScreen();
+			clearGreyScaleBuffer();
+
+
+		}
+		if (moved_flag == 1){
 			random_spawn();
 			__asm
 			push ix
@@ -597,14 +586,6 @@ void real_main(){
 			__asm
 			pop ix
 			__endasm;
-		}
-		else if (skMode == lastPressedKey()){
-			clearScreen();
-			calibration_loop();
-			clearScreen();
-			clearGreyScaleBuffer();
-
-
 		}
 
 	}
