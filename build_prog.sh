@@ -13,4 +13,5 @@ sdcc -DRAM_PROG --no-std-crt0 --code-loc 40347 --data-loc 0 --std-sdcc99 -mz80 -
 objcopy -Iihex -Obinary $OUT_NAME.ihx $OUT_NAME.bin
 python $DIRECTORY/other_files/binpac8x.py $OUT_NAME.bin -O $OUT_NAME
 
-rm $OUT_NAME.asm $OUT_NAME.bin $OUT_NAME.ihx $OUT_NAME.lk $OUT_NAME.lst $OUT_NAME.map $OUT_NAME.noi $OUT_NAME.rel $OUT_NAME.sym tios_crt0.rel
+rm $OUT_NAME.bin $OUT_NAME.ihx $OUT_NAME.lk $OUT_NAME.lst $OUT_NAME.map $OUT_NAME.noi $OUT_NAME.rel $OUT_NAME.sym tios_crt0.rel
+# rm $OUT_NAME.asm

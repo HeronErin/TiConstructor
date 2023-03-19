@@ -19,7 +19,7 @@ void main() {
 
 
 
-	char* dataLoc=getOrCreateVar(dataName, 20)+2; // 20 bytes long, add 2 to dataLoc because first 2 bytes if appvar is the length
+	char* dataLoc=getOrCreateVar(dataName, 20)+2; // 20 bytes long, add 2 to dataLoc because first 2 bytes of appvar is the length
 
 	while (1){
 		wait(2);

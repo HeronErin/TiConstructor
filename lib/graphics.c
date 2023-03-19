@@ -30,7 +30,7 @@
 #endif
 
 
-#define buff (  (char*)SCREEN_BUFFER  )
+#define buff (  (char*)G_SCREEN_BUFFER  )
 #define _LCD_BUSY_QUICK 0x000B
 #define XMAX 96
 #define YMAX 64
@@ -111,287 +111,285 @@ void swap(){
 #endif
 
 #ifdef USE_LINE
-// taken from https://www.ticalc.org/pub/83plus/asm/source/routines/dline.zip
+// taken from https://wikiti.brandonw.net/index.php?title=Z80_Routines:Graphic:LineDraw
 // adapted for sdcc, should be quite fast
 void line(char x, char y, char x2, char y2) __naked{
-	x;y;x2;y2;
 	__asm
-		; prep vars
-			pop bc
-			pop de
-			pop hl
-			push hl
-			push de
-			push bc
-			
-			ld c, d
-			ld d, e
-			ld e, c
+	// Argument loader
+		pop bc
+		pop de
+		pop hl
+		push hl
+		push de
+		push bc
 
-			ld c, h
-			ld h, l
-			ld l, c
+		push ix
+		ld ix, #G_SCREEN_BUFFER
+		call DrawLineCompact
+		pop ix
+		ret
 
 
-			di
-			ld (SP_STORE),sp
-			ld a,h
-			cp d
-			jp nc,noswapx
-			ex de,hl
-		noswapx:
-			ld a,h
-			sub d
-			jp nc,posx
-			neg
-		posx:
-			ld b,a
-			ld a,l
-			sub e
-			jp nc,posY
-			neg
-		posY:
-			ld c,a
-			ld a,l
-			ld hl,#-12
-			cp e
-			jp c,lineup
-			ld hl,#12
-		lineup:
-			ld ix,#xbit
-			ld a,b
-			cp c
-			jp nc,xline
-			ld b,c
-			ld c,a
-			ld ix,#ybit
-		xline:
-			push hl
-			ld a,d
-			ld d,#0
-			ld h,d
-			sla e
-			sla e
-			ld l,e
-			add hl,de
-			add hl,de
-			ld e,a
-			and #7 ; %00000111
-			srl e
-			srl e
-			srl e
-			add hl,de
-			ld de,#G_SCREEN_BUFFER
-			add hl,de
-			add a,a
-			ld e,a
-			ld d,#0
-			add ix,de
-			ld e,(ix)
-			ld d,1(ix)
-			push de
-			pop ix
-			pop de
-			ex de,hl
-			ld sp,hl
-			ex de,hl
-			ld d,b
-			ld e,c
-			ld a,d
-			srl a
-			inc b
-			jp (ix)
-		lineret:
 
 
-			ld sp,(SP_STORE)
 
+		; Line drawer
+		; Small and quite fast
+		; by Patai Gergely, thanks
+		DrawLineCompact:		; This routine draws an unclipped line on an IX-pointed screen from (d,e) to (h,l)
+		 ld a,h			; Calculating delta X and swapping points if negative
+		 sub d			; (Lines are always drawn from left to right)
+		 jp nc,DL_okaydx
+		 ex de,hl
+		 neg
+		DL_okaydx:
+		 push af		; Saving DX (it will be popped into DE below)
+		 ld b,#0			; Calculating the position of the first pixel to be drawn
+		 ld c,d			; IX+=D/8+E*12 (actually E*4+E*4+E*4)
+		 srl c
+		 srl c
+		 srl c
+		 add ix,bc
+		 ld c,e
+		 sla c
+		 sla c
+		 add ix,bc
+		 add ix,bc
+		 add ix,bc
+		 ld a,d			; Calculating the starting pixel mask
+		 ld c,#0x80
+		 and a, #7
+		 jp z,DL_okaymask
+		DL_calcmask:
+		 srl c
+		 dec a
+		 jp nz,DL_calcmask
+		DL_okaymask:
+		 ld a,l			; Calculating delta Y and negating the Y increment if necessary
+		 sub e			; This is the last instruction for which we need the original data
+		 ld hl,#12
+		 jp nc,DL_okaydy
+		 ld hl,#-12
+		 neg
+		DL_okaydy:
+		 pop de			; Recalling DX
+		 ld e,a			; D=DX, E=DY
+		 cp d
+		 jp c,#DL_horizontal	; Line is rather horizontal than vertical
+		 ld (SP_STORE),hl	; Modifying y increment
+		 push ix		; //Loading IX to HL for speed; we don't need the old value of HL any more
+		 pop hl
+		 ld b,e			; Pixel counter
+		 inc b
+		 srl a			; Setting up gradient counter (A=E/2)
+		 ld (spriteTemp),sp	; Backing up SP to a safe place
+		 di			; Interrupts are undesirable when we play around with SP :)
+		DL_VLinc:
+		 ld sp, (SP_STORE)		; This value is replaced by +/- 12
+		DL_Vloop:
+		 .db 0x08 //ex af,af'		; Saving A to alternative register
+		 ld a,(hl)
+		 or c			; Writing pixel to current position
+		 ld (hl),a
+		 .db 0x08 // ex af,af'		; Recalling A (faster than push-pop, and there's no need for SP)
+		 add hl,sp
+		 sub d			; Handling gradient
+		 jp nc,DL_VnoSideStep
+		 rrc c			; Rotating mask
+		 jp nc,DL_VnoByte	; Handling byte boundary
+		 inc hl
+		DL_VnoByte:
+		 add a,e
+		DL_VnoSideStep:
+		 djnz DL_Vloop
+		 ld sp,(spriteTemp)
+		 ret
+		DL_horizontal:
+		 ld (spriteTemp),hl	; Modifying y increment
+		 push ix		; //Loading IX to HL for speed; we don't need the old value of HL any more
+		 pop hl
+		 ld b,d			; Pixel counter
+		 inc b
+		 ld a,d			; Setting up gradient counter
+		 srl a
+		 ld (SP_STORE),sp	; Backing up SP to a safe place
+		 di			; Interrupts again...
+		DL_HLinc:
+		 ld sp,(spriteTemp)		; This value is replaced by +/- 12
+		DL_Hloop:
+		 .db 0x08 //ex af,af'		; Saving A to alternative register
+		 ld a,(hl)
+		 or c			; Writing pixel to current position
+		 ld (hl),a
+		 .db 0x08 // ex af,af'		; Recalling A
+		 rrc c			; Rotating mask
+		 jp nc,DL_HnoByte	; Handling byte boundary
+		 inc hl
+		DL_HnoByte:
+		 sub e			; Handling gradient
+		 jp nc,DL_HnoSideStep
+		 add hl,sp
+		 add a,d
+		DL_HnoSideStep:
+		 djnz DL_Hloop
+		 ld sp,(SP_STORE)
+ ret
 
-			ret
-
-		xbit:
-		 .dw drawx0,drawx1,drawx2,drawx3
-		 .dw drawx4,drawx5,drawx6,drawx7
-		ybit:
-		 .dw drawY0,drawY1,drawY2,drawY3
-		 .dw drawY4,drawY5,drawy6,drawy7
-			
-		drawx0:
-			set 7,(hl)
-			add a,e
-			cp d
-		_89qt23:	jp c,_89qt23+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx1
-			jp lineret
-		drawx1:
-			set 6,(hl)
-			add a,e
-			cp d
-		_7342:	jp c,_7342+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx2
-			jp lineret
-		drawx2:
-			set 5,(hl)
-			add a,e
-			cp d
-		_82934:	jp c,_82934+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx3
-			jp lineret
-		drawx3:
-			set 4,(hl)
-			add a,e
-			cp d
-		_8027523:	jp c,_8027523+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx4
-			jp lineret
-		drawx4:
-			set 3,(hl)
-			add a,e
-			cp d
-		_12489:	jp c,_12489+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx5
-			jp lineret
-		drawx5:
-			set 2,(hl)
-			add a,e
-			cp d
-		_8492348:	jp c,_8492348+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx6
-			jp lineret
-		drawx6:
-			set 1,(hl)
-			add a,e
-			cp d
-		_72834:	jp c,_72834+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx7
-			jp lineret
-		drawx7:
-			set 0,(hl)
-			inc hl
-			add a,e
-			cp d
-		_8294:	jp c,#_8294+3+1+1
-			add hl,sp
-			sub d
-			djnz drawx0
-			jp lineret
-
-		drawY0_:
-			inc hl
-			sub d
-			dec b
-			jp z,lineret
-		drawY0:
-			set 7,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawY1_
-			djnz drawY0
-			jp lineret
-		drawY1_:
-			sub d
-			dec b
-			jp z,lineret
-		drawY1:
-			set 6,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawY2_
-			djnz drawY1
-			jp lineret
-		drawY2_:
-			sub d
-			dec b
-			jp z,lineret
-		drawY2:
-			set 5,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawY3_
-			djnz drawY2
-			jp lineret
-		drawY3_:
-			sub d
-			dec b
-			jp z,lineret
-		drawY3:
-			set 4,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawY4_
-			djnz drawY3
-			jp lineret
-		drawY4_:
-			sub d
-			dec b
-			jp z,lineret
-		drawY4:
-			set 3,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawY5_
-			djnz drawY4
-			jp lineret
-		drawY5_:
-			sub d
-			dec b
-			jp z,lineret
-		drawY5:
-			set 2,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawy6_
-			djnz drawY5
-			jp lineret
-		drawy6_:
-			sub d
-			dec b
-			jp z,lineret
-		drawy6:
-			set 1,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawy7_
-			djnz drawy6
-			jp lineret
-		drawy7_:
-			sub d
-			dec b
-			jp z,lineret
-		drawy7:
-			set 0,(hl)
-			add hl,sp
-			add a,e
-			cp d
-			jp nc,drawY0_
-			djnz drawy7
-			jp lineret
-
-			__endasm;
+	__endasm;
 }
 #endif
 
+
+
+//                    e        d            l          h		
+void vertical_line(char x, char start, char height, char not_used)__naked{
+	__asm
+		pop bc
+		pop de
+		pop hl
+		push hl
+		push de
+		push bc
+
+		ld h, l
+		push hl
+
+
+
+		ld b, #0
+		ld c, d
+
+		ld h, b
+		ld l, c
+		add hl, bc
+		ld b, h
+		ld c, l
+		add hl, bc
+		ld b, h
+		ld c, l
+
+		add hl, bc
+		add hl, bc
+
+		ld b, h
+		ld c, l
+
+
+
+
+
+
+		ld a, e // X pos
+		ld hl,#G_SCREEN_BUFFER
+		add hl, bc
+
+		ld d,#0
+		ld e,a
+		srl e
+		srl e
+		srl e
+		add hl,de
+		and a, #0x07
+		ld b,a
+		inc b
+		ld a,#1
+		vertloop1:
+		rrca
+		djnz vertloop1
+		ld c,a
+		
+		pop af
+		ld b,a
+
+		ld e,#12
+		vertloop2:
+		ld a,c
+		or (hl)
+		ld (hl),a
+		add hl,de
+		djnz vertloop2
+		ret
+
+
+
+	__endasm;
+}
+//                           e        d            l          h		
+void vertical_dotted_line(char x, char start, char height, char not_used)__naked{
+	__asm
+		pop bc
+		pop de
+		pop hl
+		push hl
+		push de
+		push bc
+
+		ld h, l
+		push hl
+
+
+
+		ld b, #0
+		ld c, d
+
+		ld h, b
+		ld l, c
+		add hl, bc
+		ld b, h
+		ld c, l
+		add hl, bc
+		ld b, h
+		ld c, l
+
+		add hl, bc
+		add hl, bc
+
+		ld b, h
+		ld c, l
+
+
+
+
+
+
+		ld a, e // X pos
+
+		ld hl,#G_SCREEN_BUFFER
+		add hl, bc
+
+		ld d,#0
+		ld e,a
+		srl e
+		srl e
+		srl e
+		add hl,de
+		and a, #0x07
+		ld b,a
+		inc b
+		ld a,#1
+		_vertloop1:
+		rrca
+		djnz _vertloop1
+		ld c,a
+		
+		pop af
+		rra
+		ld b,a
+
+		ld e,#12
+		_vertloop2:
+		ld a,c
+		or (hl)
+		ld (hl),a
+		add hl,de
+		add hl,de
+		djnz _vertloop2
+		ret
+
+
+
+	__endasm;
+}
 
 
 
@@ -402,7 +400,7 @@ void line(char x, char y, char x2, char y2) __naked{
 #ifdef USE_SET_PIX
 // It ain't fast, and it ain't pretty, but it works
 void setPix(char x, char y){
-	*(char*)((((int)y)* (XMAX/8) )+(x/8)+SCREEN_BUFFER)|=128>>(x%8);
+	*(char*)((((int)y)* (XMAX/8) )+(x/8)+G_SCREEN_BUFFER)|=128>>(x%8);
 }
 #endif
 
