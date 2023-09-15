@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['ramcode_0',['ramCode',['../d4/d49/ti83plus_8h.html#aa1a880ca404c70982f2d63d02dc0ff05',1,'ti83plus.h']]],
+  ['ramcodeend_1',['ramCodeEnd',['../d4/d49/ti83plus_8h.html#a7b62d90bd3d303fc8e692942593b65c7',1,'ti83plus.h']]],
+  ['ramreturndata_2',['ramReturnData',['../d4/d49/ti83plus_8h.html#a0b3fbbc841998319d4adf32cef40fd07',1,'ti83plus.h']]],
+  ['ramstart_3',['ramStart',['../d4/d49/ti83plus_8h.html#a23cb98a626743688acec384922d9a8fa',1,'ti83plus.h']]],
+  ['rawkeyhookactive_4',['rawKeyHookActive',['../d4/d49/ti83plus_8h.html#ae39a7e9693f40439886973cff4b37c1c',1,'ti83plus.h']]],
+  ['rawkeyhookptr_5',['rawKeyHookPtr',['../d4/d49/ti83plus_8h.html#a722e7fb06c73f8942122890adfd3d914',1,'ti83plus.h']]],
+  ['rbr_5fcall_6',['rBR_CALL',['../d4/d49/ti83plus_8h.html#ad161ea5261b01d559a1a7abd2ce180f8',1,'ti83plus.h']]],
+  ['rclflag_7',['rclFlag',['../d4/d49/ti83plus_8h.html#a38948a926215350ea850afcdb6dbc830',1,'ti83plus.h']]],
+  ['rclqueue_8',['rclQueue',['../d4/d49/ti83plus_8h.html#a004b84d7873e5abe9276d9a57bbabbdc',1,'ti83plus.h']]],
+  ['rclqueueend_9',['rclQueueEnd',['../d4/d49/ti83plus_8h.html#a90d67a439302364b65cdb677b84a3108',1,'ti83plus.h']]],
+  ['realmode_10',['realMode',['../d4/d49/ti83plus_8h.html#a756c0607200274394245f04d740ca0db',1,'ti83plus.h']]],
+  ['realobj_11',['RealObj',['../d4/d49/ti83plus_8h.html#ad401c9f1ee207a8b5c595d1fffb7483c',1,'ti83plus.h']]],
+  ['rectmode_12',['rectMode',['../d4/d49/ti83plus_8h.html#a975c609676ef9410fe51175fbf7ae172',1,'ti83plus.h']]],
+  ['regraphhookactive_13',['regraphHookActive',['../d4/d49/ti83plus_8h.html#a7300c5d9e76ecc71f267dc223283bff9',1,'ti83plus.h']]],
+  ['regraphhookptr_14',['regraphHookPtr',['../d4/d49/ti83plus_8h.html#ab3b68cfe2ad79fbee42c438a953ad492',1,'ti83plus.h']]],
+  ['resetonpoweron_15',['resetOnPowerOn',['../d4/d49/ti83plus_8h.html#aaab09d2277fad0a76fcca4f211b95177',1,'ti83plus.h']]],
+  ['retable_16',['reTable',['../d4/d49/ti83plus_8h.html#aa7ad775e4121e670a48c1c971a442a3d',1,'ti83plus.h']]],
+  ['rfindsym_17',['rFINDSYM',['../d4/d49/ti83plus_8h.html#a73f15f30627232db65e66f70cd36087c',1,'ti83plus.h']]],
+  ['rfpadd_18',['rFPADD',['../d4/d49/ti83plus_8h.html#af4ae97acd107fc887e1b31fb0b999b48',1,'ti83plus.h']]],
+  ['rmov9toop1_19',['rMOV9TOOP1',['../d4/d49/ti83plus_8h.html#a8090fa40a8676ce5a3906c5a8b3c3016',1,'ti83plus.h']]],
+  ['rop1toop2_20',['rOP1TOOP2',['../d4/d49/ti83plus_8h.html#a53f1f33a04de04f27775311b6460522d',1,'ti83plus.h']]],
+  ['row_5fconst_21',['ROW_CONST',['../d7/dbc/greyscale_8c.html#a0999f61805fd5db8ec16a027c1db621c',1,'greyscale.c']]],
+  ['row_5fend_5fconst_22',['ROW_END_CONST',['../d7/dbc/greyscale_8c.html#a0997428a77d4eda7188f0dd77a006790',1,'greyscale.c']]],
+  ['rpushrealo1_23',['rPUSHREALO1',['../d4/d49/ti83plus_8h.html#affdca244180f62ad402893647af40d0d',1,'ti83plus.h']]]
+];

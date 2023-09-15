@@ -1,0 +1,73 @@
+\doxysection{lib/interupts.c File Reference}
+\hypertarget{interupts_8c}{}\label{interupts_8c}\index{lib/interupts.c@{lib/interupts.c}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{interupts_8c_a080021f8b22b47e0e515fadb3342b6d8}{\+\_\+\+\_\+hs}}~\#
+\item 
+\#define \mbox{\hyperlink{interupts_8c_a09e68d8e9da5272f666f766a4915875f}{INTRPT\+\_\+\+MASK}}~0b00001011
+\item 
+\#define \mbox{\hyperlink{interupts_8c_a1f71a76a10c4c9dde3696a69083045f0}{basepage}}~0x8584
+\item 
+\#define \mbox{\hyperlink{interupts_8c_a0b5d2bf2b393ff71c20569a0d6ac9994}{SET\+\_\+\+INTERUPTS}}()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{interupts_8c_a541352fa8faca369352a59691f4d7261}{\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+SET\+\_\+\+INTERUPTS}} ()
+\item 
+void \mbox{\hyperlink{interupts_8c_a6186bb2f266a45dadb0c9e5cfcd4b6a2}{\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+copied\+\_\+to\+\_\+position}} () \+\_\+\+\_\+naked
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{interupts_8c_a080021f8b22b47e0e515fadb3342b6d8}\label{interupts_8c_a080021f8b22b47e0e515fadb3342b6d8} 
+\index{interupts.c@{interupts.c}!\_\_hs@{\_\_hs}}
+\index{\_\_hs@{\_\_hs}!interupts.c@{interupts.c}}
+\doxysubsubsection{\texorpdfstring{\_\_hs}{\_\_hs}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+hs~\#}
+
+\Hypertarget{interupts_8c_a1f71a76a10c4c9dde3696a69083045f0}\label{interupts_8c_a1f71a76a10c4c9dde3696a69083045f0} 
+\index{interupts.c@{interupts.c}!basepage@{basepage}}
+\index{basepage@{basepage}!interupts.c@{interupts.c}}
+\doxysubsubsection{\texorpdfstring{basepage}{basepage}}
+{\footnotesize\ttfamily \#define basepage~0x8584}
+
+\Hypertarget{interupts_8c_a09e68d8e9da5272f666f766a4915875f}\label{interupts_8c_a09e68d8e9da5272f666f766a4915875f} 
+\index{interupts.c@{interupts.c}!INTRPT\_MASK@{INTRPT\_MASK}}
+\index{INTRPT\_MASK@{INTRPT\_MASK}!interupts.c@{interupts.c}}
+\doxysubsubsection{\texorpdfstring{INTRPT\_MASK}{INTRPT\_MASK}}
+{\footnotesize\ttfamily \#define INTRPT\+\_\+\+MASK~0b00001011}
+
+\Hypertarget{interupts_8c_a0b5d2bf2b393ff71c20569a0d6ac9994}\label{interupts_8c_a0b5d2bf2b393ff71c20569a0d6ac9994} 
+\index{interupts.c@{interupts.c}!SET\_INTERUPTS@{SET\_INTERUPTS}}
+\index{SET\_INTERUPTS@{SET\_INTERUPTS}!interupts.c@{interupts.c}}
+\doxysubsubsection{\texorpdfstring{SET\_INTERUPTS}{SET\_INTERUPTS}}
+{\footnotesize\ttfamily \#define SET\+\_\+\+INTERUPTS(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \_\_asm\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ld\ de,\ \mbox{\hyperlink{interupts_8c_a080021f8b22b47e0e515fadb3342b6d8}{\_\_hs}}\ \ (ON\_EXIT-\/LoadInterrupt+0x8E2C)\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ push\ de\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \_\_endasm;\ \mbox{\hyperlink{interupts_8c_a541352fa8faca369352a59691f4d7261}{\_\_\_\_\_\_\_\_\_SET\_INTERUPTS}}();\ \_\_asm\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ld\ \ ix,\mbox{\hyperlink{interupts_8c_a080021f8b22b47e0e515fadb3342b6d8}{\_\_hs}}\ 0\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ add\ ix,sp\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \_\_endasm;}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{interupts_8c_a541352fa8faca369352a59691f4d7261}\label{interupts_8c_a541352fa8faca369352a59691f4d7261} 
+\index{interupts.c@{interupts.c}!\_\_\_\_\_\_\_\_\_SET\_INTERUPTS@{\_\_\_\_\_\_\_\_\_SET\_INTERUPTS}}
+\index{\_\_\_\_\_\_\_\_\_SET\_INTERUPTS@{\_\_\_\_\_\_\_\_\_SET\_INTERUPTS}!interupts.c@{interupts.c}}
+\doxysubsubsection{\texorpdfstring{\_\_\_\_\_\_\_\_\_SET\_INTERUPTS()}{\_\_\_\_\_\_\_\_\_SET\_INTERUPTS()}}
+{\footnotesize\ttfamily void \+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+\_\+\+SET\+\_\+\+INTERUPTS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{interupts_8c_a6186bb2f266a45dadb0c9e5cfcd4b6a2}\label{interupts_8c_a6186bb2f266a45dadb0c9e5cfcd4b6a2} 
+\index{interupts.c@{interupts.c}!\_\_\_\_\_copied\_to\_position@{\_\_\_\_\_copied\_to\_position}}
+\index{\_\_\_\_\_copied\_to\_position@{\_\_\_\_\_copied\_to\_position}!interupts.c@{interupts.c}}
+\doxysubsubsection{\texorpdfstring{\_\_\_\_\_copied\_to\_position()}{\_\_\_\_\_copied\_to\_position()}}
+{\footnotesize\ttfamily void \+\_\+\+\_\+\+\_\+\+\_\+\+\_\+copied\+\_\+to\+\_\+position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+

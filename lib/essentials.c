@@ -1,5 +1,11 @@
 #pragma once
-
+/** @file essentials.c
+ *  
+ * This should be #included in all files, it should be small enough for size constrained programs. 
+ * 
+ * 
+ * 
+ */
 
 #ifndef SHOW_WARNINGS
 #pragma disable_warning 59 // disable no return warning
@@ -10,51 +16,89 @@
 
 #include "ti83plus.h"
 
-// this should be included in all files, it should be small enough for size constrained programs.
 
 
-#define aSaveA .db #0x08 // ex af, af' and only takes 4 t-states
 
+/** @{ \name Global omni-present constants
+ */
 
+/** @brief ex af, af'
+ * 
+ * Machine code to swap af and shadow af and only takes 4 t-states, only use in asm  */
+#define aSaveA .db #0x08
+
+/**  @brief Stack pointer temp
+ * 
+ * Used to store the stack pointer in several functions, if you are writing some assembly, feel free to use this.
+ * But not for long-term storage as it is writen to by multiple functions.
+*/
 #define SP_STORE 0x980C
 
+
+/** @brief Also used for storing the stack pointer */
 #define spriteTemp 0x84F3
 
+/** @} */
 
 
+/** @{ \name function macros */
+
+
+/** @brief Clears the screen */
 #define clearScreen() bcall(_ClrLCDFull)
-// bcall for c
+
+
+
+/** @brief Call System routine
+ * 
+ *  Preforms a [bcall](https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work) 
+ *  while in C 
+ *  For most bcall values click [here](https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name),
+ *  or see [TI's system routines document](https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf)*/
 #define bcall(__LABEL__) \
     __asm rst 40 \
     .dw __LABEL__ __endasm
 
-// bcall for asm
+
+
+/** @brief The asm for a bcall
+ */
 #define abcall(__LABEL__) \
     rst 40 \
     .dw __LABEL__
 
+
+/** @brief Get last pressed key 
+ *  
+ * Rrequires scanKeys() with custom interupts */
 #define lastPressedKey() (*(char*)(kbdScanCode))
+
+/** @brief Scan for pressed keys
+ * 
+ *  Manually scan for pressed key, only needed with custom interupts */
 #define scanKeys() bcall(_kdbScan)
 
 
-#define JpOffset(x) ((x)-INTER_START + 0x9999)
+/* @} */
 
 
+/** @{ \name Safe Memory Areas */
 
 
-//----> Safe Memory Areas
-// saferam1 = 768 bytes (APDRAM)
-// saferam2 = 531 bytes (statRAM)
-// saferam3 = 128 bytes (textMem)
-// saferam4 = 66 bytes (OpXs)
-// saferam5 = 10 bytes (iMathPtrs)
-
+/** @brief 768 bytes (APDRAM)*/
 #define saferam1   0x9872
+/** @brief 531 bytes (statRAM)*/
 #define saferam2   0x8A3A
+/** @brief 128 bytes (textMem)*/
 #define saferam3   0x8508
+/** @brief 66 bytes (Op registers, use with caution)*/
 #define saferam4   0x8478
-#define saferamp   0x9872
-#define saferamp2   0x8251
+/** @brief 8 bytes (bootTemp)*/
+#define saferam5   0x8251
+
+
+
+/* @} */
 
 
 
@@ -71,11 +115,7 @@
 
 
 
-
-
-
-
-// switch stuff:
+// switch stuff
 
 
 // makes sure if you use something you have what is depends on, like number if you are using fixed_print

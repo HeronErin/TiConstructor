@@ -1,0 +1,180 @@
+\doxysection{textio.\+c}
+\hypertarget{textio_8c_source}{}\label{textio_8c_source}\index{lib/textio.c@{lib/textio.c}}
+\mbox{\hyperlink{textio_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00017\ \textcolor{keywordtype}{void}\ setPenRow(\textcolor{keywordtype}{char}\ row)\ \_\_naked\{}
+\DoxyCodeLine{00018\ \ \ \ \ row;}
+\DoxyCodeLine{00019\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ push\ hl\ \ \ \ \ ;\ ret\ value}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00029\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ setPenCol(\textcolor{keywordtype}{char}\ col)\ \_\_naked\{}
+\DoxyCodeLine{00032\ \ \ \ \ col;}
+\DoxyCodeLine{00033\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ push\ hl\ \ \ \ \ ;\ ret\ value}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00043\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00044\ \}}
+\DoxyCodeLine{00045\ \textcolor{keywordtype}{void}\ resetPen()\ \_\_naked\{}
+\DoxyCodeLine{00046\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ xor\ a,\ a}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00052\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ just\ prints\ chars\ to\ screen}}
+\DoxyCodeLine{00055\ \textcolor{keywordtype}{void}\ fputs(\textcolor{keywordtype}{char}*\ loc)\ \_\_naked\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ loc;}
+\DoxyCodeLine{00057\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ push\ bc\ \ \ \ \ ;\ ret\ value}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ push\ hl\ \ \ \ \ }
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ the\_char\_loop\_i\_need\_more\_good\_names\_for\_labels:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ ld\ \ a,\ (bc)}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ or\ a,\ a}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ ret\ z}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_VPutMap)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ inc\ bc}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ jr\ the\_char\_loop\_i\_need\_more\_good\_names\_for\_labels}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ \textcolor{comment}{//\ prints\ to\ screen\ while\ also\ quickly\ setting\ cursor\ stuff.\ }}
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ println(\textcolor{keywordtype}{char}*\ loc)\{}
+\DoxyCodeLine{00076\ \ \ \ \ fputs(loc);}
+\DoxyCodeLine{00077\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ ld\ a,\ (\#penRow)}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ ld\ b,\ \#6}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ add\ b}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ xor\ a,\ a}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00085\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00086\ \}}
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{void}\ newline()\ \_\_naked\{}
+\DoxyCodeLine{00088\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ ld\ a,\ (\#penRow)}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ ld\ b,\ \#6}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ add\ b}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ xor\ a,\ a}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00097\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ \textcolor{keywordtype}{void}\ printc(\textcolor{keywordtype}{char}\ ch)\ \_\_naked\{}
+\DoxyCodeLine{00100\ \ \ \ \ ch;}
+\DoxyCodeLine{00101\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ pop\ bc}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ push\ hl\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_VPutMap)}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00111\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#ifdef\ USE\_NUMBER}}
+\DoxyCodeLine{00114\ \textcolor{keywordtype}{void}\ number(\textcolor{keywordtype}{int}\ x)\{}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{if}\ (x<0)\{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ x=0-\/x;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ printc(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00119\ \ \ \ \ \}}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{char}\ out[25];}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ out[i]=x\ \%\ 10\ +\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ i+=1;}
+\DoxyCodeLine{00124\ \ \ \ \ \}\ \textcolor{keywordflow}{while}((x\ /=\ 10)\ >\ 0);}
+\DoxyCodeLine{00125\ \ \ \ \ i-\/-\/;}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordflow}{for}(;i>=0;\ i-\/-\/)\{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ ld\ \ l,\ -\/4\ (ix)}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ ld\ \ h,\ -\/3\ (ix)}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ add\ hl,\ bc}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ ld\ \ a,\ (hl)}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_VPutMap)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#ifdef\ USE\_HEXDUMP}}
+\DoxyCodeLine{00145\ \textcolor{comment}{//\ great\ for\ debuging,\ not\ so\ great\ for\ games}}
+\DoxyCodeLine{00146\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ hexTab[16]\ =\ \{\textcolor{charliteral}{'0'},\ \textcolor{charliteral}{'1'},\ \textcolor{charliteral}{'2'},\ \textcolor{charliteral}{'3'},\ \textcolor{charliteral}{'4'},\ \textcolor{charliteral}{'5'},\ \textcolor{charliteral}{'6'},\ \textcolor{charliteral}{'7'},\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{charliteral}{'8'},\ \textcolor{charliteral}{'9'},\ \textcolor{charliteral}{'A'},\ \textcolor{charliteral}{'B'},\ \textcolor{charliteral}{'C'},\ \textcolor{charliteral}{'D'},\ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'F'},\ \};}
+\DoxyCodeLine{00148\ \textcolor{keywordtype}{void}\ hexdump(\textcolor{keywordtype}{char}\ v)\_\_naked\{}
+\DoxyCodeLine{00149\ \ \ \ \ v;}
+\DoxyCodeLine{00150\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ push\ hl}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ ld\ \ hl,\ \#\_hexTab}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ and\ a,\ \#0xF0}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ ld\ e,\ a}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ ld\ d,\ \#0}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ add\ hl,\ de}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ ld\ a,\ (hl)}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_VPutMap)}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ ld\ \ hl,\ \#\_hexTab}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ and\ a,\ \#0x0F}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ ld\ e,\ a}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ ld\ d,\ \#0}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ add\ hl,\ de}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ ld\ a,\ (hl)}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_VPutMap)}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00184\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00185\ \}}
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

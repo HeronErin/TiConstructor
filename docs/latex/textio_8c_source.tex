@@ -1,0 +1,180 @@
+\doxysection{textio.\+c}
+\hypertarget{textio_8c_source}{}\label{textio_8c_source}\index{lib/textio.c@{lib/textio.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ this\ is\ for\ printing\ c\ string,\ it\ is\ not\ fast,\ but\ shouldn't\ be\ too\ large.\ Feel\ free\ not\ to\ use\ it\ if\ you\ need\ more\ space,\ although\ don't\ expect\ to\ use\ any\ other\ io\ type\ stuff.}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keywordtype}{void}\ setPenRow(\textcolor{keywordtype}{char}\ row)\ \_\_naked\{}
+\DoxyCodeLine{00006\ \ \ \ \ row;}
+\DoxyCodeLine{00007\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ push\ hl\ \ \ \ \ ;\ ret\ value}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00017\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00018\ \}}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{void}\ setPenCol(\textcolor{keywordtype}{char}\ col)\ \_\_naked\{}
+\DoxyCodeLine{00020\ \ \ \ \ col;}
+\DoxyCodeLine{00021\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ push\ hl\ \ \ \ \ ;\ ret\ value}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00031\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00032\ \}}
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{void}\ resetPen()\ \_\_naked\{}
+\DoxyCodeLine{00034\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ xor\ a,\ a}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00040\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00041\ \}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ just\ prints\ chars\ to\ screen}}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ fputs(\textcolor{keywordtype}{char}*\ loc)\ \_\_naked\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ loc;}
+\DoxyCodeLine{00045\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ push\ bc\ \ \ \ \ ;\ ret\ value}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ push\ hl\ \ \ \ \ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ the\_char\_loop\_i\_need\_more\_good\_names\_for\_labels:}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ ld\ \ a,\ (bc)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ or\ a,\ a}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ ret\ z}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ abcall(\_VPutMap)}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ inc\ bc}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ jr\ the\_char\_loop\_i\_need\_more\_good\_names\_for\_labels}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00061\ \}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ prints\ to\ screen\ while\ also\ quickly\ setting\ cursor\ stuff.\ }}
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{void}\ println(\textcolor{keywordtype}{char}*\ loc)\{}
+\DoxyCodeLine{00064\ \ \ \ \ fputs(loc);}
+\DoxyCodeLine{00065\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ ld\ a,\ (\#penRow)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ ld\ b,\ \#6}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ add\ b}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ xor\ a,\ a}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00073\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00074\ \}}
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ newline()\ \_\_naked\{}
+\DoxyCodeLine{00076\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ ld\ a,\ (\#penRow)}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ ld\ b,\ \#6}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ add\ b}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ ld\ (\#penRow),\ a}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ xor\ a,\ a}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ ld\ (\#penCol),\ a}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00085\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00086\ \}}
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{void}\ printc(\textcolor{keywordtype}{char}\ ch)\ \_\_naked\{}
+\DoxyCodeLine{00088\ \ \ \ \ ch;}
+\DoxyCodeLine{00089\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ pop\ bc}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ push\ hl\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ abcall(\_VPutMap)}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00099\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00100\ \}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#ifdef\ USE\_NUMBER}}
+\DoxyCodeLine{00102\ \textcolor{keywordtype}{void}\ number(\textcolor{keywordtype}{int}\ x)\{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{if}\ (x<0)\{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ x=0-\/x;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ printc(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{char}\ out[25];}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ out[i]=x\ \%\ 10\ +\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ i+=1;}
+\DoxyCodeLine{00112\ \ \ \ \ \}\ \textcolor{keywordflow}{while}((x\ /=\ 10)\ >\ 0);}
+\DoxyCodeLine{00113\ \ \ \ \ i-\/-\/;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{for}(;i>=0;\ i-\/-\/)\{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ ld\ \ l,\ -\/4\ (ix)}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ ld\ \ h,\ -\/3\ (ix)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ add\ hl,\ bc}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ ld\ \ a,\ (hl)}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ abcall(\_VPutMap)}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#ifdef\ USE\_HEXDUMP}}
+\DoxyCodeLine{00133\ \textcolor{comment}{//\ great\ for\ debuging,\ not\ so\ great\ for\ games}}
+\DoxyCodeLine{00134\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ hexTab[16]\ =\ \{\textcolor{charliteral}{'0'},\ \textcolor{charliteral}{'1'},\ \textcolor{charliteral}{'2'},\ \textcolor{charliteral}{'3'},\ \textcolor{charliteral}{'4'},\ \textcolor{charliteral}{'5'},\ \textcolor{charliteral}{'6'},\ \textcolor{charliteral}{'7'},\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{charliteral}{'8'},\ \textcolor{charliteral}{'9'},\ \textcolor{charliteral}{'A'},\ \textcolor{charliteral}{'B'},\ \textcolor{charliteral}{'C'},\ \textcolor{charliteral}{'D'},\ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'F'},\ \};}
+\DoxyCodeLine{00136\ \textcolor{keywordtype}{void}\ hexdump(\textcolor{keywordtype}{char}\ v)\_\_naked\{}
+\DoxyCodeLine{00137\ \ \ \ \ v;}
+\DoxyCodeLine{00138\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ pop\ hl\ \ \ \ \ \ ;\ Get\ input}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ pop\ bc\ \ \ \ \ \ ;\ and\ perserve}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ push\ hl}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ ld\ \ hl,\ \#\_hexTab}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ and\ a,\ \#0xF0}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ SRL\ a}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ ld\ e,\ a}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ ld\ d,\ \#0}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ add\ hl,\ de}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ ld\ a,\ (hl)}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ abcall(\_VPutMap)}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ ld\ a,\ c}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ ld\ \ hl,\ \#\_hexTab}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ and\ a,\ \#0x0F}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ ld\ e,\ a}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ ld\ d,\ \#0}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ add\ hl,\ de}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ ld\ a,\ (hl)}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ abcall(\_VPutMap)}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{00172\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{00173\ \}}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

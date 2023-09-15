@@ -1,0 +1,134 @@
+\doxysection{lib/graphics.c File Reference}
+\hypertarget{graphics_8c}{}\label{graphics_8c}\index{lib/graphics.c@{lib/graphics.c}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a2ea627d6e756dbfc4694ea0db433ba16}{G\+\_\+\+SCREEN\+\_\+\+BUFFER}}~\mbox{\hyperlink{ti83plus_8h_a03e85ed87ada93a09d613f87cf177087}{plot\+SScreen}}
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a7c25744a0d40ef79f2c4178813c881aa}{G\+\_\+\+COL\+\_\+\+START}}~0x20
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a82649b3deb5716667f718935df8794bc}{G\+\_\+\+START\+\_\+\+ROW}}~0x80
+\item 
+\#define \mbox{\hyperlink{graphics_8c_ac624deeef0a40445144b4eedbee6edb7}{G\+\_\+\+ROW\+\_\+\+END}}~0x\+BF
+\item 
+\#define \mbox{\hyperlink{graphics_8c_ac5f6cb648c8526ce941a28cef7fb6aa1}{G\+\_\+\+MAX\+\_\+\+ROW}}~12
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a98f63375bfe6a6142a95c3a129d19c5f}{G\+\_\+\+BLOB\+\_\+\+END}}~768
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a89a9908aea001386e64d2b2471ffda07}{G\+\_\+\+CLEAR\+\_\+\+BUFFER\+\_\+\+CO}}~48
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a49b4801ec4ecca0932baadffe07d994b}{buff}}~(  (char\texorpdfstring{$\ast$}{*})\mbox{\hyperlink{graphics_8c_a2ea627d6e756dbfc4694ea0db433ba16}{G\+\_\+\+SCREEN\+\_\+\+BUFFER}}  )
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a34ae1178623830a7a8b2c06ad82759be}{\+\_\+\+LCD\+\_\+\+BUSY\+\_\+\+QUICK}}~0x000B
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a0312cb6d6cbc719075d4e5380c387ab3}{XMAX}}~96
+\item 
+\#define \mbox{\hyperlink{graphics_8c_a610d6ad95b18966b70b6845de2a9c56b}{YMAX}}~64
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{graphics_8c_a20bbd4d45e3f01305dd709f5a9cc9952}{clear\+Buffer}} ()
+\item 
+void \mbox{\hyperlink{graphics_8c_a07bca8cc0cfca0e80cac16305cac9f13}{swap}} ()
+\item 
+void \mbox{\hyperlink{graphics_8c_abb95569c1cc36c678574d4ee8486ef65}{vertical\+\_\+line}} (char x, char start, char height, char not\+\_\+used) \+\_\+\+\_\+naked
+\item 
+void \mbox{\hyperlink{graphics_8c_a463706520b4764bf2273330592c8d05c}{vertical\+\_\+dotted\+\_\+line}} (char x, char start, char height, char not\+\_\+used) \+\_\+\+\_\+naked
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{graphics_8c_a34ae1178623830a7a8b2c06ad82759be}\label{graphics_8c_a34ae1178623830a7a8b2c06ad82759be} 
+\index{graphics.c@{graphics.c}!\_LCD\_BUSY\_QUICK@{\_LCD\_BUSY\_QUICK}}
+\index{\_LCD\_BUSY\_QUICK@{\_LCD\_BUSY\_QUICK}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{\_LCD\_BUSY\_QUICK}{\_LCD\_BUSY\_QUICK}}
+{\footnotesize\ttfamily \#define \+\_\+\+LCD\+\_\+\+BUSY\+\_\+\+QUICK~0x000B}
+
+\Hypertarget{graphics_8c_a49b4801ec4ecca0932baadffe07d994b}\label{graphics_8c_a49b4801ec4ecca0932baadffe07d994b} 
+\index{graphics.c@{graphics.c}!buff@{buff}}
+\index{buff@{buff}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{buff}{buff}}
+{\footnotesize\ttfamily \#define buff~(  (char\texorpdfstring{$\ast$}{*})\mbox{\hyperlink{graphics_8c_a2ea627d6e756dbfc4694ea0db433ba16}{G\+\_\+\+SCREEN\+\_\+\+BUFFER}}  )}
+
+\Hypertarget{graphics_8c_a98f63375bfe6a6142a95c3a129d19c5f}\label{graphics_8c_a98f63375bfe6a6142a95c3a129d19c5f} 
+\index{graphics.c@{graphics.c}!G\_BLOB\_END@{G\_BLOB\_END}}
+\index{G\_BLOB\_END@{G\_BLOB\_END}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_BLOB\_END}{G\_BLOB\_END}}
+{\footnotesize\ttfamily \#define G\+\_\+\+BLOB\+\_\+\+END~768}
+
+\Hypertarget{graphics_8c_a89a9908aea001386e64d2b2471ffda07}\label{graphics_8c_a89a9908aea001386e64d2b2471ffda07} 
+\index{graphics.c@{graphics.c}!G\_CLEAR\_BUFFER\_CO@{G\_CLEAR\_BUFFER\_CO}}
+\index{G\_CLEAR\_BUFFER\_CO@{G\_CLEAR\_BUFFER\_CO}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_CLEAR\_BUFFER\_CO}{G\_CLEAR\_BUFFER\_CO}}
+{\footnotesize\ttfamily \#define G\+\_\+\+CLEAR\+\_\+\+BUFFER\+\_\+\+CO~48}
+
+\Hypertarget{graphics_8c_a7c25744a0d40ef79f2c4178813c881aa}\label{graphics_8c_a7c25744a0d40ef79f2c4178813c881aa} 
+\index{graphics.c@{graphics.c}!G\_COL\_START@{G\_COL\_START}}
+\index{G\_COL\_START@{G\_COL\_START}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_COL\_START}{G\_COL\_START}}
+{\footnotesize\ttfamily \#define G\+\_\+\+COL\+\_\+\+START~0x20}
+
+\Hypertarget{graphics_8c_ac5f6cb648c8526ce941a28cef7fb6aa1}\label{graphics_8c_ac5f6cb648c8526ce941a28cef7fb6aa1} 
+\index{graphics.c@{graphics.c}!G\_MAX\_ROW@{G\_MAX\_ROW}}
+\index{G\_MAX\_ROW@{G\_MAX\_ROW}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_MAX\_ROW}{G\_MAX\_ROW}}
+{\footnotesize\ttfamily \#define G\+\_\+\+MAX\+\_\+\+ROW~12}
+
+\Hypertarget{graphics_8c_ac624deeef0a40445144b4eedbee6edb7}\label{graphics_8c_ac624deeef0a40445144b4eedbee6edb7} 
+\index{graphics.c@{graphics.c}!G\_ROW\_END@{G\_ROW\_END}}
+\index{G\_ROW\_END@{G\_ROW\_END}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_ROW\_END}{G\_ROW\_END}}
+{\footnotesize\ttfamily \#define G\+\_\+\+ROW\+\_\+\+END~0x\+BF}
+
+\Hypertarget{graphics_8c_a2ea627d6e756dbfc4694ea0db433ba16}\label{graphics_8c_a2ea627d6e756dbfc4694ea0db433ba16} 
+\index{graphics.c@{graphics.c}!G\_SCREEN\_BUFFER@{G\_SCREEN\_BUFFER}}
+\index{G\_SCREEN\_BUFFER@{G\_SCREEN\_BUFFER}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_SCREEN\_BUFFER}{G\_SCREEN\_BUFFER}}
+{\footnotesize\ttfamily \#define G\+\_\+\+SCREEN\+\_\+\+BUFFER~\mbox{\hyperlink{ti83plus_8h_a03e85ed87ada93a09d613f87cf177087}{plot\+SScreen}}}
+
+\Hypertarget{graphics_8c_a82649b3deb5716667f718935df8794bc}\label{graphics_8c_a82649b3deb5716667f718935df8794bc} 
+\index{graphics.c@{graphics.c}!G\_START\_ROW@{G\_START\_ROW}}
+\index{G\_START\_ROW@{G\_START\_ROW}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{G\_START\_ROW}{G\_START\_ROW}}
+{\footnotesize\ttfamily \#define G\+\_\+\+START\+\_\+\+ROW~0x80}
+
+\Hypertarget{graphics_8c_a0312cb6d6cbc719075d4e5380c387ab3}\label{graphics_8c_a0312cb6d6cbc719075d4e5380c387ab3} 
+\index{graphics.c@{graphics.c}!XMAX@{XMAX}}
+\index{XMAX@{XMAX}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{XMAX}{XMAX}}
+{\footnotesize\ttfamily \#define XMAX~96}
+
+\Hypertarget{graphics_8c_a610d6ad95b18966b70b6845de2a9c56b}\label{graphics_8c_a610d6ad95b18966b70b6845de2a9c56b} 
+\index{graphics.c@{graphics.c}!YMAX@{YMAX}}
+\index{YMAX@{YMAX}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{YMAX}{YMAX}}
+{\footnotesize\ttfamily \#define YMAX~64}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{graphics_8c_a20bbd4d45e3f01305dd709f5a9cc9952}\label{graphics_8c_a20bbd4d45e3f01305dd709f5a9cc9952} 
+\index{graphics.c@{graphics.c}!clearBuffer@{clearBuffer}}
+\index{clearBuffer@{clearBuffer}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{clearBuffer()}{clearBuffer()}}
+{\footnotesize\ttfamily void clear\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{graphics_8c_a07bca8cc0cfca0e80cac16305cac9f13}\label{graphics_8c_a07bca8cc0cfca0e80cac16305cac9f13} 
+\index{graphics.c@{graphics.c}!swap@{swap}}
+\index{swap@{swap}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{swap()}{swap()}}
+{\footnotesize\ttfamily void swap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{graphics_8c_a463706520b4764bf2273330592c8d05c}\label{graphics_8c_a463706520b4764bf2273330592c8d05c} 
+\index{graphics.c@{graphics.c}!vertical\_dotted\_line@{vertical\_dotted\_line}}
+\index{vertical\_dotted\_line@{vertical\_dotted\_line}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{vertical\_dotted\_line()}{vertical\_dotted\_line()}}
+{\footnotesize\ttfamily void vertical\+\_\+dotted\+\_\+line (\begin{DoxyParamCaption}\item[{char}]{x,  }\item[{char}]{start,  }\item[{char}]{height,  }\item[{char}]{not\+\_\+used }\end{DoxyParamCaption})}
+
+\Hypertarget{graphics_8c_abb95569c1cc36c678574d4ee8486ef65}\label{graphics_8c_abb95569c1cc36c678574d4ee8486ef65} 
+\index{graphics.c@{graphics.c}!vertical\_line@{vertical\_line}}
+\index{vertical\_line@{vertical\_line}!graphics.c@{graphics.c}}
+\doxysubsubsection{\texorpdfstring{vertical\_line()}{vertical\_line()}}
+{\footnotesize\ttfamily void vertical\+\_\+line (\begin{DoxyParamCaption}\item[{char}]{x,  }\item[{char}]{start,  }\item[{char}]{height,  }\item[{char}]{not\+\_\+used }\end{DoxyParamCaption})}
+

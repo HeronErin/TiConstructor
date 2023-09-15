@@ -1,7 +1,19 @@
+/**
+ * @file textio.c
+ * This is for printing c strings, it is not fast, but shouldn't be too large. Feel free not to use it if you need more space, although don't expect to use any other io type stuff
+ */
+
+
+
 #pragma once
-// this is for printing c string, it is not fast, but shouldn't be too large. Feel free not to use it if you need more space, although don't expect to use any other io type stuff.
 
 
+/**
+ *
+ *
+ *
+ *
+ */
 void setPenRow(char row) __naked{
 	row;
 	__asm

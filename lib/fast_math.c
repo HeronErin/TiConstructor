@@ -1,12 +1,36 @@
 #pragma once
 
 #include "textio.c"
-// Faster then fixedpoint.c but more complex and less precise
-// Mostly sourced from https://wikiti.brandonw.net/index.php?title=Category:Z80_Routines
 
-// #define FX(rdtfyhjik) ( (rdtfyhjik) * (1<<8))
+
+/** @file fast_math.c
+ * @brief Fast math operations, and some 16-bit fixed point path
+ * 
+ * Faster then fixedpoint.c but more complex and less precise. Uses 16 bit (int) for fixed point math (8 for decimal and 8 for fraction).
+ * It should be noted that if you are worried about the size of your program, this is quite a large file. 
+ * 
+ * Mostly sourced from https://wikiti.brandonw.net/index.php?title=Category:Z80_Routines
+ * 
+ * <h3> Optional #defines </h3>
+ * 
+ *  + <b>FX_TRIG</b> - Vars: FX_sine_lookup as a fixed point sine lookup table. Functions: FX_sine(), FX_cos(), and FX_tan()
+ * 
+ */
+
+
+/**  @brief Inline compile time fixed point number
+ * 	 @param[R] Number to be converted
+ * 	 @return Fixed point number
+ * 		
+ * 	 This is used to create a fixed point number at compile time, highly <b><i>NOT</i></b> recommended to use at run time, or with anything other than a literal. 
+ */
 #define FX(R) (int)((R) > 0 ? (R)*256 :  0xFFFF-((-(R)) *256)  )
 
+
+/** @brief Fixed point number to char number
+ *  @param[f] Number to be converted
+ *  @return char
+ */
 char FX_floor_int(int f)__naked{
 	__asm
 		pop hl      ; Get input
@@ -17,6 +41,10 @@ char FX_floor_int(int f)__naked{
 		ret
 	__endasm;
 }
+/** @brief Round fixed point number
+ *  @param[f] Number to be rounded
+ *  @return Another fixed point number
+ */
 int FX_floor(int f)__naked{
 	__asm
 		pop de      ; Get input
@@ -29,8 +57,11 @@ int FX_floor(int f)__naked{
 		ret
 	__endasm;
 }
-
-// Gets the square root of a 16-bit intager to a 8 bit char
+ 
+/** @brief Gets the square root of a 16-bit intager to a 8 bit char
+ *  @param[x] A 16-bit INTEGER (<b>NOT</b> fixed point number) 
+ *  @return A rounded char of the sqrt(x) 
+ */ 
 char sqrt_rounded(int x)__naked{
 	__asm
 		pop hl      ; Get input
@@ -45,6 +76,11 @@ char sqrt_rounded(int x)__naked{
 		ret
 	__endasm;
 }
+/** @brief Multiple two 16-bit ints together
+ *  @param[x] A 16-bit int (<b>NOT</b> fixed point number) 
+ *  @param[y] Another 16-bit int (<b>NOT</b> fixed point number) 
+ *  @return A long(32-bit) value of x*y
+ */ 
 long mul_int(int x, int y)__naked{
 	__asm
 		pop hl      ; Get input
@@ -57,6 +93,11 @@ long mul_int(int x, int y)__naked{
 		jp ___mult_de_bc ; Jp instead of call saves time due to ___mult_de_bc having the same output as long
 	__endasm;
 }
+/** @brief Divide two 16-bit ints together
+ *  @param[x] A 16-bit int (<b>NOT</b> fixed point number) 
+ *  @param[y] Another 16-bit int (<b>NOT</b> fixed point number) 
+ *  @return A 16-bit int of x/y
+ */ 
 int div_int(int x, int y)__naked{
 	__asm
 		pop hl      ; Get input
@@ -75,7 +116,11 @@ int div_int(int x, int y)__naked{
 	__endasm;
 }
 
-
+/** @brief Multiple two 16-bit fixed point numbers
+ *  @param[x] A 16-bit fixed point number
+ *  @param[y] Another 16-bit fixed point number
+ *  @return The fixed point result of x*y
+ */ 
 int FX_mul(int x, int y)__naked{
 	__asm
 		pop hl      ; Get input
@@ -134,7 +179,15 @@ int FX_mul(int x, int y)__naked{
 		ret
 	__endasm;
 }
-// About 1800 t-states (+-500)
+
+
+/** @brief Divide two 16-bit fixed point numbers
+ *  @param[x] A 16-bit fixed point number
+ *  @param[y] Another 16-bit fixed point number
+ *  @return The fixed point result of x/y
+ * 
+ *  <small>Takes about 1800 t-states (+-500)</small>
+ */ 
 int FX_div(int x, int y)__naked{
 	__asm
 		pop hl      ; Get input
@@ -205,6 +258,11 @@ int FX_div(int x, int y)__naked{
 		ret
 	__endasm;
 }
+
+/** @brief Take the sqrt of a fixed point number
+ *  @param[x] A 16-bit fixed point number
+ *  @return The fixed point result of sqrt(x)
+ */ 
 int FX_sqrt(int x)__naked{
 	__asm
 		pop hl      ; Get input
@@ -231,7 +289,13 @@ int FX_sqrt(int x)__naked{
 	__endasm;
 }
 
-// https://learn.cemetech.net/index.php?title=Z80:Math_Routines#absHL
+
+/** @brief Take the abs of a fixed point number
+ *  @param[x] A 16-bit fixed point number
+ *  @return The fixed point result of abs(x)
+ * 
+ * <small> Taken from https://learn.cemetech.net/index.php?title=Z80:Math_Routines#absHL </small>
+ */ 
 int FX_abs(int x)__naked{
 	__asm
 			pop de
@@ -250,6 +314,10 @@ int FX_abs(int x)__naked{
 			ret
 	__endasm;
 }
+
+/** @brief Print a fixed point number to the screen
+ *  @param[x] A 16-bit fixed point number
+ */ 
 void FX_number(int x)__naked{
 	__asm
 		pop de
@@ -330,15 +398,14 @@ void FX_number(int x)__naked{
 
 
 
-// ;-------------------------------
-// ;Square Root
-// ;Inputs:
-// ;la = number to be square rooted
-// ;Outputs:
-// ;D  = square root
 
-
-// ONLY CALL FROM ASM
+/** 
+ * @brief <b>Assembly</b> 16-bit Square Root routine
+ * 
+ * <h2> <b> ONLY CALL FROM ASM </b> </h2>
+ * 
+ * <b>la</b> is the 16-bit operand and <b>D</b> is the 8-bit result.
+ */
 void __fast_16_bit_sqrt_asm()__naked{
 	__asm
 
@@ -373,8 +440,14 @@ jrpt:	jr	nc, #jrpt+3
 
 }
 
-// bc by de and places the result in dehl.
-// ONLY CALL FROM ASM
+
+/** 
+ * @brief <b>Assembly</b> 16-bit multiplication routine
+ * 
+ * <h2> <b> ONLY CALL FROM ASM </b> </h2>
+ * 
+ * <b>bc</b> by <b>de</b> and places the result in <b>dehl.</b>
+ */
 void __mult_de_bc()__naked{ 
 	__asm
 		ld	hl, #0
@@ -403,9 +476,16 @@ lrjp:	jr	nc, #lrjp+3
 }
 
 
-// ; IN:	ACIX=dividend, DE=divisor
-// ; OUT:	ACIX=quotient, DE=divisor, HL=remainder, B=0
-// ONLY CALL FROM ASM
+/** 
+ * @brief <b>Assembly</b> 32-bit by 16-bit division routine
+ * 
+ * <h2> <b> ONLY CALL FROM ASM </b> </h2>
+ * 
+ * 
+ * IN:	<b>ACIX</b>=dividend, <b>DE</b>=divisor
+ * OUT:	<b>ACIX</b>=quotient, <b>DE</b>=divisor, <b>HL</b>=remainder, <b>B</b>=0
+ * 
+ */
 void __div_32_by_16()__naked{
 	__asm
 		ld	hl,#0
@@ -433,8 +513,13 @@ void __div_32_by_16()__naked{
 
 
 
-// The following routine divides ac by de and places the quotient in ac and the remainder in hl
-// ONLY CALL FROM ASM
+/** 
+ * @brief <b>Assembly</b> 16-bit division routine
+ * 
+ * <h2> <b> ONLY CALL FROM ASM </b> </h2>
+ * 
+ * This <b>assembly</b> routine divides <b>ac</b> by <b>de</b> and places the quotient in <b>ac</b> and the remainder in <b>hl</b>
+ */
 void __div_ac_de()__naked{
 	__asm
 	ld	hl, #0
@@ -456,20 +541,40 @@ ijyq:	jr	nc, #ijyq+4
 }
 
 
-
+/** @{ \name Fixed point trig functions (requires #define FX_TRIG)
+ */
 #ifdef FX_TRIG
+
+/** @brief Fixed point sine lookup table. Takes up 360 bytes  */
 const int FX_sine_lookup[] =  {4, 13, 22, 31, 40, 48, 57, 66, 74, 83, 91, 100, 108, 116, 124, 131, 139, 146, 154, 161, 167, 174, 181, 187, 193, 198, 204, 209, 214, 219, 223, 228, 232, 235, 238, 242, 244, 247, 249, 251, 252, 254, 255, 255, 255, 255, 255, 255, 254, 252, 251, 249, 247, 244, 242, 238, 235, 232, 228, 223, 219, 214, 209, 204, 198, 193, 187, 181, 174, 167, 161, 154, 146, 139, 131, 124, 116, 108, 100, 91, 83, 74, 66, 57, 48, 40, 31, 22, 13, 4, -4, -13, -22, -31, -40, -48, -57, -66, -74, -83, -91, -100, -108, -116, -124, -131, -139, -146, -154, -161, -167, -174, -181, -187, -193, -198, -204, -209, -214, -219, -223, -228, -232, -235, -238, -242, -244, -247, -249, -251, -252, -254, -255, -255, -255, -255, -255, -255, -254, -252, -251, -249, -247, -244, -242, -238, -235, -232, -228, -223, -219, -214, -209, -204, -198, -193, -187, -181, -174, -167, -161, -154, -146, -139, -131, -124, -116, -108, -100, -91, -83, -74, -66, -57, -48, -40, -31, -22, -13, -4};
 
+/** @brief Fixed point sine operation
+ *  @param[deg] A degree as an INTEGER 
+ *  @return The fixed point sine value
+ */
 int FX_sine(int deg){
 
 	int ret = FX_sine_lookup[(deg%360)/2];
 
 	return ret;
 }
+/** @brief Fixed point cosine operation
+ *  @param[deg] A degree as an INTEGER 
+ *  @return The fixed point cosine value
+ */
 int FX_cos(int deg){
   return FX_sine(deg+90);
 }
+/** @brief Fixed point tangent operation
+ *  @param[deg] A degree as an INTEGER 
+ *  @return The fixed point tangent value
+ */
 int FX_tan(int deg){
   return FX_div(FX_sine(deg), FX_sine(deg+90));
 }
+
 #endif
+
+
+/** @} */
+
