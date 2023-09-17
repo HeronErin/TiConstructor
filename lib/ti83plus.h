@@ -1,10 +1,29 @@
-//TI-83 Plus Include File
+/** @file  ti83plus.h
+ *  @brief TI-83 Plus Include File
+ * 
+ * This is created from the ti83plus.inc which used by many assembly programs and includes essential equates used by the operating system. 
+ * This version is more complete than what TI provides, due to years of research from various programmers throughout the decades.
+ * 
+ * And converted into a .h file from https://wikiti.brandonw.net/index.php?title=83Plus:OS:ti83plus.inc
+ * a lot of comments were striped, so look at the url if your looking for a routine, but still use this for constants
+ * should be C compatible now, if you see any mistakes a PR is welcome.
+ * 
+ * 
+ * 
+ * 
+ */
 
 
-// Converted from https://wikiti.brandonw.net/index.php?title=83Plus:OS:ti83plus.inc
-// a lot of comments were striped, so look at the url if your looking for a routine, but still use this for constants
+/** @snippet ti83plus.h bulk
+ */
 
-// should be C compatible now, if you see any mistakes a PR is welcome
+
+#ifndef DOXYGEN
+
+
+
+
+//! [bulk]
 
 //System Variable Equates
 //------------------------------
@@ -4475,3 +4494,14 @@
 #define E_DF			 F_MS + FPLEN
 #define E_SS			 E_DF + FPLEN
 #define E_MS			 E_SS + FPLEN
+
+
+
+//! [bulk]
+
+
+#endif
+
+#ifdef DOXYGEN
+void _();     // needed to keep doxygen including the file
+#endif

@@ -76,9 +76,188 @@ $(function() {
   <div class="headertitle"><div class="title">essentials.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>This should be #included in all files.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d4/d49/ti83plus_8h_source.html">ti83plus.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Global omni-present constants</div></td></tr>
+<tr class="memitem:a2729ab5166820ef85f4c3a4a50c49c8e" id="r_a2729ab5166820ef85f4c3a4a50c49c8e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4a/essentials_8c.html#a2729ab5166820ef85f4c3a4a50c49c8e">aSaveA</a>&#160;&#160;&#160;.db #0x08</td></tr>
+<tr class="memdesc:a2729ab5166820ef85f4c3a4a50c49c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ex af, af'  <br /></td></tr>
+<tr class="separator:a2729ab5166820ef85f4c3a4a50c49c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f8cba501b7f79c5bb0dad8a633f8f8a" id="r_a3f8cba501b7f79c5bb0dad8a633f8f8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4a/essentials_8c.html#a3f8cba501b7f79c5bb0dad8a633f8f8a">SP_STORE</a>&#160;&#160;&#160;0x980C</td></tr>
+<tr class="memdesc:a3f8cba501b7f79c5bb0dad8a633f8f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack pointer temp.  <br /></td></tr>
+<tr class="separator:a3f8cba501b7f79c5bb0dad8a633f8f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5942c7d60a6c2a59372f8fde03658a" id="r_a6a5942c7d60a6c2a59372f8fde03658a"><td class="memItemLeft" align="right" valign="top"><a id="a6a5942c7d60a6c2a59372f8fde03658a" name="a6a5942c7d60a6c2a59372f8fde03658a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>spriteTemp</b>&#160;&#160;&#160;0x84F3</td></tr>
+<tr class="memdesc:a6a5942c7d60a6c2a59372f8fde03658a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Also used for storing the stack pointer. <br /></td></tr>
+<tr class="separator:a6a5942c7d60a6c2a59372f8fde03658a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">function macros</div></td></tr>
+<tr class="memitem:aceb70c1ed7e11f0863a868704f02214b" id="r_aceb70c1ed7e11f0863a868704f02214b"><td class="memItemLeft" align="right" valign="top"><a id="aceb70c1ed7e11f0863a868704f02214b" name="aceb70c1ed7e11f0863a868704f02214b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>clearScreen</b>()&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(_ClrLCDFull)</td></tr>
+<tr class="memdesc:aceb70c1ed7e11f0863a868704f02214b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the screen. <br /></td></tr>
+<tr class="separator:aceb70c1ed7e11f0863a868704f02214b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68264b1743db602f8233757550b88f09" id="r_a68264b1743db602f8233757550b88f09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(__LABEL__)</td></tr>
+<tr class="memdesc:a68264b1743db602f8233757550b88f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call System routine.  <br /></td></tr>
+<tr class="separator:a68264b1743db602f8233757550b88f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a129499a7680583fc58a699bbb1aca61d" id="r_a129499a7680583fc58a699bbb1aca61d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(__LABEL__)</td></tr>
+<tr class="memdesc:a129499a7680583fc58a699bbb1aca61d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The asm for a bcall.  <br /></td></tr>
+<tr class="separator:a129499a7680583fc58a699bbb1aca61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00779d8b864708d1f7091c47e1e87c64" id="r_a00779d8b864708d1f7091c47e1e87c64"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4a/essentials_8c.html#a00779d8b864708d1f7091c47e1e87c64">lastPressedKey</a>()&#160;&#160;&#160;(*(char*)(kbdScanCode))</td></tr>
+<tr class="memdesc:a00779d8b864708d1f7091c47e1e87c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last pressed key.  <br /></td></tr>
+<tr class="separator:a00779d8b864708d1f7091c47e1e87c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b6c33a910bc2747fbf14cfec775f11c" id="r_a5b6c33a910bc2747fbf14cfec775f11c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d4a/essentials_8c.html#a5b6c33a910bc2747fbf14cfec775f11c">scanKeys</a>()&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(_kdbScan)</td></tr>
+<tr class="memdesc:a5b6c33a910bc2747fbf14cfec775f11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for pressed keys.  <br /></td></tr>
+<tr class="separator:a5b6c33a910bc2747fbf14cfec775f11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Safe Memory Areas</div></td></tr>
+<tr class="memitem:a96109672f0e8545baf4faf9ab4574343" id="r_a96109672f0e8545baf4faf9ab4574343"><td class="memItemLeft" align="right" valign="top"><a id="a96109672f0e8545baf4faf9ab4574343" name="a96109672f0e8545baf4faf9ab4574343"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>saferam1</b>&#160;&#160;&#160;0x9872</td></tr>
+<tr class="memdesc:a96109672f0e8545baf4faf9ab4574343"><td class="mdescLeft">&#160;</td><td class="mdescRight">768 bytes (APDRAM) <br /></td></tr>
+<tr class="separator:a96109672f0e8545baf4faf9ab4574343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac16ec4c70efc5252f43679ed11a348b8" id="r_ac16ec4c70efc5252f43679ed11a348b8"><td class="memItemLeft" align="right" valign="top"><a id="ac16ec4c70efc5252f43679ed11a348b8" name="ac16ec4c70efc5252f43679ed11a348b8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>saferam2</b>&#160;&#160;&#160;0x8A3A</td></tr>
+<tr class="memdesc:ac16ec4c70efc5252f43679ed11a348b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">531 bytes (statRAM) <br /></td></tr>
+<tr class="separator:ac16ec4c70efc5252f43679ed11a348b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaed5ef70437a2d0bbf4aad296521e8d3" id="r_aaed5ef70437a2d0bbf4aad296521e8d3"><td class="memItemLeft" align="right" valign="top"><a id="aaed5ef70437a2d0bbf4aad296521e8d3" name="aaed5ef70437a2d0bbf4aad296521e8d3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>saferam3</b>&#160;&#160;&#160;0x8508</td></tr>
+<tr class="memdesc:aaed5ef70437a2d0bbf4aad296521e8d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">128 bytes (textMem) <br /></td></tr>
+<tr class="separator:aaed5ef70437a2d0bbf4aad296521e8d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a068b742df6def2627d3fa3275f84dc8d" id="r_a068b742df6def2627d3fa3275f84dc8d"><td class="memItemLeft" align="right" valign="top"><a id="a068b742df6def2627d3fa3275f84dc8d" name="a068b742df6def2627d3fa3275f84dc8d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>saferam4</b>&#160;&#160;&#160;0x8478</td></tr>
+<tr class="memdesc:a068b742df6def2627d3fa3275f84dc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">66 bytes (Op registers, use with caution) <br /></td></tr>
+<tr class="separator:a068b742df6def2627d3fa3275f84dc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9099cbf3a5987f95a0f104c9f170cfc9" id="r_a9099cbf3a5987f95a0f104c9f170cfc9"><td class="memItemLeft" align="right" valign="top"><a id="a9099cbf3a5987f95a0f104c9f170cfc9" name="a9099cbf3a5987f95a0f104c9f170cfc9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>saferam5</b>&#160;&#160;&#160;0x8251</td></tr>
+<tr class="memdesc:a9099cbf3a5987f95a0f104c9f170cfc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">8 bytes (bootTemp) <br /></td></tr>
+<tr class="separator:a9099cbf3a5987f95a0f104c9f170cfc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This should be #included in all files, it should be small enough for size constrained programs. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>This should be #included in all files. </p>
+<p>This file #defines all required constants, and loads in "ti83plus.h" for other constantss that are needed. Only defines stuff at compile time, no real function, no extra bytes. </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a129499a7680583fc58a699bbb1aca61d" name="a129499a7680583fc58a699bbb1aca61d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a129499a7680583fc58a699bbb1aca61d">&#9670;&#160;</a></span>abcall</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define abcall</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__LABEL__</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    rst 40 \</div>
+<div class="line">    .dw __LABEL__</div>
+</div><!-- fragment -->
+<p>The asm for a bcall. </p>
+
+</div>
+</div>
+<a id="a2729ab5166820ef85f4c3a4a50c49c8e" name="a2729ab5166820ef85f4c3a4a50c49c8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2729ab5166820ef85f4c3a4a50c49c8e">&#9670;&#160;</a></span>aSaveA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define aSaveA&#160;&#160;&#160;.db #0x08</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ex af, af' </p>
+<p>Machine code to swap af and shadow af and only takes 4 t-states, only use in asm <br  />
+ </p>
+
+</div>
+</div>
+<a id="a68264b1743db602f8233757550b88f09" name="a68264b1743db602f8233757550b88f09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68264b1743db602f8233757550b88f09">&#9670;&#160;</a></span>bcall</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define bcall</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__LABEL__</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    __asm rst 40 \</div>
+<div class="line">    .dw __LABEL__ __endasm</div>
+</div><!-- fragment -->
+<p>Call System routine. </p>
+<p>Preforms a <a href="https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work">bcall</a> while in C For most bcall values click <a href="https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name">here</a>, or see <a href="https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf">TI's system routines document</a> </p>
+
+</div>
+</div>
+<a id="a00779d8b864708d1f7091c47e1e87c64" name="a00779d8b864708d1f7091c47e1e87c64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00779d8b864708d1f7091c47e1e87c64">&#9670;&#160;</a></span>lastPressedKey</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define lastPressedKey</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(*(char*)(kbdScanCode))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get last pressed key. </p>
+<p>Rrequires <a class="el" href="../../d2/d4a/essentials_8c.html#a5b6c33a910bc2747fbf14cfec775f11c" title="Scan for pressed keys.">scanKeys()</a> with custom interupts </p>
+
+</div>
+</div>
+<a id="a5b6c33a910bc2747fbf14cfec775f11c" name="a5b6c33a910bc2747fbf14cfec775f11c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b6c33a910bc2747fbf14cfec775f11c">&#9670;&#160;</a></span>scanKeys</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define scanKeys</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(_kdbScan)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Scan for pressed keys. </p>
+<p>Manually scan for pressed key, only needed with custom interupts </p>
+
+</div>
+</div>
+<a id="a3f8cba501b7f79c5bb0dad8a633f8f8a" name="a3f8cba501b7f79c5bb0dad8a633f8f8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f8cba501b7f79c5bb0dad8a633f8f8a">&#9670;&#160;</a></span>SP_STORE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SP_STORE&#160;&#160;&#160;0x980C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stack pointer temp. </p>
+<p>Used to store the stack pointer in several functions, if you are writing some assembly, feel free to use this. But not for long-term storage as it is writen to by multiple functions. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

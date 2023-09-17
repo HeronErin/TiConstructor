@@ -74,6 +74,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">fast_math.c File Reference</div></div>
 </div><!--header-->
@@ -81,7 +82,14 @@ $(function() {
 
 <p>Fast math operations, and some 16-bit fixed point path.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d2/dba/textio_8c_source.html">textio.c</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a837a137e392ae871a39de8f0757e64ad" id="r_a837a137e392ae871a39de8f0757e64ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d31/fast__math_8c.html#a837a137e392ae871a39de8f0757e64ad">FX</a>(R)&#160;&#160;&#160;(int)((R) &gt; 0 ? (R)*256 :  0xFFFF-((-(R)) *256)  )</td></tr>
+<tr class="memdesc:a837a137e392ae871a39de8f0757e64ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inline compile time fixed point number.  <br /></td></tr>
+<tr class="separator:a837a137e392ae871a39de8f0757e64ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5529a599fa2c1cb7e7323116a86387df" id="r_a5529a599fa2c1cb7e7323116a86387df"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d31/fast__math_8c.html#a5529a599fa2c1cb7e7323116a86387df">FX_floor_int</a> (int f) __naked</td></tr>
@@ -151,7 +159,36 @@ const int&#160;</td><td class="memItemRight" valign="bottom"><b>FX_sine_lookup</
 <ul>
 <li><b>FX_TRIG</b> - Vars: FX_sine_lookup as a fixed point sine lookup table. Functions: <a class="el" href="../../d7/d31/fast__math_8c.html#a45860b312b69da7d3ba4afa0ec9b89d5" title="Fixed point sine operation.">FX_sine()</a>, <a class="el" href="../../d7/d31/fast__math_8c.html#a9f5659631c18d301cb73c7ec7a58b43e" title="Fixed point cosine operation.">FX_cos()</a>, and <a class="el" href="../../d7/d31/fast__math_8c.html#acb214629c138c1a16dd2759e0bcfa2a2" title="Fixed point tangent operation.">FX_tan()</a> </li>
 </ul>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a837a137e392ae871a39de8f0757e64ad" name="a837a137e392ae871a39de8f0757e64ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a837a137e392ae871a39de8f0757e64ad">&#9670;&#160;</a></span>FX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">R</td><td>)</td>
+          <td>&#160;&#160;&#160;(int)((R) &gt; 0 ? (R)*256 :  0xFFFF-((-(R)) *256)  )</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inline compile time fixed point number. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[R]</td><td>Number to be converted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Fixed point number</dd></dl>
+<p>This is used to create a fixed point number at compile time, highly <b><em>NOT</em></b> recommended to use at run time, or with anything other than a literal. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="aca8c524d27be5cfbed4ec3f4c11979ae" name="aca8c524d27be5cfbed4ec3f4c11979ae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aca8c524d27be5cfbed4ec3f4c11979ae">&#9670;&#160;</a></span>__div_32_by_16()</h2>
 

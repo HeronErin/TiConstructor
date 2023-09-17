@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['some_20useful_20resources_0',['Some useful resources',['../d0/d30/md_README.html#autotoc_md3',1,'']]],
-  ['sqrt_5frounded_1',['sqrt_rounded',['../d7/d31/fast__math_8c.html#a596724bfaacd207eb1ee760887a5546a',1,'fast_math.c']]],
-  ['started_2',['How to get started',['../d0/d30/md_README.html#autotoc_md0',1,'']]]
+  ['lastpressedkey_0',['lastPressedKey',['../d2/d4a/essentials_8c.html#a00779d8b864708d1f7091c47e1e87c64',1,'essentials.c']]],
+  ['light_5fgrey_5floc_1',['LIGHT_GREY_LOC',['../d7/dbc/greyscale_8c.html#a422e7cd1a0055b8cac4e90ecafedb1bb',1,'greyscale.c']]]
 ];

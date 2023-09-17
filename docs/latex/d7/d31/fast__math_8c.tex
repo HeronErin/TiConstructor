@@ -5,6 +5,12 @@
 Fast math operations, and some 16-\/bit fixed point path.  
 
 
+{\ttfamily \#include "{}textio.\+c"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{fast__math_8c_a837a137e392ae871a39de8f0757e64ad}{FX}}(R)~(int)((R) $>$ 0 ? (R)\texorpdfstring{$\ast$}{*}256 \+:  0x\+FFFF-\/((-\/(R)) \texorpdfstring{$\ast$}{*}256)  )
+\begin{DoxyCompactList}\small\item\em Inline compile time fixed point number. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -64,6 +70,27 @@ Mostly sourced from \href{https://wikiti.brandonw.net/index.php?title=Category:Z
 \begin{DoxyItemize}
 \item {\bfseries{FX\+\_\+\+TRIG}} -\/ Vars\+: FX\+\_\+sine\+\_\+lookup as a fixed point sine lookup table. Functions\+: \doxylink{fast__math_8c_a45860b312b69da7d3ba4afa0ec9b89d5}{FX\+\_\+sine()}, \doxylink{fast__math_8c_a9f5659631c18d301cb73c7ec7a58b43e}{FX\+\_\+cos()}, and \doxylink{fast__math_8c_acb214629c138c1a16dd2759e0bcfa2a2}{FX\+\_\+tan()} 
 \end{DoxyItemize}
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{fast__math_8c_a837a137e392ae871a39de8f0757e64ad}\label{fast__math_8c_a837a137e392ae871a39de8f0757e64ad} 
+\index{fast\_math.c@{fast\_math.c}!FX@{FX}}
+\index{FX@{FX}!fast\_math.c@{fast\_math.c}}
+\doxysubsubsection{\texorpdfstring{FX}{FX}}
+{\footnotesize\ttfamily \#define FX(\begin{DoxyParamCaption}\item[{}]{R }\end{DoxyParamCaption})~(int)((R) $>$ 0 ? (R)\texorpdfstring{$\ast$}{*}256 \+:  0x\+FFFF-\/((-\/(R)) \texorpdfstring{$\ast$}{*}256)  )}
+
+
+
+Inline compile time fixed point number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}\+R\mbox{]}} & Number to be converted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Fixed point number
+\end{DoxyReturn}
+This is used to create a fixed point number at compile time, highly {\bfseries{{\itshape NOT}}} recommended to use at run time, or with anything other than a literal. 
 
 \doxysubsection{Function Documentation}
 \Hypertarget{fast__math_8c_aca8c524d27be5cfbed4ec3f4c11979ae}\label{fast__math_8c_aca8c524d27be5cfbed4ec3f4c11979ae} 

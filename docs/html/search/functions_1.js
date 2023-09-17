@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['div_5fint_0',['div_int',['../d7/d31/fast__math_8c.html#a66bc0fe0d2a312e16310040a00402d69',1,'fast_math.c']]]
+  ['cleargreyscalebuffer_0',['clearGreyScaleBuffer',['../d7/dbc/greyscale_8c.html#ac5082e0fa1de607c1f6d085366d02591',1,'greyscale.c']]]
 ];

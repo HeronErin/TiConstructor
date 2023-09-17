@@ -1,76 +1,100 @@
 #pragma once
 #define _LCD_BUSY_QUICK 0x000B
 
+/** @file greyscale.c @brief Unlocks greyscale on the calc at the cost of some cpu
+ * 
+* Warnings: This _may_ take up 90% of the cpu time and should be used with cpu turbo setCpuSpeed(3)
+* Look at the example in examples/greyScale
+* Usage:
+*
+* you might want to know that there is an emergency killswitch built in, if you press the on button it will stop the greyscale,
+* but you can disable the killswitch with #define DISABLE_ON_BUTTON_KILL before you include this file
+* 
+* 
+* 
+* Greyscale uses interupts so no need for a swap (don't even try to use swap)
+* First put your image in LIGHT_GREY_LOC and DARK_GREY_LOC, since there is 4 different color options (off, light grey, dark grey, and black)
+* you need need 2 bits per pixel (one in LIGHT_GREY_LOC and the other in DARK_GREY_LOC), both bits are set for black and both are zero for off
+* Use clearGreyScaleBuffer to clear these two buffers quickly
+* 
+* Your first instruction should be clearGreyScaleBuffer() followed by INIT_GREYSCALE()
+* 
+* Next you may need to set your drawing settings (since default values are set in INIT_GREYSCALE)
+* this can be done in C as follows:
+* 						 *((char*)START_ROW) = ROW_CONST;
+* 						 *((char*)START_COL) = COL_START_CONST;
+* 						 
+*						 *((char*)END_ROW) = ROW_END_CONST;
+*						 *((char*)MAX_COL) = DEFAULT_MAX_COL; // you must change your XMAX (or equivalent) along with your DEFAULT_MAX_COL, otherwise things tend to break
+*
+*
+* It is recommended to add/subtrace to/from the default values due to some of them being offseted values (the setting for row 0 is 0x80 and column 0 is 0x20)
+* 
+* Ps. The emulator dosn't work with greyscale well
+* 
+* Also if you use an appvar for greyscale settings use the name "greycfg" and use this structor [0x69, WAIT_TIME, CONTRAST, 0x69] 
+* 0x69 is for integrity checking (Im not immature at all lol)                        see the 2048 in examples/
+*/
 
-// Warnings: This _may_ take up 90% of the cpu time and should be used with cpu turbo (setCpuSpeed(3))
-// Look at the example in examples/greyScale
-// Usage:
+/** @brief Bypass allowing for # in preprocess direcive values */
+#define __hs # 
 
-// you might want to know that there is an emergency killswitch built in, if you press the on button it will stop the grey scale,
-// but you can disable the killswitch with #define DISABLE_ON_BUTTON_KILL before you include this file
+/** @brief Ram location for wait char */
+#define WAIT_LOC 0x85BE  
 
+/** @brief Ram location for constast char */
+#define CONTRAST_LOC (WAIT_LOC+1) 
 
+/** @brief 0 - 0x25, do not set this yourself */
+#define GRAY_CYCLE (CONTRAST_LOC+1) 
 
-// Greyscale uses interupts so no need for a swap (don't even try to use swap)
-// First put your image in LIGHT_GREY_LOC and DARK_GREY_LOC, since there is 4 different color options (off, light grey, dark grey, and black)
-// you need need 2 bits per pixel (one in LIGHT_GREY_LOC and the other in DARK_GREY_LOC), both bits are set for black and both are zero for off
-// Use clearGreyScaleBuffer to clear these two buffers quickly
-
-// Your first instruction should be clearGreyScaleBuffer() followed by INIT_GREYSCALE()
-
-// Next you may to set your drawing settings (since default values are set in INIT_GREYSCALE)
-// this can be done in C as follows:
-//						 *((char*)START_ROW) = ROW_CONST;
-//						 *((char*)START_COL) = COL_START_CONST;
-//						 
-//						 *((char*)END_ROW) = ROW_END_CONST;
-//						 *((char*)MAX_COL) = DEFAULT_MAX_COL; // you must change your XMAX (or equivalent) along with your DEFAULT_MAX_COL, otherwise things tend to break
-//
-//
-// It is recommended to add/subtrace to/from the default values due to some of them being offseted values (the setting for row 0 is 0x80 and column 0 is 0x20)
-
-// Ps. The emulator dosn't work with greyscale well
-
-// Also if you use an appvar for greyscale settings use the name "greycfg" and use this structor [0x69, WAIT_TIME, CONTRAST, 0x69] 
-// 0x69 is for integrity checking (Im not immature at all lol)                        see the 2048 in examples/
+/** @brief Used for greyscale math, do not set this yourself */
+#define GRAY_CYCLE_CARRY (GRAY_CYCLE+1) 
 
 
 
-#define __hs #
+/** @{ \name Greyscale setting ram locations
+ */
 
-#define WAIT_LOC 0x85BE
-#define CONTRAST_LOC (WAIT_LOC+1)
-#define GRAY_CYCLE (CONTRAST_LOC+1) // 0 - 0x25
-#define GRAY_CYCLE_CARRY (GRAY_CYCLE+1)
-
-#define START_ROW (GRAY_CYCLE_CARRY+1)
-#define END_ROW (START_ROW+1)
+/** @brief Ram location whoose value starts at 0x80 and defines what row the greyscale starts at.*/
+#define START_ROW (GRAY_CYCLE_CARRY+1) 
+/** @brief Ram location whoose value starts at 0xBF and defines what row the greyscale ends at.*/
+#define END_ROW (START_ROW+1) 
 
 
 
-// IF YOU CHANGE COL, YOU MUST CHANGE THE XMAX, OTHERWISE THE IMAGE IS MESSED UP
-// #define XMAX (endcol - startcol)*8
-#define START_COL (END_ROW+1)
+/**  @{ \name IF YOU CHANGE COL, YOU MUST CHANGE THE XMAX, OTHERWISE THE IMAGE IS MESSED UP: #define XMAX (endcol - startcol)*8 
+*/
+/** @brief Ram location of what colum the greyscale starts */
+#define START_COL (END_ROW+1) 
+/** @brief Ram location of how many colums to draw */
 #define MAX_COL (START_COL+1)
 
+/** @} */
 
+/** @brief Ram location of where the old contrast of the screen is stored. */
 #define SAVE_CONTRAST 0x9D88
 
+/** @brief Only used when setting the initial MAX_COL */
 #define DEFAULT_MAX_COL 12
 
 
 
-
+/** @brief Only used when setting the initial START_COL */
 #define COL_START_CONST 0x20
+/** @brief Only used when setting the initial START_ROW */
 #define ROW_CONST 0x80
+/** @brief Only used when setting the initial END_ROW */
 #define ROW_END_CONST 0xBF
 
+/** @brief @{ \name Grey scale screen buffer locations */
 
+/** @brief Ram location of where light grey pixels are set */
 #define LIGHT_GREY_LOC plotSScreen
+/** @brief Ram location of where dark grey pixels are set */
 #define DARK_GREY_LOC appBackUpScreen
-// #define LIGHT_GREY_LOC plotSScreen
-// #define DARK_GREY_LOC plotSScreen
 
+/** @} */
 
 #define XMAX 96
 #define YMAX 64
@@ -78,6 +102,8 @@
 
 
 // Don't change anything here, change it after, for example change WAIT_LOC right after INIT_GREYSCALE is called
+
+/** @brief Call this to enable greyscale interupts, <b>change greyscale settings after calling this </b> */
 #define INIT_GREYSCALE() *((char*)GRAY_CYCLE) = 0b01101101 ;\
 						 *((char*)CONTRAST_LOC) = 0x15;\
 						 *((char*)SAVE_CONTRAST) = *((char*)contrast);\
@@ -110,9 +136,10 @@
 		ret\
 	__endasm
 
-// called during interupts
+
+/** @brief Called during interupts, <b>DO NOT CALL YOURSELF</b> */
 void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times per secound (depending on the interupt mask and cpu clock setting) 
-  						 // and the z80 only has ome core
+  						 // and the z80 only has one core
 	scanKeys();
 	__asm
 
@@ -277,7 +304,7 @@ void grey_interupt() __naked{ // Keeps this quick as it may be called 100 times 
 
 #include "interupts.c"
 
-
+/** @brief Quickly clears both LIGHT_GREY_LOC and DARK_GREY_LOC */
 void clearGreyScaleBuffer(){
     __asm
             DI

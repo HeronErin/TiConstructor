@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jpoffset_0',['JpOffset',['../d2/d4a/essentials_8c.html#a0ccd408679332840c8e10fcb68a3a325',1,'essentials.c']]]
+  ['max_5fcol_0',['MAX_COL',['../d7/dbc/greyscale_8c.html#a97e80440b5a5ec2ffc172dead9f8d2ec',1,'greyscale.c']]]
 ];

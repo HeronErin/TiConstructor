@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['getorcreatevar_0',['getOrCreateVar',['../d5/de8/variables_8c.html#afe191947cfd17993fcca9d9101c3895f',1,'variables.c']]],
-  ['grey_5finterupt_1',['grey_interupt',['../d7/dbc/greyscale_8c.html#abbebc026da0bcc62f8667548ed32aa9d',1,'greyscale.c']]]
+  ['mul_5fint_0',['mul_int',['../d7/d31/fast__math_8c.html#a864a6c649cc122b08b911f2065ef02eb',1,'fast_math.c']]]
 ];

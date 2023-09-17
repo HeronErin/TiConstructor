@@ -1,10 +1,9 @@
 #pragma once
 /** @file essentials.c
  *  
- * This should be #included in all files, it should be small enough for size constrained programs. 
+ * @brief This should be #included in all files.
  * 
- * 
- * 
+ * This file #defines all required constants, and loads in "ti83plus.h" for other constantss that are needed. Only defines stuff at compile time, no real function, no extra bytes.
  */
 
 #ifndef SHOW_WARNINGS

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['mul_5fint_0',['mul_int',['../d7/d31/fast__math_8c.html#a864a6c649cc122b08b911f2065ef02eb',1,'fast_math.c']]]
+  ['how_20this_20works_0',['How this works',['../d0/d30/md_README.html#autotoc_md2',1,'']]],
+  ['how_20to_20get_20started_1',['How to get started',['../d0/d30/md_README.html#autotoc_md0',1,'']]],
+  ['how_20to_20install_2',['How to install',['../d0/d30/md_README.html#autotoc_md1',1,'']]]
 ];
