@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['printc_0',['printc',['../d2/dba/textio_8c.html#a8f5c92b67e468af24552b8f68baf7fa8',1,'textio.c']]],
-  ['println_1',['println',['../d2/dba/textio_8c.html#a14055334d5f05def8c67b7c98212ab99',1,'textio.c']]]
+  ['newline_0',['newline',['../d2/dba/textio_8c.html#a7ffed7dceb713fc324f0534bc9152c4b',1,'textio.c']]],
+  ['number_1',['number',['../d2/dba/textio_8c.html#a66a569e51623061dc516f13047a7cd8f',1,'textio.c']]]
 ];

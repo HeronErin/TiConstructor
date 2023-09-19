@@ -51,7 +51,7 @@
 /** @brief Call System routine
  * 
  *  Preforms a [bcall](https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work) 
- *  while in C 
+ *  while in C. <b> And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable </b>
  *  For most bcall values click [here](https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name),
  *  or see [TI's system routines document](https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf)*/
 #define bcall(__LABEL__) \

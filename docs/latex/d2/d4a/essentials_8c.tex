@@ -103,7 +103,7 @@ Machine code to swap af and shadow af and only takes 4 t-\/states, only use in a
 
 Call System routine. 
 
-Preforms a \href{https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work}{\texttt{ bcall}} while in C For most bcall values click \href{https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name}{\texttt{ here}}, or see \href{https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf}{\texttt{ TI\textquotesingle{}s system routines document}} \Hypertarget{essentials_8c_a00779d8b864708d1f7091c47e1e87c64}\label{essentials_8c_a00779d8b864708d1f7091c47e1e87c64} 
+Preforms a \href{https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work}{\texttt{ bcall}} while in C. {\bfseries{ And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable }} For most bcall values click \href{https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name}{\texttt{ here}}, or see \href{https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf}{\texttt{ TI\textquotesingle{}s system routines document}} \Hypertarget{essentials_8c_a00779d8b864708d1f7091c47e1e87c64}\label{essentials_8c_a00779d8b864708d1f7091c47e1e87c64} 
 \index{essentials.c@{essentials.c}!lastPressedKey@{lastPressedKey}}
 \index{lastPressedKey@{lastPressedKey}!essentials.c@{essentials.c}}
 \doxysubsubsection{\texorpdfstring{lastPressedKey}{lastPressedKey}}

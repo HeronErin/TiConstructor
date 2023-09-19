@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['xsclt_0',['XSCLt',['../d4/d49/ti83plus_8h.html#a337ce71ac9d2a484f864c473f3cca22c',1,'ti83plus.h']]]
+  ['useful_20resources_0',['Some useful resources',['../index.html#autotoc_md3',1,'']]],
+  ['userinput_2ec_1',['userinput.c',['../d4/d5f/userinput_8c.html',1,'']]]
 ];

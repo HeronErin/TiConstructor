@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['random_20fun_20facts_0',['Random fun facts',['../d0/d30/md_README.html#autotoc_md4',1,'']]],
-  ['resources_1',['Some useful resources',['../d0/d30/md_README.html#autotoc_md3',1,'']]],
-  ['row_5fconst_2',['ROW_CONST',['../d7/dbc/greyscale_8c.html#a0999f61805fd5db8ec16a027c1db621c',1,'greyscale.c']]],
-  ['row_5fend_5fconst_3',['ROW_END_CONST',['../d7/dbc/greyscale_8c.html#a0997428a77d4eda7188f0dd77a006790',1,'greyscale.c']]]
+  ['neg_5fop1_0',['NEG_OP1',['../d4/d1f/floatmath_8c.html#a2aef176fc4a8689c9067cf6a4868e755',1,'floatmath.c']]],
+  ['newline_1',['newline',['../d2/dba/textio_8c.html#a7ffed7dceb713fc324f0534bc9152c4b',1,'textio.c']]],
+  ['number_2',['number',['../d2/dba/textio_8c.html#a66a569e51623061dc516f13047a7cd8f',1,'textio.c']]]
 ];

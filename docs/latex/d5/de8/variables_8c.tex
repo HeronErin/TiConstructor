@@ -1,211 +1,100 @@
 \doxysection{lib/variables.c File Reference}
 \hypertarget{variables_8c}{}\label{variables_8c}\index{lib/variables.c@{lib/variables.c}}
+
+
+Used for working with calculator variables.  
+
+
 \doxysubsubsection*{Macros}
+\begin{Indent}\textbf{ Adds token to string constant for variable name}\par
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{variables_8c_ad9a41f61cc84f91d2e735626b5b7dff4}{add\+Real\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x00"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ad9a41f61cc84f91d2e735626b5b7dff4}\label{variables_8c_ad9a41f61cc84f91d2e735626b5b7dff4} 
+\#define {\bfseries add\+Real\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x00"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_afffc988454452875305b8194bff4d742}{add\+List\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x01"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_afffc988454452875305b8194bff4d742}\label{variables_8c_afffc988454452875305b8194bff4d742} 
+\#define {\bfseries add\+List\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x01"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ac9ac965ab385cce185f9d2517fd8d38e}{add\+Mat\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x02"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ac9ac965ab385cce185f9d2517fd8d38e}\label{variables_8c_ac9ac965ab385cce185f9d2517fd8d38e} 
+\#define {\bfseries add\+Mat\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x02"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a40f36dcd9bca4f930c5ae4566a7101d0}{add\+Equ\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x03"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a40f36dcd9bca4f930c5ae4566a7101d0}\label{variables_8c_a40f36dcd9bca4f930c5ae4566a7101d0} 
+\#define {\bfseries add\+Equ\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x03"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a7048d163dd32b58ea3480d3fa4fb8450}{add\+Strng\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x04"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a7048d163dd32b58ea3480d3fa4fb8450}\label{variables_8c_a7048d163dd32b58ea3480d3fa4fb8450} 
+\#define {\bfseries add\+Strng\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x04"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a3bef7c3f10a718f67ebe8b267ba2527b}{add\+Prog\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x05"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a3bef7c3f10a718f67ebe8b267ba2527b}\label{variables_8c_a3bef7c3f10a718f67ebe8b267ba2527b} 
+\#define {\bfseries add\+Prog\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x05"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ab920771741b11fb80f61e0c126b73134}{add\+Prot\+Prog\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x06"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ab920771741b11fb80f61e0c126b73134}\label{variables_8c_ab920771741b11fb80f61e0c126b73134} 
+\#define {\bfseries add\+Prot\+Prog\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x06"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a5dd51364f84cef5cb4253f4267ff708d}{add\+Pict\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x07"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a5dd51364f84cef5cb4253f4267ff708d}\label{variables_8c_a5dd51364f84cef5cb4253f4267ff708d} 
+\#define {\bfseries add\+Pict\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x07"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a8c40f2e8f6c9af492c09d1fc7218328c}{add\+GDBObj}}(xxxxxxxxxx)~("{}\textbackslash{}x08"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a8c40f2e8f6c9af492c09d1fc7218328c}\label{variables_8c_a8c40f2e8f6c9af492c09d1fc7218328c} 
+\#define {\bfseries add\+GDBObj}(xxxxxxxxxx)~("{}\textbackslash{}x08"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a3c9f3b8eb3d189060cc418c15af816ba}{add\+Unknown\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x09"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a3c9f3b8eb3d189060cc418c15af816ba}\label{variables_8c_a3c9f3b8eb3d189060cc418c15af816ba} 
+\#define {\bfseries add\+Unknown\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x09"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a6b05ac04bed50071c2bb10e6de4448d7}{add\+Unknown\+Equ\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x0\+A"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a6b05ac04bed50071c2bb10e6de4448d7}\label{variables_8c_a6b05ac04bed50071c2bb10e6de4448d7} 
+\#define {\bfseries add\+Unknown\+Equ\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x0\+A"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ad1e9650ad74671af4349ee70403551ab}{add\+New\+Equ\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x0\+B"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ad1e9650ad74671af4349ee70403551ab}\label{variables_8c_ad1e9650ad74671af4349ee70403551ab} 
+\#define {\bfseries add\+New\+Equ\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x0\+B"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_aea2c124bcd0cdd91a71ad437e610a06a}{add\+Cplx\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x0\+C"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_aea2c124bcd0cdd91a71ad437e610a06a}\label{variables_8c_aea2c124bcd0cdd91a71ad437e610a06a} 
+\#define {\bfseries add\+Cplx\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x0\+C"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a0deea2b87dc7b85dc0fb3b0bb3357240}{add\+CList\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x0\+D"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a0deea2b87dc7b85dc0fb3b0bb3357240}\label{variables_8c_a0deea2b87dc7b85dc0fb3b0bb3357240} 
+\#define {\bfseries add\+CList\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x0\+D"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a7c6b73514f920dbc6ece6ab566fe6f6e}{add\+Undef\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x0\+E"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a7c6b73514f920dbc6ece6ab566fe6f6e}\label{variables_8c_a7c6b73514f920dbc6ece6ab566fe6f6e} 
+\#define {\bfseries add\+Undef\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x0\+E"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a6f58eb97f3f7a57a47d645c3c59fef55}{add\+Window\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x0\+F"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a6f58eb97f3f7a57a47d645c3c59fef55}\label{variables_8c_a6f58eb97f3f7a57a47d645c3c59fef55} 
+\#define {\bfseries add\+Window\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x0\+F"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a6bc1a38e015d53e7546f7ff1980ae85a}{add\+ZSto\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x10"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a6bc1a38e015d53e7546f7ff1980ae85a}\label{variables_8c_a6bc1a38e015d53e7546f7ff1980ae85a} 
+\#define {\bfseries add\+ZSto\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x10"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ac684800371ce525325d67e7653bcb26c}{add\+Tbl\+Rng\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x11"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ac684800371ce525325d67e7653bcb26c}\label{variables_8c_ac684800371ce525325d67e7653bcb26c} 
+\#define {\bfseries add\+Tbl\+Rng\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x11"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ada723dfbf2fecbc612800d2a1a230a94}{add\+LCDObj}}(xxxxxxxxxx)~("{}\textbackslash{}x12"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ada723dfbf2fecbc612800d2a1a230a94}\label{variables_8c_ada723dfbf2fecbc612800d2a1a230a94} 
+\#define {\bfseries add\+LCDObj}(xxxxxxxxxx)~("{}\textbackslash{}x12"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a76dbf685eba840900eafd2fb44bf0b20}{add\+Backup\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x13"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a76dbf685eba840900eafd2fb44bf0b20}\label{variables_8c_a76dbf685eba840900eafd2fb44bf0b20} 
+\#define {\bfseries add\+Backup\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x13"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ad455c801131d3dea0ad9958245fb14cf}{add\+App\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x14"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ad455c801131d3dea0ad9958245fb14cf}\label{variables_8c_ad455c801131d3dea0ad9958245fb14cf} 
+\#define {\bfseries add\+App\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x14"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a7f182127be8e5e909a8df5ba40ea0353}{add\+App\+Var\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x15"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a7f182127be8e5e909a8df5ba40ea0353}\label{variables_8c_a7f182127be8e5e909a8df5ba40ea0353} 
+\#define {\bfseries add\+App\+Var\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x15"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_a43ab7c83430fdfd10a53704e37b1360f}{add\+Temp\+Prog\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x16"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_a43ab7c83430fdfd10a53704e37b1360f}\label{variables_8c_a43ab7c83430fdfd10a53704e37b1360f} 
+\#define {\bfseries add\+Temp\+Prog\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x16"{} xxxxxxxxxx)
 \item 
-\#define \mbox{\hyperlink{variables_8c_ae4f70cea08692b0dae119352b7c143a1}{add\+Group\+Obj}}(xxxxxxxxxx)~("{}\textbackslash{}x17"{} xxxxxxxxxx)
+\Hypertarget{variables_8c_ae4f70cea08692b0dae119352b7c143a1}\label{variables_8c_ae4f70cea08692b0dae119352b7c143a1} 
+\#define {\bfseries add\+Group\+Obj}(xxxxxxxxxx)~("{}\textbackslash{}x17"{} xxxxxxxxxx)
 \end{DoxyCompactItemize}
+\end{Indent}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{variables_8c_afe191947cfd17993fcca9d9101c3895f}{get\+Or\+Create\+Var}} (char \texorpdfstring{$\ast$}{*}name, int size) \+\_\+\+\_\+naked
-\item 
+\begin{DoxyCompactList}\small\item\em Gets a var or creates one a given size. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{variables_8c_a0d3f0d93af7f9eb4419173b24c725343}{archive}} (char \texorpdfstring{$\ast$}{*}name) \+\_\+\+\_\+naked
-\item 
+\begin{DoxyCompactList}\small\item\em Toggles if a var is archived. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{variables_8c_a2f62cc8750ffebff2a9eee2d2f732922}{delete}} (char \texorpdfstring{$\ast$}{*}name) \+\_\+\+\_\+naked
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Delete a var. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\doxysubsection{Macro Definition Documentation}
-\Hypertarget{variables_8c_ad455c801131d3dea0ad9958245fb14cf}\label{variables_8c_ad455c801131d3dea0ad9958245fb14cf} 
-\index{variables.c@{variables.c}!addAppObj@{addAppObj}}
-\index{addAppObj@{addAppObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addAppObj}{addAppObj}}
-{\footnotesize\ttfamily \#define add\+App\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x14"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a7f182127be8e5e909a8df5ba40ea0353}\label{variables_8c_a7f182127be8e5e909a8df5ba40ea0353} 
-\index{variables.c@{variables.c}!addAppVarObj@{addAppVarObj}}
-\index{addAppVarObj@{addAppVarObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addAppVarObj}{addAppVarObj}}
-{\footnotesize\ttfamily \#define add\+App\+Var\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x15"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a76dbf685eba840900eafd2fb44bf0b20}\label{variables_8c_a76dbf685eba840900eafd2fb44bf0b20} 
-\index{variables.c@{variables.c}!addBackupObj@{addBackupObj}}
-\index{addBackupObj@{addBackupObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addBackupObj}{addBackupObj}}
-{\footnotesize\ttfamily \#define add\+Backup\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x13"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a0deea2b87dc7b85dc0fb3b0bb3357240}\label{variables_8c_a0deea2b87dc7b85dc0fb3b0bb3357240} 
-\index{variables.c@{variables.c}!addCListObj@{addCListObj}}
-\index{addCListObj@{addCListObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addCListObj}{addCListObj}}
-{\footnotesize\ttfamily \#define add\+CList\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x0\+D"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_aea2c124bcd0cdd91a71ad437e610a06a}\label{variables_8c_aea2c124bcd0cdd91a71ad437e610a06a} 
-\index{variables.c@{variables.c}!addCplxObj@{addCplxObj}}
-\index{addCplxObj@{addCplxObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addCplxObj}{addCplxObj}}
-{\footnotesize\ttfamily \#define add\+Cplx\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x0\+C"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a40f36dcd9bca4f930c5ae4566a7101d0}\label{variables_8c_a40f36dcd9bca4f930c5ae4566a7101d0} 
-\index{variables.c@{variables.c}!addEquObj@{addEquObj}}
-\index{addEquObj@{addEquObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addEquObj}{addEquObj}}
-{\footnotesize\ttfamily \#define add\+Equ\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x03"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a8c40f2e8f6c9af492c09d1fc7218328c}\label{variables_8c_a8c40f2e8f6c9af492c09d1fc7218328c} 
-\index{variables.c@{variables.c}!addGDBObj@{addGDBObj}}
-\index{addGDBObj@{addGDBObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addGDBObj}{addGDBObj}}
-{\footnotesize\ttfamily \#define add\+GDBObj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x08"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ae4f70cea08692b0dae119352b7c143a1}\label{variables_8c_ae4f70cea08692b0dae119352b7c143a1} 
-\index{variables.c@{variables.c}!addGroupObj@{addGroupObj}}
-\index{addGroupObj@{addGroupObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addGroupObj}{addGroupObj}}
-{\footnotesize\ttfamily \#define add\+Group\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x17"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ada723dfbf2fecbc612800d2a1a230a94}\label{variables_8c_ada723dfbf2fecbc612800d2a1a230a94} 
-\index{variables.c@{variables.c}!addLCDObj@{addLCDObj}}
-\index{addLCDObj@{addLCDObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addLCDObj}{addLCDObj}}
-{\footnotesize\ttfamily \#define add\+LCDObj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x12"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_afffc988454452875305b8194bff4d742}\label{variables_8c_afffc988454452875305b8194bff4d742} 
-\index{variables.c@{variables.c}!addListObj@{addListObj}}
-\index{addListObj@{addListObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addListObj}{addListObj}}
-{\footnotesize\ttfamily \#define add\+List\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x01"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ac9ac965ab385cce185f9d2517fd8d38e}\label{variables_8c_ac9ac965ab385cce185f9d2517fd8d38e} 
-\index{variables.c@{variables.c}!addMatObj@{addMatObj}}
-\index{addMatObj@{addMatObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addMatObj}{addMatObj}}
-{\footnotesize\ttfamily \#define add\+Mat\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x02"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ad1e9650ad74671af4349ee70403551ab}\label{variables_8c_ad1e9650ad74671af4349ee70403551ab} 
-\index{variables.c@{variables.c}!addNewEquObj@{addNewEquObj}}
-\index{addNewEquObj@{addNewEquObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addNewEquObj}{addNewEquObj}}
-{\footnotesize\ttfamily \#define add\+New\+Equ\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x0\+B"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a5dd51364f84cef5cb4253f4267ff708d}\label{variables_8c_a5dd51364f84cef5cb4253f4267ff708d} 
-\index{variables.c@{variables.c}!addPictObj@{addPictObj}}
-\index{addPictObj@{addPictObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addPictObj}{addPictObj}}
-{\footnotesize\ttfamily \#define add\+Pict\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x07"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a3bef7c3f10a718f67ebe8b267ba2527b}\label{variables_8c_a3bef7c3f10a718f67ebe8b267ba2527b} 
-\index{variables.c@{variables.c}!addProgObj@{addProgObj}}
-\index{addProgObj@{addProgObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addProgObj}{addProgObj}}
-{\footnotesize\ttfamily \#define add\+Prog\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x05"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ab920771741b11fb80f61e0c126b73134}\label{variables_8c_ab920771741b11fb80f61e0c126b73134} 
-\index{variables.c@{variables.c}!addProtProgObj@{addProtProgObj}}
-\index{addProtProgObj@{addProtProgObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addProtProgObj}{addProtProgObj}}
-{\footnotesize\ttfamily \#define add\+Prot\+Prog\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x06"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ad9a41f61cc84f91d2e735626b5b7dff4}\label{variables_8c_ad9a41f61cc84f91d2e735626b5b7dff4} 
-\index{variables.c@{variables.c}!addRealObj@{addRealObj}}
-\index{addRealObj@{addRealObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addRealObj}{addRealObj}}
-{\footnotesize\ttfamily \#define add\+Real\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x00"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a7048d163dd32b58ea3480d3fa4fb8450}\label{variables_8c_a7048d163dd32b58ea3480d3fa4fb8450} 
-\index{variables.c@{variables.c}!addStrngObj@{addStrngObj}}
-\index{addStrngObj@{addStrngObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addStrngObj}{addStrngObj}}
-{\footnotesize\ttfamily \#define add\+Strng\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x04"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_ac684800371ce525325d67e7653bcb26c}\label{variables_8c_ac684800371ce525325d67e7653bcb26c} 
-\index{variables.c@{variables.c}!addTblRngObj@{addTblRngObj}}
-\index{addTblRngObj@{addTblRngObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addTblRngObj}{addTblRngObj}}
-{\footnotesize\ttfamily \#define add\+Tbl\+Rng\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x11"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a43ab7c83430fdfd10a53704e37b1360f}\label{variables_8c_a43ab7c83430fdfd10a53704e37b1360f} 
-\index{variables.c@{variables.c}!addTempProgObj@{addTempProgObj}}
-\index{addTempProgObj@{addTempProgObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addTempProgObj}{addTempProgObj}}
-{\footnotesize\ttfamily \#define add\+Temp\+Prog\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x16"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a7c6b73514f920dbc6ece6ab566fe6f6e}\label{variables_8c_a7c6b73514f920dbc6ece6ab566fe6f6e} 
-\index{variables.c@{variables.c}!addUndefObj@{addUndefObj}}
-\index{addUndefObj@{addUndefObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addUndefObj}{addUndefObj}}
-{\footnotesize\ttfamily \#define add\+Undef\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x0\+E"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a6b05ac04bed50071c2bb10e6de4448d7}\label{variables_8c_a6b05ac04bed50071c2bb10e6de4448d7} 
-\index{variables.c@{variables.c}!addUnknownEquObj@{addUnknownEquObj}}
-\index{addUnknownEquObj@{addUnknownEquObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addUnknownEquObj}{addUnknownEquObj}}
-{\footnotesize\ttfamily \#define add\+Unknown\+Equ\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x0\+A"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a3c9f3b8eb3d189060cc418c15af816ba}\label{variables_8c_a3c9f3b8eb3d189060cc418c15af816ba} 
-\index{variables.c@{variables.c}!addUnknownObj@{addUnknownObj}}
-\index{addUnknownObj@{addUnknownObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addUnknownObj}{addUnknownObj}}
-{\footnotesize\ttfamily \#define add\+Unknown\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x09"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a6f58eb97f3f7a57a47d645c3c59fef55}\label{variables_8c_a6f58eb97f3f7a57a47d645c3c59fef55} 
-\index{variables.c@{variables.c}!addWindowObj@{addWindowObj}}
-\index{addWindowObj@{addWindowObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addWindowObj}{addWindowObj}}
-{\footnotesize\ttfamily \#define add\+Window\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x0\+F"{} xxxxxxxxxx)}
-
-\Hypertarget{variables_8c_a6bc1a38e015d53e7546f7ff1980ae85a}\label{variables_8c_a6bc1a38e015d53e7546f7ff1980ae85a} 
-\index{variables.c@{variables.c}!addZStoObj@{addZStoObj}}
-\index{addZStoObj@{addZStoObj}!variables.c@{variables.c}}
-\doxysubsubsection{\texorpdfstring{addZStoObj}{addZStoObj}}
-{\footnotesize\ttfamily \#define add\+ZSto\+Obj(\begin{DoxyParamCaption}\item[{}]{xxxxxxxxxx }\end{DoxyParamCaption})~("{}\textbackslash{}x10"{} xxxxxxxxxx)}
+\doxysubsection{Detailed Description}
+Used for working with calculator variables. 
 
 
 
@@ -216,15 +105,48 @@ void \mbox{\hyperlink{variables_8c_a2f62cc8750ffebff2a9eee2d2f732922}{delete}} (
 \doxysubsubsection{\texorpdfstring{archive()}{archive()}}
 {\footnotesize\ttfamily void archive (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name }\end{DoxyParamCaption})}
 
-\Hypertarget{variables_8c_a2f62cc8750ffebff2a9eee2d2f732922}\label{variables_8c_a2f62cc8750ffebff2a9eee2d2f732922} 
+
+
+Toggles if a var is archived. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}name\mbox{]}} & Name of the var to be archived/archived\\
+\hline
+\end{DoxyParams}
+See\+: \href{https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4FD8}{\texttt{ https\+://wikiti.\+brandonw.\+net/index.\+php?title=83\+Plus\+:\+BCALLs\+:4\+FD8}} \Hypertarget{variables_8c_a2f62cc8750ffebff2a9eee2d2f732922}\label{variables_8c_a2f62cc8750ffebff2a9eee2d2f732922} 
 \index{variables.c@{variables.c}!delete@{delete}}
 \index{delete@{delete}!variables.c@{variables.c}}
 \doxysubsubsection{\texorpdfstring{delete()}{delete()}}
 {\footnotesize\ttfamily void delete (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name }\end{DoxyParamCaption})}
 
+
+
+Delete a var. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}name\mbox{]}} & Name of the var to be removed \\
+\hline
+\end{DoxyParams}
 \Hypertarget{variables_8c_afe191947cfd17993fcca9d9101c3895f}\label{variables_8c_afe191947cfd17993fcca9d9101c3895f} 
 \index{variables.c@{variables.c}!getOrCreateVar@{getOrCreateVar}}
 \index{getOrCreateVar@{getOrCreateVar}!variables.c@{variables.c}}
 \doxysubsubsection{\texorpdfstring{getOrCreateVar()}{getOrCreateVar()}}
 {\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} get\+Or\+Create\+Var (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{int}]{size }\end{DoxyParamCaption})}
 
+
+
+Gets a var or creates one a given size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}name\mbox{]}} & the name of a variable after adding the type to the name (like with add\+App\+Var\+Obj()) \\
+\hline
+{\em \mbox{[}size\mbox{]}} & the size of a variable \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Memory address of the variable
+\end{DoxyReturn}
+I only care about appvars, but delete and archive should work for anything Also float math could be combined with these of you use \+\_\+\+Sto\+Sys\+Tok see\+: \href{https://taricorp.gitlab.io/83pa28d/lesson/day19.html}{\texttt{ https\+://taricorp.\+gitlab.\+io/83pa28d/lesson/day19.\+html}} and \href{https://taricorp.gitlab.io/83pa28d/lesson/day20.html}{\texttt{ https\+://taricorp.\+gitlab.\+io/83pa28d/lesson/day20.\+html}} 

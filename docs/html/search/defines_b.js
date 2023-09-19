@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['row_5fconst_0',['ROW_CONST',['../d7/dbc/greyscale_8c.html#a0999f61805fd5db8ec16a027c1db621c',1,'greyscale.c']]],
-  ['row_5fend_5fconst_1',['ROW_END_CONST',['../d7/dbc/greyscale_8c.html#a0997428a77d4eda7188f0dd77a006790',1,'greyscale.c']]]
+  ['neg_5fop1_0',['NEG_OP1',['../d4/d1f/floatmath_8c.html#a2aef176fc4a8689c9067cf6a4868e755',1,'floatmath.c']]]
 ];

@@ -1,16 +1,47 @@
 \doxysection{lib/userinput.c File Reference}
 \hypertarget{userinput_8c}{}\label{userinput_8c}\index{lib/userinput.c@{lib/userinput.c}}
+
+
+2 useful functions for getting user input  
+
+
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{userinput_8c_adeed93c34ed50c8c4ccc7d0555408013}{Press\+Any\+Key}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x4972)
-\end{DoxyCompactItemize}
-
-
-\doxysubsection{Macro Definition Documentation}
 \Hypertarget{userinput_8c_adeed93c34ed50c8c4ccc7d0555408013}\label{userinput_8c_adeed93c34ed50c8c4ccc7d0555408013} 
-\index{userinput.c@{userinput.c}!PressAnyKey@{PressAnyKey}}
-\index{PressAnyKey@{PressAnyKey}!userinput.c@{userinput.c}}
-\doxysubsubsection{\texorpdfstring{PressAnyKey}{PressAnyKey}}
-{\footnotesize\ttfamily \#define Press\+Any\+Key(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x4972)}
+\#define {\bfseries Press\+Any\+Key}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x4972)
+\begin{DoxyCompactList}\small\item\em Wait for a key to be pressed and return it in the "{}\+A"{} assembly register This is mostly used at the end of a program, bewarned that this(like any bcall) my mess with C vars, see \href{https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4972}{\texttt{ https\+://wikiti.\+brandonw.\+net/index.\+php?title=83\+Plus\+:\+BCALLs\+:4972}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{userinput_8c_a2da36c055d23bb1f20f20bfabbb40661}{get\+Key}} ()
+\begin{DoxyCompactList}\small\item\em {\bfseries{DEPRECATED}} Scan for keypresses and returns the currently pressed key \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+2 useful functions for getting user input 
+
+You don\textquotesingle{}t actually need \doxylink{userinput_8c_a2da36c055d23bb1f20f20bfabbb40661}{get\+Key()} unless custom interupts (like \doxylink{greyscale_8c}{greyscale.\+c}) are used.
+
+\doxysubsubsubsection*{Optional \#defines }
+
+
+\begin{DoxyItemize}
+\item {\bfseries{ USE\+\_\+\+GETKEY}} -\/ enables \doxylink{userinput_8c_a2da36c055d23bb1f20f20bfabbb40661}{get\+Key()} 
+\end{DoxyItemize}
+
+\doxysubsection{Function Documentation}
+\Hypertarget{userinput_8c_a2da36c055d23bb1f20f20bfabbb40661}\label{userinput_8c_a2da36c055d23bb1f20f20bfabbb40661} 
+\index{userinput.c@{userinput.c}!getKey@{getKey}}
+\index{getKey@{getKey}!userinput.c@{userinput.c}}
+\doxysubsubsection{\texorpdfstring{getKey()}{getKey()}}
+{\footnotesize\ttfamily char get\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+{\bfseries{DEPRECATED}} Scan for keypresses and returns the currently pressed key 
+
+\begin{DoxyReturn}{Returns}
+char of the currently pressed key (see\+: \href{https://wikiti.brandonw.net/index.php?title=83Plus:RAM:843F}{\texttt{ https\+://wikiti.\+brandonw.\+net/index.\+php?title=83\+Plus\+:\+RAM\+:843F}})
+\end{DoxyReturn}
+\doxysubsubsubsection*{{\bfseries{DEPRECATED}} You probably do not need this, but if interupts are disable/customized or greyscale is active, this will work for you.}

@@ -1,23 +1,28 @@
 
 
-
-// This library interfaces with the full normal calc float rutines.
-// This is highly accurate but not very flexible with asm programs
-
-// Also quite slow
-
-
-
-
+/** @file floatmath.c @brief Use the built in calculator floating point math
+ * 
+ * 
+ * This library interfaces with the full normal calc float rutines. This is highly accurate but not very flexible with asm programs
+ * Also everything here is realitivly slow compared to intiger or fixed point math. <b> And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable </b>
+ * See: https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html
+ */
 
 
 
 
 
+
+
+
+
+
+
+/** @{ \name floating point stack stuff */
 #define FPS 0x9824
 
+/** @{ \name Only odd op push and pops seem to exist */
 
-// only odd ops seem to exist
 #define PushOP1()bcall(0x43C9)
 #define PushOP5()bcall(0x43C0)
 #define PushOP3()bcall(0x43C3)
@@ -26,10 +31,13 @@
 #define PopOP3()bcall(0x437B)
 #define PopOP1()bcall(0x437E)
 
+/** @} */
+/** @} */
 
 
 
-#define OP1_TO_ANS() bcall(0x4ABF) // saves op1 to ans
+/** @{ \name Stores op1 to variable */
+#define OP1_TO_ANS() bcall(0x4ABF)
 #define Store_Theta() bcall(0x4AC2)
 #define Store_R() bcall(0x4AC5)
 #define Store_Y() bcall(0x4AC8)
@@ -37,40 +45,59 @@
 #define Store_T() bcall(0x4ACE)
 #define Store_X() bcall(0x4AD1)
 
-
-#define MATH_FLOOR() bcall(0x405D) // op1 = floor(op1)
-#define MATH_CEIL() bcall(0x489A) // op1 = ceil(op1)
+/** @} */
 
 
-#define TEN_TO_THE_POWER_OF_OP1() bcall(0x40B7) // 10 ^ (op1) // not sure the use of this but its here
+/** @{ \name Math operations */
 
-#define INC_OP1() bcall(0x4069) // op1 += 1
-#define DEC_OP1() bcall(0x406C) // op1 -= 1
-#define NEG_OP1() bcall(0x408D) // op1 = -op1
-#define DOUBLE_OP1() bcall(0x4066) // op1 *= 2
+/** @brief op1 = floor(op1) */
+#define MATH_FLOOR() bcall(0x405D)
+/** @brief op1 = ceil(op1) */
+#define MATH_CEIL() bcall(0x489A)
+/** @brief 10 ^ (op1) not sure the use of this but its here */
+#define TEN_TO_THE_POWER_OF_OP1() bcall(0x40B7)
+/** @brief op1 += 1 */
+#define INC_OP1() bcall(0x4069)
+/** @brief op1 -= 1 */
+#define DEC_OP1() bcall(0x406C)
+/** @brief op1 = -op1 */
+#define NEG_OP1() bcall(0x408D)
+/** @brief op1 *= 2 */
+#define DOUBLE_OP1() bcall(0x4066)
+/** @brief op1 += op2 */
+#define FP_ADD() bcall(0x4072)
+/** @brief op1 -= op2 */
+#define FP_SUB() bcall(0x406F)
+/** @brief op1 *= op2 */
+#define FP_MULT() bcall(0x4084)
+/** @brief op1 /= op2 */
+#define FP_DIV()  bcall(0x4099)
+/** @brief op1 = op1 * op1 */
+#define SQUARE_OP1() bcall(0x4081)
+/** @brief op1 = op1 * op1 * op1 */
+#define CUBE_OP1() bcall(0x407B)
+/** @brief op1 = sqrt( op1 ) */
+#define SQ_ROOT_OP1() bcall(0x409C)
+/** @brief op1 = 1/op1 */
+#define FP_Recip() bcall(0x4096)
+/** @brief op1 = Pi/180 * op1 may be bigger than 2pi */
+#define DEG_TO_RAD() bcall(0x4075)
 
-#define FP_ADD() bcall(0x4072) // op1 += op2
-#define FP_SUB() bcall(0x406F)// op1 -= op2
+/** @{ \name SUPER SLOW !!!! DON'T USE UNLESS NECESSARY 
+around 150,000 to 200,000 cycles, the base clock is 8 mhz and turbo is 16  */
+/** @brief op1 = tan(op1) */
+#define Tan() bcall(0x40C3)
+/** @brief op1 = Sin( op1 ) */
+#define Sin() bcall(0x40BD)
+/** @brief op1 = cos( op1 ) */
+#define Cos() bcall(0x40C0)
 
-#define FP_MULT() bcall(0x4084) // op1 *= op2
-#define FP_DIV()  bcall(0x4099) // op1 /= op2
-
-#define SQUARE_OP1() bcall(0x4081) // op1 = op1 * op1
-#define CUBE_OP1() bcall(0x407B)   // op1 = op1 * op1 * op1
-
-#define SQ_ROOT_OP1() bcall(0x409C) // op1 = sqrt( op1 )
-
-#define FP_Recip() bcall(0x4096) // op1 = 1/op1
-#define DEG_TO_RAD() bcall(0x4075) // op1 = Pi/180 * op1 // may be bigger than 2pi
-
-// SUPER SLOW !!!! DON'T USE UNLESS NECESSARY 
-// around 150,000 to 200,000 cycles, the base clock is 8 mhz and turbo is 16
-#define Tan() bcall(0x40C3) // op1 = Tan( op1 )
-#define Sin() bcall(0x40BD) // op1 = Sin( op1 )
-#define Cos() bcall(0x40C0) // op1 = cos( op1 )
+/** @} */
+/** @} */
 
 
-// load instructions
+/** @{ \name op(n) load instructions */
+
 #define OP3ToOP4() bcall(0x4114)
 #define OP1ToOP4() bcall(0x4117)
 #define OP2ToOP4() bcall(0x411A)
@@ -93,14 +120,15 @@
 #define OP1ToOP6() bcall(0x4150)
 #define OP1ToOP5() bcall(0x4153)
 #define OP2ToOP1() bcall(0x4156)
-
-
 #define OP2ToOP3() bcall(0x416E);
 #define OP4ToOP3() bcall(0x4171);
 #define OP5ToOP3() bcall(0x4174);
 #define OP4ToOP6() bcall(0x4177);
 
-// easy default values sets and op value to a whole number
+/** @} */
+
+/** @{ \name Easy default values sets and op value to a whole number */
+
 #define OP4Set1() bcall(0x4186)
 #define OP3Set1() bcall(0x4189)
 #define OP2Set8() bcall(0x418C)
@@ -115,12 +143,13 @@
 #define OP1Set2() bcall(0x41A7)
 #define OP2Set2() bcall(0x41AA)
 #define OP2Set1() bcall(0x41AD)
-
 #define OP5Set0() bcall(0x41B3)
 #define OP4Set0() bcall(0x41B6)
 #define OP3Set0() bcall(0x41B9)
 #define OP2Set0() bcall(0x41BC)
 #define OP1Set0() bcall(0x41BF)
+
+/** @} */
 
 
 int OPT1_TO_INT(){ // if greater than 9999 errors

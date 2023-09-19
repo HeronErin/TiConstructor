@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cleargreyscalebuffer_0',['clearGreyScaleBuffer',['../d7/dbc/greyscale_8c.html#ac5082e0fa1de607c1f6d085366d02591',1,'greyscale.c']]]
+  ['archive_0',['archive',['../d5/de8/variables_8c.html#a0d3f0d93af7f9eb4419173b24c725343',1,'variables.c']]]
 ];

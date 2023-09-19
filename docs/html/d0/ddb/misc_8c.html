@@ -76,6 +76,159 @@ $(function() {
   <div class="headertitle"><div class="title">misc.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Some random but useful functions.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">CPU speed settings</div></td></tr>
+<tr class="memitem:ab75d789d39b23bb1f1636faadf07f71b" id="r_ab75d789d39b23bb1f1636faadf07f71b"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/ddb/misc_8c.html#ab75d789d39b23bb1f1636faadf07f71b">getCpuSpeed</a> () __naked</td></tr>
+<tr class="memdesc:ab75d789d39b23bb1f1636faadf07f71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current cpu speed.  <br /></td></tr>
+<tr class="separator:ab75d789d39b23bb1f1636faadf07f71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01be9569f3b9a3577843a15348e2840b" id="r_a01be9569f3b9a3577843a15348e2840b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/ddb/misc_8c.html#a01be9569f3b9a3577843a15348e2840b">setCpuSpeed</a> (char speed)</td></tr>
+<tr class="memdesc:a01be9569f3b9a3577843a15348e2840b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current cpu speed.  <br /></td></tr>
+<tr class="separator:a01be9569f3b9a3577843a15348e2840b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad489769b2d140a90776726cdfbc7fd6f" id="r_ad489769b2d140a90776726cdfbc7fd6f"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/ddb/misc_8c.html#ad489769b2d140a90776726cdfbc7fd6f">getTime</a> ()</td></tr>
+<tr class="memdesc:ad489769b2d140a90776726cdfbc7fd6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get bottom bytes of realtime clock.  <br /></td></tr>
+<tr class="separator:ad489769b2d140a90776726cdfbc7fd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bf771f8afb49a0c3aa76993723e72f4" id="r_a6bf771f8afb49a0c3aa76993723e72f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/ddb/misc_8c.html#a6bf771f8afb49a0c3aa76993723e72f4">wait</a> (unsigned char x)</td></tr>
+<tr class="memdesc:a6bf771f8afb49a0c3aa76993723e72f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for amount of time (1/8th of sec)  <br /></td></tr>
+<tr class="separator:a6bf771f8afb49a0c3aa76993723e72f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf41caa61eadef31671cd6b0c31d8d19" id="r_aaf41caa61eadef31671cd6b0c31d8d19"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/ddb/misc_8c.html#aaf41caa61eadef31671cd6b0c31d8d19">isqrt</a> (unsigned int val)</td></tr>
+<tr class="memdesc:aaf41caa61eadef31671cd6b0c31d8d19"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>DEPRECATED</b> Int square root  <br /></td></tr>
+<tr class="separator:aaf41caa61eadef31671cd6b0c31d8d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Some random but useful functions. </p>
+<h3>Optional #defines </h3>
+<ul>
+<li><b> USE_CPU_SPEED</b> - enables <a class="el" href="../../d0/ddb/misc_8c.html#ab75d789d39b23bb1f1636faadf07f71b" title="Get the current cpu speed.">getCpuSpeed()</a>, and <a class="el" href="../../d0/ddb/misc_8c.html#a01be9569f3b9a3577843a15348e2840b" title="Set the current cpu speed.">setCpuSpeed()</a></li>
+<li><b> USE_GET_TIME</b> - enables <a class="el" href="../../d0/ddb/misc_8c.html#ad489769b2d140a90776726cdfbc7fd6f" title="Get bottom bytes of realtime clock.">getTime()</a></li>
+<li><b> USE_WAIT8</b> - enables <a class="el" href="../../d0/ddb/misc_8c.html#a6bf771f8afb49a0c3aa76993723e72f4" title="Wait for amount of time (1/8th of sec)">wait()</a></li>
+<li><b> USE_ISQRT</b> - enables <a class="el" href="../../d0/ddb/misc_8c.html#aaf41caa61eadef31671cd6b0c31d8d19" title="DEPRECATED Int square root">isqrt()</a> </li>
+</ul>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ab75d789d39b23bb1f1636faadf07f71b" name="ab75d789d39b23bb1f1636faadf07f71b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab75d789d39b23bb1f1636faadf07f71b">&#9670;&#160;</a></span>getCpuSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char getCpuSpeed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current cpu speed. </p>
+<dl class="section return"><dt>Returns</dt><dd>char of a value 0-3 0 for 8 mhz and 3 for 14.99 mhz for more info: <a href="https://wikiti.brandonw.net/index.php?title=83Plus:Ports:20">https://wikiti.brandonw.net/index.php?title=83Plus:Ports:20</a> </dd></dl>
+
+</div>
+</div>
+<a id="ad489769b2d140a90776726cdfbc7fd6f" name="ad489769b2d140a90776726cdfbc7fd6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad489769b2d140a90776726cdfbc7fd6f">&#9670;&#160;</a></span>getTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int getTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get bottom bytes of realtime clock. </p>
+<dl class="section return"><dt>Returns</dt><dd>16-bit unsigned int of the bottom bytes of the real time clock See: <a href="https://wikiti.brandonw.net/index.php?title=83Plus:Ports:45">https://wikiti.brandonw.net/index.php?title=83Plus:Ports:45</a> and <a href="https://wikiti.brandonw.net/index.php?title=83Plus:Ports:40">https://wikiti.brandonw.net/index.php?title=83Plus:Ports:40</a> </dd></dl>
+
+</div>
+</div>
+<a id="aaf41caa61eadef31671cd6b0c31d8d19" name="aaf41caa61eadef31671cd6b0c31d8d19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf41caa61eadef31671cd6b0c31d8d19">&#9670;&#160;</a></span>isqrt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char isqrt </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><b>DEPRECATED</b> Int square root </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[val]</td><td>unsigned int </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>char value of sqrt(val)</dd></dl>
+<h3>This function is <b>DEPRECATED</b> and slow! Please use <a class="el" href="../../d7/d31/fast__math_8c.html#a596724bfaacd207eb1ee760887a5546a" title="Gets the square root of a 16-bit intager to a 8 bit char.">sqrt_rounded()</a> in <a class="el" href="../../d7/d31/fast__math_8c.html" title="Fast math operations, and some 16-bit fixed point path.">fast_math.c</a></h3>
+
+</div>
+</div>
+<a id="a01be9569f3b9a3577843a15348e2840b" name="a01be9569f3b9a3577843a15348e2840b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01be9569f3b9a3577843a15348e2840b">&#9670;&#160;</a></span>setCpuSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setCpuSpeed </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the current cpu speed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[speed]</td><td>char of a value 0-3 0 for 8 mhz and 3 for 14.99 mhz for more info: <a href="https://wikiti.brandonw.net/index.php?title=83Plus:Ports:20">https://wikiti.brandonw.net/index.php?title=83Plus:Ports:20</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6bf771f8afb49a0c3aa76993723e72f4" name="a6bf771f8afb49a0c3aa76993723e72f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bf771f8afb49a0c3aa76993723e72f4">&#9670;&#160;</a></span>wait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void wait </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Wait for amount of time (1/8th of sec) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[x]</td><td>Amount of time to wait in intervals of 1/8th of a secound </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

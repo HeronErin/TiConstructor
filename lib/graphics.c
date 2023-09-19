@@ -1,7 +1,34 @@
 #pragma once
-// SCREEN_BUFFER is the temp ram where you draw to 
+/** @file graphics.c @brief some useful graphics functions
+ * 
+ * <h3> Optional #defines </h3>
+ *    <h4>Functions enables </h4>
+ * 
+ *    + <b> USE_LINE</b> - enables line()
+ *    + <b> USE_SET_PIX</b> - enables setPix() 
+ *    + <b> USE_CIRCLE</b> - enables circle()
+ * 	 <h4>Functions Disables </h4>
+ * 
+ *    + <b> NO_USE_CLEAR</b> - Disables clearBuffer()
+ *    + <b> NO_USE_SWAP</b>  - Disables swap()
+ *   <h4> Variables </h4>
+ * 	
+ *    + <b> G_SCREEN_BUFFER</b> - allows you to redefine the location of the screen buffer. This is not recommended as the default is plotSScreen
+ *    + <b> G_COL_START</b> - allows you to redefine where the screen starts drawing. Not recommended
+ *    + <b> G_START_ROW</b> - allows you to redefine where the screen starts drawing. Not recommended
+ *    + <b> G_ROW_END</b> - allows you to redefine where the screen stops drawing. Not recommended
+ *    + <b> G_MAX_ROW</b> - allows you to redefine where the screen stops drawing. Not recommended
+ *    + <b> G_BLOB_END</b> - allows you to redefine how large the screen buffer is. Could be cause errors if you redefine without changing G_CLEAR_BUFFER_CO
+ *    + <b> G_CLEAR_BUFFER_CO</b> - allows you to redefine the math behind clearBuffer(). By default is set to 48 beacuse <b>48</b>*8=384 times, @ 2 bytes a PUSH = 768 bytes
+ * 	  + <b> XMAX</b> - Max x value. Not recommended. Requires changing a lot of defines
+ * 	  + <b> YMAX</b> - Max y value. Not recommended. Requires changing a lot of defines
+ */
+
+
+/** @{ \name Drawing settings */
 
 #ifndef G_SCREEN_BUFFER
+/** @brief the temp ram where you draw to */
 #define G_SCREEN_BUFFER plotSScreen
 #endif
 
@@ -30,13 +57,32 @@
 #endif
 
 
+/** @brief Use this like a variable for interacting with the screen buffer */
 #define buff (  (char*)G_SCREEN_BUFFER  )
+
+/** @brief function to call from <b>ASM</b> to wait required amount of time between screen calls */
 #define _LCD_BUSY_QUICK 0x000B
+
+#ifndef XMAX
+
+/** @brief Width of screen in pixels */
 #define XMAX 96
+#endif
+
+#ifndef YMAX
+/** @brief Height of screen in pixels */
 #define YMAX 64
+#endif
+
+
+/** @} */
 
 #ifndef NO_USE_CLEAR
-// taken from https://taricorp.gitlab.io/83pa28d/lesson/day10.html
+/** @brief clears screen buffer as defined by G_SCREEN_BUFFER
+ * If you wish to redefine the screen size you muse set multiple #defines before you include this file. You can find an example of this in examples/2048/main.c
+ * 
+ * <small>Taken from https://taricorp.gitlab.io/83pa28d/lesson/day10.html</small>
+ */
 void clearBuffer(){
     __asm
             DI
@@ -62,7 +108,9 @@ void clearBuffer(){
 }
 #endif
 #ifndef NO_USE_SWAP
-// fast enough way to display SCREEN_BUFFER on lcd
+/** @brief fast enough way to display SCREEN_BUFFER on lcd 
+ * See the scoreboard in examples/2048/main.c for redefining the location of the screen
+ */
 void swap(){
     __asm
 	    di
@@ -110,9 +158,19 @@ void swap(){
 
 #endif
 
-#ifdef USE_LINE
-// taken from https://wikiti.brandonw.net/index.php?title=Z80_Routines:Graphic:LineDraw
-// adapted for sdcc, should be quite fast
+#if defined(USE_LINE) || defined(DOXYGEN)
+
+/** @brief Draw a line between any 2 valid points
+ *  @param[x] First x coord (between 0-XMAX)
+ *  @param[x] First y coord (between 0-YMAX)
+ *  @param[x2] Secound x coord (between 0-XMAX)
+ *  @param[y2] Secound y coord (between 0-YMAX)
+ * 
+ * Draws a line onto G_SCREEN_BUFFER between (x, y) and (x2, y2) 
+ * 
+ * <small>taken from https://wikiti.brandonw.net/index.php?title=Z80_Routines:Graphic:LineDraw and
+ *  adapted for sdcc, should be quite fast</small>
+ */ 
 void line(char x, char y, char x2, char y2) __naked{
 	__asm
 	// Argument loader
@@ -241,7 +299,16 @@ void line(char x, char y, char x2, char y2) __naked{
 
 
 
-//                    e        d            l          h		
+	
+/** @brief Quick verticle line drawing routine
+ * @param[x] the x value to draw at (0-XMAX)
+ * @param[start] the y value to start at (0-YMAX-1)
+ * @param[height] How long the line should be (1-YMAX)
+ * @param[not_used] Can be anything, this value is just discarded. Odd number byte params require more instructions than Even number params
+ * 
+ * Quickly draws a verticle line onto G_SCREEN_BUFFER
+ */
+//                    e        d            l          h	
 void vertical_line(char x, char start, char height, char not_used)__naked{
 	__asm
 		pop bc
@@ -314,6 +381,16 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 
 	__endasm;
 }
+
+/** @brief Quick dotted verticle line drawing routine
+ * @param[x] the x value to draw at (0-XMAX)
+ * @param[start] the y value to start at (0-YMAX-1)
+ * @param[height] How long the line should be (1-YMAX)
+ * @param[not_used] Can be anything, this value is just discarded. Odd number byte params require more instructions than Even number params
+ * 
+ * Quickly draws a dotted verticle line onto G_SCREEN_BUFFER
+ */
+
 //                           e        d            l          h		
 void vertical_dotted_line(char x, char start, char height, char not_used)__naked{
 	__asm
@@ -397,8 +474,15 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 #define USE_SET_PIX
 #endif
 
-#ifdef USE_SET_PIX
-// It ain't fast, and it ain't pretty, but it works
+#if defined(USE_SET_PIX) || defined(DOXYGEN)
+
+/** @brief Set a pixel on the screen
+ * @param[x] the x value to draw at (0-XMAX)
+ * @param[y] the y value to draw at (0-YMAX)
+ * It ain't fast, and it ain't pretty, but it works. 
+ * 
+ * TODO: rewite in a quicker asm implementation
+ */
 void setPix(char x, char y){
 	*(char*)((((int)y)* (XMAX/8) )+(x/8)+G_SCREEN_BUFFER)|=128>>(x%8);
 }
@@ -412,10 +496,11 @@ void setPix(char x, char y){
 
 
 // this is not fast, nor small
-#ifdef USE_CIRCLE
-// taken from https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/
-// and modified
-void drawCircleSegment(char xc, char yc, char x, char y)
+#if defined(USE_CIRCLE) || defined(DOXYGEN)
+
+
+/** @brief Do not call me */
+void __drawCircleSegment(char xc, char yc, char x, char y)
 {
     setPix(xc+x, yc+y);
     setPix(xc-x, yc+y);
@@ -427,12 +512,19 @@ void drawCircleSegment(char xc, char yc, char x, char y)
     setPix(xc-y, yc-x);
 }
  
-// Function for circle-generation
-// using Bresenham's algorithm
+/** @brief Circle drawing routine
+ *  @param[xc] X coord of center of the circle
+ *  @param[yc] Y coord of center of the circle
+ *  @param[r] Radius of the circle
+ * 
+ * This code is quite slow as it is entirly written in c and uses the already quite slow setPix()
+ * 
+ * <small>taken from https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/ and modified </small>
+ */ 
 void circle(char xc, char yc, char r)
 {
     char x = 0, y = r;
-    drawCircleSegment(xc, yc, x, y);
+    __drawCircleSegment(xc, yc, x, y);
     int d = 3 - 2 * r;
     while (y >= x)
     {
@@ -451,7 +543,7 @@ void circle(char xc, char yc, char r)
         }
         else
             d = d + 4 * x + 6;
-        drawCircleSegment(xc, yc, x, y);
+        __drawCircleSegment(xc, yc, x, y);
     }
 }
 #endif

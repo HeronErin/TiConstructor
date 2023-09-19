@@ -74,31 +74,54 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">userinput.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>2 useful functions for getting user input  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:adeed93c34ed50c8c4ccc7d0555408013" id="r_adeed93c34ed50c8c4ccc7d0555408013"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d5f/userinput_8c.html#adeed93c34ed50c8c4ccc7d0555408013">PressAnyKey</a>()&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(0x4972)</td></tr>
+<tr class="memitem:adeed93c34ed50c8c4ccc7d0555408013" id="r_adeed93c34ed50c8c4ccc7d0555408013"><td class="memItemLeft" align="right" valign="top"><a id="adeed93c34ed50c8c4ccc7d0555408013" name="adeed93c34ed50c8c4ccc7d0555408013"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PressAnyKey</b>()&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(0x4972)</td></tr>
+<tr class="memdesc:adeed93c34ed50c8c4ccc7d0555408013"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a key to be pressed and return it in the "A" assembly register This is mostly used at the end of a program, bewarned that this(like any bcall) my mess with C vars, see <a href="https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4972">https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4972</a>. <br /></td></tr>
 <tr class="separator:adeed93c34ed50c8c4ccc7d0555408013"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a2da36c055d23bb1f20f20bfabbb40661" id="r_a2da36c055d23bb1f20f20bfabbb40661"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d5f/userinput_8c.html#a2da36c055d23bb1f20f20bfabbb40661">getKey</a> ()</td></tr>
+<tr class="memdesc:a2da36c055d23bb1f20f20bfabbb40661"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>DEPRECATED</b> Scan for keypresses and returns the currently pressed key  <br /></td></tr>
+<tr class="separator:a2da36c055d23bb1f20f20bfabbb40661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="adeed93c34ed50c8c4ccc7d0555408013" name="adeed93c34ed50c8c4ccc7d0555408013"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adeed93c34ed50c8c4ccc7d0555408013">&#9670;&#160;</a></span>PressAnyKey</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>2 useful functions for getting user input </p>
+<p>You don't actually need <a class="el" href="../../d4/d5f/userinput_8c.html#a2da36c055d23bb1f20f20bfabbb40661" title="DEPRECATED Scan for keypresses and returns the currently pressed key">getKey()</a> unless custom interupts (like <a class="el" href="../../d7/dbc/greyscale_8c.html" title="Unlocks greyscale on the calc at the cost of some cpu.">greyscale.c</a>) are used.</p>
+<h3>Optional #defines </h3>
+<ul>
+<li><b> USE_GETKEY</b> - enables <a class="el" href="../../d4/d5f/userinput_8c.html#a2da36c055d23bb1f20f20bfabbb40661" title="DEPRECATED Scan for keypresses and returns the currently pressed key">getKey()</a> </li>
+</ul>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2da36c055d23bb1f20f20bfabbb40661" name="a2da36c055d23bb1f20f20bfabbb40661"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da36c055d23bb1f20f20bfabbb40661">&#9670;&#160;</a></span>getKey()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PressAnyKey</td>
+          <td class="memname">char getKey </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(0x4972)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><b>DEPRECATED</b> Scan for keypresses and returns the currently pressed key </p>
+<dl class="section return"><dt>Returns</dt><dd>char of the currently pressed key (see: <a href="https://wikiti.brandonw.net/index.php?title=83Plus:RAM:843F">https://wikiti.brandonw.net/index.php?title=83Plus:RAM:843F</a>)</dd></dl>
+<h3><b>DEPRECATED</b> You probably do not need this, but if interupts are disable/customized or greyscale is active, this will work for you.</h3>
 
 </div>
 </div>

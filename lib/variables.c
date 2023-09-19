@@ -1,7 +1,8 @@
 #pragma once
+/** @file variables.c @brief Used for working with calculator variables 
+ */
 
-
-// Adds token to string constant for variable
+/** @{ \name Adds token to string constant for variable name */
 #define addRealObj(xxxxxxxxxx)					("\x00" xxxxxxxxxx)
 #define addListObj(xxxxxxxxxx)					("\x01" xxxxxxxxxx)
 #define addMatObj(xxxxxxxxxx)					("\x02" xxxxxxxxxx)
@@ -27,12 +28,20 @@
 #define addTempProgObj(xxxxxxxxxx)				("\x16" xxxxxxxxxx)
 #define addGroupObj(xxxxxxxxxx)					("\x17" xxxxxxxxxx)
 
+/** @} */
 
 
-// I only care about appvars, but delete and archive should work for anything
-// Also floatmath could be combined with these of you use _StoSysTok
-// see: https://taricorp.gitlab.io/83pa28d/lesson/day19.html and https://taricorp.gitlab.io/83pa28d/lesson/day20.html
 
+/** @brief Gets a var or creates one a given size
+* @param[name] the name of a variable after adding the type to the name (like with addAppVarObj())
+* @param[size] the size of a variable
+* @return Memory address of the variable
+* 
+*  
+* I only care about appvars, but delete and archive should work for anything
+* Also float math could be combined with these of you use _StoSysTok
+* see: https://taricorp.gitlab.io/83pa28d/lesson/day19.html and https://taricorp.gitlab.io/83pa28d/lesson/day20.html
+*/
 
 char* getOrCreateVar(char* name, int size)__naked{
 	__asm
@@ -84,8 +93,15 @@ char* getOrCreateVar(char* name, int size)__naked{
 	__endasm;
 }
 
+/** 
+ * @brief Toggles if a var is archived.
+ * @param[name] Name of the var to be archived/archived
+ * 
+ * See: https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4FD8
+ */ 
 
-// took me 7 hours to figure out, but _Arc_Unarc destroys everything and it is better of to let is destroy the shadow registers instead, otherwise everything crashes
+
+// took me 7 hours to figure out, but _Arc_Unarc destroys everything and it is better off to let it destroy the shadow registers instead, otherwise everything crashes
 void archive(char* name)__naked{
 	__asm
 		pop de
@@ -108,6 +124,12 @@ void archive(char* name)__naked{
 	__endasm;
 
 }
+
+/** 
+ * @brief Delete a var
+ * @param[name] Name of the var to be removed 
+ */ 
+
 void delete(char* name)__naked{
 	__asm
 		pop de

@@ -13,7 +13,7 @@
  * 
  * <h3> Optional #defines </h3>
  * 
- *  + <b>FX_TRIG</b> - Vars: FX_sine_lookup as a fixed point sine lookup table. Functions: FX_sine(), FX_cos(), and FX_tan()
+ *  + <b>FX_TRIG</b> - Enables FX_sine(), FX_cos(), and FX_tan()
  * 
  */
 

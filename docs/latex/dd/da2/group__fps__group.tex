@@ -1,0 +1,63 @@
+\doxysection{Floating Point Stack Operations}
+\hypertarget{group__fps__group}{}\label{group__fps__group}\index{Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection*{Floating Point Stack Operations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{group__fps__group_gac92ca5ab87034a348decad7ee8d4bd1b}\label{group__fps__group_gac92ca5ab87034a348decad7ee8d4bd1b} 
+\#define {\bfseries FPS}~0x9824
+\item 
+\#define \mbox{\hyperlink{group__fps__group_gac7a6e131caa55f705afe2552d2d4a09b}{Push\+OP1}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x43\+C9)
+\item 
+\#define \mbox{\hyperlink{group__fps__group_gafe71449b1c234fe3fbe9a6cc7e249666}{Push\+OP5}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x43\+C0)
+\item 
+\#define \mbox{\hyperlink{group__fps__group_ga624eb9529056a643969f8817b58b51d9}{Push\+OP3}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x43\+C3)
+\item 
+\#define \mbox{\hyperlink{group__fps__group_ga5a23663118ff0e5a8297900679796f4d}{Pop\+OP5}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x4378)
+\item 
+\#define \mbox{\hyperlink{group__fps__group_ga72b84eedbbd90d09152d7de885ec3df2}{Pop\+OP3}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x437B)
+\item 
+\#define \mbox{\hyperlink{group__fps__group_ga3cebc6dc3bcd572feff4c077be55d9ec}{Pop\+OP1}}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x437E)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group__fps__group_ga3cebc6dc3bcd572feff4c077be55d9ec}\label{group__fps__group_ga3cebc6dc3bcd572feff4c077be55d9ec} 
+\index{Floating Point Stack Operations@{Floating Point Stack Operations}!PopOP1@{PopOP1}}
+\index{PopOP1@{PopOP1}!Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection{\texorpdfstring{PopOP1}{PopOP1}}
+{\footnotesize\ttfamily \#define Pop\+OP1(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x437E)}
+
+Pops op1 from the stack. \Hypertarget{group__fps__group_ga72b84eedbbd90d09152d7de885ec3df2}\label{group__fps__group_ga72b84eedbbd90d09152d7de885ec3df2} 
+\index{Floating Point Stack Operations@{Floating Point Stack Operations}!PopOP3@{PopOP3}}
+\index{PopOP3@{PopOP3}!Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection{\texorpdfstring{PopOP3}{PopOP3}}
+{\footnotesize\ttfamily \#define Pop\+OP3(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x437B)}
+
+Pops op3 from the stack. \Hypertarget{group__fps__group_ga5a23663118ff0e5a8297900679796f4d}\label{group__fps__group_ga5a23663118ff0e5a8297900679796f4d} 
+\index{Floating Point Stack Operations@{Floating Point Stack Operations}!PopOP5@{PopOP5}}
+\index{PopOP5@{PopOP5}!Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection{\texorpdfstring{PopOP5}{PopOP5}}
+{\footnotesize\ttfamily \#define Pop\+OP5(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x4378)}
+
+Pops op5 from the stack. \Hypertarget{group__fps__group_gac7a6e131caa55f705afe2552d2d4a09b}\label{group__fps__group_gac7a6e131caa55f705afe2552d2d4a09b} 
+\index{Floating Point Stack Operations@{Floating Point Stack Operations}!PushOP1@{PushOP1}}
+\index{PushOP1@{PushOP1}!Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection{\texorpdfstring{PushOP1}{PushOP1}}
+{\footnotesize\ttfamily \#define Push\+OP1(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x43\+C9)}
+
+Pushes op1 onto the stack. \Hypertarget{group__fps__group_ga624eb9529056a643969f8817b58b51d9}\label{group__fps__group_ga624eb9529056a643969f8817b58b51d9} 
+\index{Floating Point Stack Operations@{Floating Point Stack Operations}!PushOP3@{PushOP3}}
+\index{PushOP3@{PushOP3}!Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection{\texorpdfstring{PushOP3}{PushOP3}}
+{\footnotesize\ttfamily \#define Push\+OP3(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x43\+C3)}
+
+Pushes op3 onto the stack. \Hypertarget{group__fps__group_gafe71449b1c234fe3fbe9a6cc7e249666}\label{group__fps__group_gafe71449b1c234fe3fbe9a6cc7e249666} 
+\index{Floating Point Stack Operations@{Floating Point Stack Operations}!PushOP5@{PushOP5}}
+\index{PushOP5@{PushOP5}!Floating Point Stack Operations@{Floating Point Stack Operations}}
+\doxysubsubsection{\texorpdfstring{PushOP5}{PushOP5}}
+{\footnotesize\ttfamily \#define Push\+OP5(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x43\+C0)}
+
+Pushes op5 onto the stack. 

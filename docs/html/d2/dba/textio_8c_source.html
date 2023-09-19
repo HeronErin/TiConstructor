@@ -82,180 +82,212 @@ $(document).ready(function() { init_codefold(1); });
 </div><!--header-->
 <div class="contents">
 <a href="../../d2/dba/textio_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> setPenRow(<span class="keywordtype">char</span> row) __naked{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    row;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    __asm</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        pop hl      ; Get input</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        pop bc      ; and perserve</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        push bc</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        push hl     ; ret value</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        ld a, c</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        ld (#penRow), a</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        ret</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    __endasm;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keywordtype">void</span> setPenCol(<span class="keywordtype">char</span> col) __naked{</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    col;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    __asm</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        pop hl      ; Get input</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        pop bc      ; and perserve</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        push bc</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        push hl     ; ret value</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        ld a, c</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        ld (#penCol), a</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        ret</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    __endasm;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">void</span> resetPen() __naked{</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    __asm</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        xor a, a</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="}">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#ac8df7968d45a0cc93de680cdd7025cdb">   20</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#ac8df7968d45a0cc93de680cdd7025cdb">setPenRow</a>(<span class="keywordtype">char</span> row) __naked{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    row;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    __asm</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        pop hl      ; Get input</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        pop bc      ; and perserve</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        push bc</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        push hl     ; ret value</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        ld a, c</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        ld (#penRow), a</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        ret</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    __endasm;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
+</div>
+<div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#ad781e6859c1ac67ab4e11f90261dc287">   38</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#ad781e6859c1ac67ab4e11f90261dc287">setPenCol</a>(<span class="keywordtype">char</span> col) __naked{</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    col;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    __asm</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        pop hl      ; Get input</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        pop bc      ; and perserve</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        push bc</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        push hl     ; ret value</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        ld a, c</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        ld (#penCol), a</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        ld (#penCol), a</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        ld (#penRow), a</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        ret</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    __endasm;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">// just prints chars to screen</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keywordtype">void</span> fputs(<span class="keywordtype">char</span>* loc) __naked {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    loc;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    __asm</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        pop hl      ; Get input</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        pop bc      ; and perserve</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        push bc     ; ret value</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        push hl     </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    the_char_loop_i_need_more_good_names_for_labels:</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        ld  a, (bc)</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        or a, a</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        ret z</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        inc bc</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        jr the_char_loop_i_need_more_good_names_for_labels</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    __endasm;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment">// prints to screen while also quickly setting cursor stuff. </span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keywordtype">void</span> println(<span class="keywordtype">char</span>* loc){</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    fputs(loc);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    __asm</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        ld a, (#penRow)</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        ld b, #6</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        add b</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        ld (#penRow), a</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        xor a, a</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        ld (#penCol), a</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    __endasm;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keywordtype">void</span> newline() __naked{</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    __asm</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        ld a, (#penRow)</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        ld b, #6</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        add b</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        ld (#penRow), a</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        xor a, a</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        ld (#penCol), a</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        ret</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    __endasm;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keywordtype">void</span> printc(<span class="keywordtype">char</span> ch) __naked{</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    ch;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    __asm</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        pop hl      ; Get input</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        pop bc</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        push bc</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        push hl </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        ld a, c</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        push ix</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        pop ix</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        ret</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    __endasm;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#ifdef USE_NUMBER</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keywordtype">void</span> number(<span class="keywordtype">int</span> x){</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">int</span> i = 0;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">if</span> (x&lt;0){</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        x=0-x;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        printc(<span class="charliteral">&#39;-&#39;</span>);</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">char</span> out[25];</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        out[i]=x % 10 + <span class="charliteral">&#39;0&#39;</span>;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        i+=1;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    } <span class="keywordflow">while</span>((x /= 10) &gt; 0);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    i--;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordflow">for</span>(;i&gt;=0; i--){</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        __asm</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            ld  l, -4 (ix)</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            ld  h, -3 (ix)</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            add hl, bc</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            ld  a, (hl)</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            push ix</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            pop ix</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        __endasm;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    }</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>}</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="preprocessor">#ifdef USE_HEXDUMP</span></div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment">// great for debuging, not so great for games</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="keyword">const</span> <span class="keywordtype">char</span> hexTab[16] = {<span class="charliteral">&#39;0&#39;</span>, <span class="charliteral">&#39;1&#39;</span>, <span class="charliteral">&#39;2&#39;</span>, <span class="charliteral">&#39;3&#39;</span>, <span class="charliteral">&#39;4&#39;</span>, <span class="charliteral">&#39;5&#39;</span>, <span class="charliteral">&#39;6&#39;</span>, <span class="charliteral">&#39;7&#39;</span>, </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="charliteral">&#39;8&#39;</span>, <span class="charliteral">&#39;9&#39;</span>, <span class="charliteral">&#39;A&#39;</span>, <span class="charliteral">&#39;B&#39;</span>, <span class="charliteral">&#39;C&#39;</span>, <span class="charliteral">&#39;D&#39;</span>, <span class="charliteral">&#39;E&#39;</span>, <span class="charliteral">&#39;F&#39;</span>, };</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="keywordtype">void</span> hexdump(<span class="keywordtype">char</span> v)__naked{</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    v;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    __asm</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        pop hl      ; Get input</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        pop bc      ; and perserve</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        push bc</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        push hl</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        push ix</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        ld a, c</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        ld  hl, #_hexTab</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        and a, #0xF0</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        SRL a</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        SRL a</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        SRL a</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        SRL a</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        ret</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    __endasm;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+</div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#ae95669a52ba3a2adb7021a225ebf8192">   54</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#ae95669a52ba3a2adb7021a225ebf8192">resetPen</a>() __naked{</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    __asm</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        xor a, a</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        ld (#penCol), a</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        ld (#penRow), a</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        ret</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    __endasm;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
+</div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#aca07b808550bc084bf01fffa964bf362">   67</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#aca07b808550bc084bf01fffa964bf362">fputs</a>(<span class="keywordtype">char</span>* loc) __naked {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    loc;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    __asm</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        pop hl      ; Get input</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        pop bc      ; and perserve</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        push bc     ; ret value</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        push hl     </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    the_char_loop_i_need_more_good_names_for_labels:</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        ld  a, (bc)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        or a, a</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        ret z</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        inc bc</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        jr the_char_loop_i_need_more_good_names_for_labels</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    __endasm;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>}</div>
+</div>
+<div class="foldopen" id="foldopen00090" data-start="{" data-end="}">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#a14055334d5f05def8c67b7c98212ab99">   90</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#a14055334d5f05def8c67b7c98212ab99">println</a>(<span class="keywordtype">char</span>* loc){</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <a class="code hl_function" href="../../d2/dba/textio_8c.html#aca07b808550bc084bf01fffa964bf362">fputs</a>(loc);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    __asm</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        ld a, (#penRow)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        ld b, #6</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        add b</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        ld (#penRow), a</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        xor a, a</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        ld (#penCol), a</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    __endasm;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>}</div>
+</div>
+<div class="foldopen" id="foldopen00104" data-start="{" data-end="}">
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#a7ffed7dceb713fc324f0534bc9152c4b">  104</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#a7ffed7dceb713fc324f0534bc9152c4b">newline</a>() __naked{</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    __asm</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        ld a, (#penRow)</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        ld b, #6</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        add b</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        ld (#penRow), a</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        xor a, a</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        ld (#penCol), a</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        ret</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    __endasm;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
+</div>
+<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#a8f5c92b67e468af24552b8f68baf7fa8">  119</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#a8f5c92b67e468af24552b8f68baf7fa8">printc</a>(<span class="keywordtype">char</span> ch) __naked{</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    ch;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    __asm</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        pop hl      ; Get input</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        pop bc</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        push bc</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        push hl </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        ld a, c</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        push ix</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        pop ix</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        ret</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    __endasm;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
+</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#if defined(USE_NUMBER) || defined(DOXYGEN)</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="foldopen" id="foldopen00141" data-start="{" data-end="}">
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#a66a569e51623061dc516f13047a7cd8f">  141</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#a66a569e51623061dc516f13047a7cd8f">number</a>(<span class="keywordtype">int</span> x){</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordtype">int</span> i = 0;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordflow">if</span> (x&lt;0){</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        x=0-x;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <a class="code hl_function" href="../../d2/dba/textio_8c.html#a8f5c92b67e468af24552b8f68baf7fa8">printc</a>(<span class="charliteral">&#39;-&#39;</span>);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    }</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">char</span> out[25];</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        out[i]=x % 10 + <span class="charliteral">&#39;0&#39;</span>;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        i+=1;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    } <span class="keywordflow">while</span>((x /= 10) &gt; 0);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    i--;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordflow">for</span>(;i&gt;=0; i--){</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        __asm</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            ld  l, -4 (ix)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            ld  h, -3 (ix)</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            add hl, bc</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            ld  a, (hl)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            push ix</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            pop ix</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        __endasm;</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        ld e, a</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        ld d, #0</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        add hl, de</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        ld a, (hl)</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        ld a, c</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        ld  hl, #_hexTab</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        and a, #0x0F</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        ld e, a</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        ld d, #0</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        add hl, de</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        ld a, (hl)</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        pop ix</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        ret</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    __endasm;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>}</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>}</div>
+</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">#if defined(USE_HEXDUMP) || defined(DOXYGEN)</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="foldopen" id="foldopen00174" data-start="{" data-end="};">
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#a6dd76dc5bcabf89a30f7d13e2c3469f7">  174</a></span><span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code hl_variable" href="../../d2/dba/textio_8c.html#a6dd76dc5bcabf89a30f7d13e2c3469f7">hexTab</a>[16] = {<span class="charliteral">&#39;0&#39;</span>, <span class="charliteral">&#39;1&#39;</span>, <span class="charliteral">&#39;2&#39;</span>, <span class="charliteral">&#39;3&#39;</span>, <span class="charliteral">&#39;4&#39;</span>, <span class="charliteral">&#39;5&#39;</span>, <span class="charliteral">&#39;6&#39;</span>, <span class="charliteral">&#39;7&#39;</span>, </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="charliteral">&#39;8&#39;</span>, <span class="charliteral">&#39;9&#39;</span>, <span class="charliteral">&#39;A&#39;</span>, <span class="charliteral">&#39;B&#39;</span>, <span class="charliteral">&#39;C&#39;</span>, <span class="charliteral">&#39;D&#39;</span>, <span class="charliteral">&#39;E&#39;</span>, <span class="charliteral">&#39;F&#39;</span>, };</div>
+</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="foldopen" id="foldopen00182" data-start="{" data-end="}">
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="../../d2/dba/textio_8c.html#ab64ca59caab800b6c00645189dd806e8">  182</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d2/dba/textio_8c.html#ab64ca59caab800b6c00645189dd806e8">hexdump</a>(<span class="keywordtype">char</span> v)__naked{</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    v;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    __asm</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        pop hl      ; Get input</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        pop bc      ; and perserve</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        push bc</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        push hl</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        push ix</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        ld a, c</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        ld  hl, #_hexTab</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        and a, #0xF0</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        SRL a</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        SRL a</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        SRL a</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        SRL a</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        ld e, a</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        ld d, #0</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        add hl, de</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        ld a, (hl)</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        ld a, c</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        ld  hl, #_hexTab</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        and a, #0x0F</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        ld e, a</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        ld d, #0</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        add hl, de</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        ld a, (hl)</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <a class="code hl_define" href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a>(_VPutMap)</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        pop ix</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        ret</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    __endasm;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>}</div>
+</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aessentials_8c_html_a129499a7680583fc58a699bbb1aca61d"><div class="ttname"><a href="../../d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">abcall</a></div><div class="ttdeci">#define abcall(__LABEL__)</div><div class="ttdoc">The asm for a bcall.</div><div class="ttdef"><b>Definition</b> essentials.c:65</div></div>
+<div class="ttc" id="atextio_8c_html_a14055334d5f05def8c67b7c98212ab99"><div class="ttname"><a href="../../d2/dba/textio_8c.html#a14055334d5f05def8c67b7c98212ab99">println</a></div><div class="ttdeci">void println(char *loc)</div><div class="ttdoc">print a string to the screen, move down a line, and reset the pen col</div><div class="ttdef"><b>Definition</b> textio.c:90</div></div>
+<div class="ttc" id="atextio_8c_html_a66a569e51623061dc516f13047a7cd8f"><div class="ttname"><a href="../../d2/dba/textio_8c.html#a66a569e51623061dc516f13047a7cd8f">number</a></div><div class="ttdeci">void number(int x)</div><div class="ttdoc">Print a number to the screen.</div><div class="ttdef"><b>Definition</b> textio.c:141</div></div>
+<div class="ttc" id="atextio_8c_html_a6dd76dc5bcabf89a30f7d13e2c3469f7"><div class="ttname"><a href="../../d2/dba/textio_8c.html#a6dd76dc5bcabf89a30f7d13e2c3469f7">hexTab</a></div><div class="ttdeci">const char hexTab[16]</div><div class="ttdef"><b>Definition</b> textio.c:174</div></div>
+<div class="ttc" id="atextio_8c_html_a7ffed7dceb713fc324f0534bc9152c4b"><div class="ttname"><a href="../../d2/dba/textio_8c.html#a7ffed7dceb713fc324f0534bc9152c4b">newline</a></div><div class="ttdeci">void newline() __naked</div><div class="ttdoc">Go to the next line go back to the first col.</div><div class="ttdef"><b>Definition</b> textio.c:104</div></div>
+<div class="ttc" id="atextio_8c_html_a8f5c92b67e468af24552b8f68baf7fa8"><div class="ttname"><a href="../../d2/dba/textio_8c.html#a8f5c92b67e468af24552b8f68baf7fa8">printc</a></div><div class="ttdeci">void printc(char ch) __naked</div><div class="ttdoc">prints a single char</div><div class="ttdef"><b>Definition</b> textio.c:119</div></div>
+<div class="ttc" id="atextio_8c_html_ab64ca59caab800b6c00645189dd806e8"><div class="ttname"><a href="../../d2/dba/textio_8c.html#ab64ca59caab800b6c00645189dd806e8">hexdump</a></div><div class="ttdeci">void hexdump(char v) __naked</div><div class="ttdoc">print the hex of a char to the screen</div><div class="ttdef"><b>Definition</b> textio.c:182</div></div>
+<div class="ttc" id="atextio_8c_html_ac8df7968d45a0cc93de680cdd7025cdb"><div class="ttname"><a href="../../d2/dba/textio_8c.html#ac8df7968d45a0cc93de680cdd7025cdb">setPenRow</a></div><div class="ttdeci">void setPenRow(char row) __naked</div><div class="ttdoc">set the row that is currently selectd</div><div class="ttdef"><b>Definition</b> textio.c:20</div></div>
+<div class="ttc" id="atextio_8c_html_aca07b808550bc084bf01fffa964bf362"><div class="ttname"><a href="../../d2/dba/textio_8c.html#aca07b808550bc084bf01fffa964bf362">fputs</a></div><div class="ttdeci">void fputs(char *loc) __naked</div><div class="ttdoc">print a string to the screen</div><div class="ttdef"><b>Definition</b> textio.c:67</div></div>
+<div class="ttc" id="atextio_8c_html_ad781e6859c1ac67ab4e11f90261dc287"><div class="ttname"><a href="../../d2/dba/textio_8c.html#ad781e6859c1ac67ab4e11f90261dc287">setPenCol</a></div><div class="ttdeci">void setPenCol(char col) __naked</div><div class="ttdoc">set the column that is currently selectd</div><div class="ttdef"><b>Definition</b> textio.c:38</div></div>
+<div class="ttc" id="atextio_8c_html_ae95669a52ba3a2adb7021a225ebf8192"><div class="ttname"><a href="../../d2/dba/textio_8c.html#ae95669a52ba3a2adb7021a225ebf8192">resetPen</a></div><div class="ttdeci">void resetPen() __naked</div><div class="ttdoc">Set the pen back to 0,0.</div><div class="ttdef"><b>Definition</b> textio.c:54</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sqrt_5frounded_0',['sqrt_rounded',['../d7/d31/fast__math_8c.html#a596724bfaacd207eb1ee760887a5546a',1,'fast_math.c']]]
+  ['hexdump_0',['hexdump',['../d2/dba/textio_8c.html#ab64ca59caab800b6c00645189dd806e8',1,'textio.c']]]
 ];

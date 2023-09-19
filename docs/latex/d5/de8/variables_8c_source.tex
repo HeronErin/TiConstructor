@@ -1,0 +1,129 @@
+\doxysection{variables.\+c}
+\hypertarget{variables_8c_source}{}\label{variables_8c_source}\index{lib/variables.c@{lib/variables.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00004}00004\ \textcolor{comment}{//\ Adds\ token\ to\ string\ constant\ for\ variable}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00005}00005\ \textcolor{preprocessor}{\#define\ addRealObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x00"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00006}00006\ \textcolor{preprocessor}{\#define\ addListObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x01"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00007}00007\ \textcolor{preprocessor}{\#define\ addMatObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x02"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00008}00008\ \textcolor{preprocessor}{\#define\ addEquObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x03"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00009}00009\ \textcolor{preprocessor}{\#define\ addStrngObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x04"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00010}00010\ \textcolor{preprocessor}{\#define\ addProgObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x05"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00011}00011\ \textcolor{preprocessor}{\#define\ addProtProgObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x06"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00012}00012\ \textcolor{preprocessor}{\#define\ addPictObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x07"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00013}00013\ \textcolor{preprocessor}{\#define\ addGDBObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x08"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00014}00014\ \textcolor{preprocessor}{\#define\ addUnknownObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x09"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00015}00015\ \textcolor{preprocessor}{\#define\ addUnknownEquObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x0A"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00016}00016\ \textcolor{preprocessor}{\#define\ addNewEquObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x0B"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00017}00017\ \textcolor{preprocessor}{\#define\ addCplxObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x0C"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00018}00018\ \textcolor{preprocessor}{\#define\ addCListObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x0D"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00019}00019\ \textcolor{preprocessor}{\#define\ addUndefObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x0E"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00020}00020\ \textcolor{preprocessor}{\#define\ addWindowObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x0F"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00021}00021\ \textcolor{preprocessor}{\#define\ addZStoObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x10"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00022}00022\ \textcolor{preprocessor}{\#define\ addTblRngObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x11"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00023}00023\ \textcolor{preprocessor}{\#define\ addLCDObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x12"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00024}00024\ \textcolor{preprocessor}{\#define\ addBackupObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x13"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00025}00025\ \textcolor{preprocessor}{\#define\ addAppObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x14"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00026}00026\ \textcolor{preprocessor}{\#define\ addAppVarObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x15"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00027}00027\ \textcolor{preprocessor}{\#define\ addTempProgObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x16"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00028}00028\ \textcolor{preprocessor}{\#define\ addGroupObj(xxxxxxxxxx)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ("{}\(\backslash\)x17"{}\ xxxxxxxxxx)}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00032}00032\ \textcolor{comment}{//\ I\ only\ care\ about\ appvars,\ but\ delete\ and\ archive\ should\ work\ for\ anything}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00033}00033\ \textcolor{comment}{//\ Also\ floatmath\ could\ be\ combined\ with\ these\ of\ you\ use\ \_StoSysTok}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00034}00034\ \textcolor{comment}{//\ see:\ https://taricorp.gitlab.io/83pa28d/lesson/day19.html\ and\ https://taricorp.gitlab.io/83pa28d/lesson/day20.html}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00037}00037\ \textcolor{keywordtype}{char}*\ getOrCreateVar(\textcolor{keywordtype}{char}*\ name,\ \textcolor{keywordtype}{int}\ size)\_\_naked\{}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00038}00038\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00039}00039\ \ \ \ \ \ \ \ \ pop\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00040}00040\ \ \ \ \ \ \ \ \ pop\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00041}00041\ \ \ \ \ \ \ \ \ push\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ push\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00046}00046\ \ \ \ \ \ \ \ \ rst\ 0x20\ \textcolor{comment}{//\ \ Mov9ToOP1}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00047}00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_ChkFindSym)}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00048}00048\ \ \ \ \ \ \ \ \ jr\ c,notfound\ \ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00049}00049\ \ \ \ \ \ \ \ \ ex\ de,hl\ \ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00050}00050\ \ \ \ \ \ \ \ \ xor\ a\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ cp\ \ b}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ jr\ z,unarchived}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ di}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00057}00057\ \ \ \ \ \ \ \ \ exx}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00058}00058\ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00059}00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_Arc\_Unarc)}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ exx}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00063}00063\ \ \ \ \ \ \ \ \ ei}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ jp\ \_getOrCreateVar}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ unarchived:}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ notfound:}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ pop\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ pop\ bc}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ pop\ hl\ \textcolor{comment}{//\ hl\ =\ size}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ push\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ push\ bc}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ push\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_CreateAppVar)}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ jp\ \_getOrCreateVar}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00084}00084\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00085}00085\ \}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00088}00088\ \textcolor{comment}{//\ took\ me\ 7\ hours\ to\ figure\ out,\ but\ \_Arc\_Unarc\ destroys\ everything\ and\ it\ is\ better\ of\ to\ let\ is\ destroy\ the\ shadow\ registers\ instead,\ otherwise\ everything\ crashes}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00089}00089\ \textcolor{keywordtype}{void}\ archive(\textcolor{keywordtype}{char}*\ name)\_\_naked\{}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00090}00090\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ pop\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ pop\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ push\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00094}00094\ \ \ \ \ \ \ \ \ push\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00096}00096\ \ \ \ \ \ \ \ \ rst\ 0x20\ ;\ Mov9ToOP1}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ di}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ exx}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ push\ ix}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_Arc\_Unarc)}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ pop\ ix}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ exx}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ ei}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00108}00108\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00110}00110\ \}}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00111}00111\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{delete}(\textcolor{keywordtype}{char}*\ name)\_\_naked\{}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00112}00112\ \ \ \ \ \_\_asm}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ pop\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ pop\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ push\ hl}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ push\ de}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ rst\ 0x20\ ;\ Mov9ToOP1}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_ChkFindSym)}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\_DelVar)}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00121}00121\ \ \ \ \ \ \ \ \ ret}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00122}00122\ \ \ \ \ \_\_endasm;}
+\DoxyCodeLine{\Hypertarget{variables_8c_source_l00123}00123\ \}}
+
+\end{DoxyCode}

@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['textio_2ec_0',['textio.c',['../d2/dba/textio_8c.html',1,'']]],
-  ['this_20works_1',['How this works',['../d0/d30/md_README.html#autotoc_md2',1,'']]],
-  ['ti83plus_2eh_2',['ti83plus.h',['../d4/d49/ti83plus_8h.html',1,'']]],
-  ['ticonstructor_3',['# TiConstructor',['../d0/d30/md_README.html',1,'']]],
-  ['to_20get_20started_4',['How to get started',['../d0/d30/md_README.html#autotoc_md0',1,'']]],
-  ['to_20install_5',['How to install',['../d0/d30/md_README.html#autotoc_md1',1,'']]]
+  ['random_20fun_20facts_0',['Random fun facts',['../index.html#autotoc_md4',1,'']]],
+  ['resetpen_1',['resetPen',['../d2/dba/textio_8c.html#ae95669a52ba3a2adb7021a225ebf8192',1,'textio.c']]],
+  ['resources_2',['Some useful resources',['../index.html#autotoc_md3',1,'']]],
+  ['row_5fconst_3',['ROW_CONST',['../d7/dbc/greyscale_8c.html#a0999f61805fd5db8ec16a027c1db621c',1,'greyscale.c']]],
+  ['row_5fend_5fconst_4',['ROW_END_CONST',['../d7/dbc/greyscale_8c.html#a0997428a77d4eda7188f0dd77a006790',1,'greyscale.c']]]
 ];

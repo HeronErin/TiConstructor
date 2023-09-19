@@ -1,6 +1,11 @@
 /**
- * @file textio.c
+ * @file textio.c  @brief String I/O type stuff
+ * 
  * This is for printing c strings, it is not fast, but shouldn't be too large. Feel free not to use it if you need more space, although don't expect to use any other io type stuff
+ * 
+ * <h3> Optional #defines </h3>
+ *   + <b> USE_NUMBER</b>  - enables number()
+ *   + <b> USE_HEXDUMP</b> - enables hexdump()
  */
 
 
@@ -8,11 +13,9 @@
 #pragma once
 
 
-/**
- *
- *
- *
- *
+/** @brief set the row that is currently selectd
+ *  @param[row] char to move the pen to
+ * See https://wikiti.brandonw.net/index.php?title=83Plus:RAM:86D8
  */
 void setPenRow(char row) __naked{
 	row;
@@ -28,6 +31,10 @@ void setPenRow(char row) __naked{
 		ret
 	__endasm;
 }
+/** @brief set the column that is currently selectd
+ *  @param[col] char to move the pen to
+ * See https://wikiti.brandonw.net/index.php?title=83Plus:RAM:86D7 
+ */
 void setPenCol(char col) __naked{
 	col;
 	__asm
@@ -42,6 +49,8 @@ void setPenCol(char col) __naked{
 		ret
 	__endasm;
 }
+/** @brief Set the pen back to 0,0
+ */
 void resetPen() __naked{
 	__asm
 		xor a, a
@@ -51,7 +60,10 @@ void resetPen() __naked{
 		ret
 	__endasm;
 }
-// just prints chars to screen
+/** @brief print a string to the screen
+ *  @param[loc] string to be printed
+ * Normal text output will not work in apps, this should though by repeatedly printing single chars to the string. 
+ */ 
 void fputs(char* loc) __naked {
 	loc;
 	__asm
@@ -71,7 +83,10 @@ void fputs(char* loc) __naked {
 
 	__endasm;
 }
-// prints to screen while also quickly setting cursor stuff. 
+/** @brief print a string to the screen, move down a line, and reset the pen col
+ *  @param[loc] string to be printed
+ * Calls fputs() and moves the pen for you
+ */ 
 void println(char* loc){
 	fputs(loc);
 	__asm
@@ -84,6 +99,8 @@ void println(char* loc){
 		ld (#penCol), a
 	__endasm;
 }
+/** @brief Go to the next line go back to the first col
+ */
 void newline() __naked{
 	__asm
 		ld a, (#penRow)
@@ -96,6 +113,9 @@ void newline() __naked{
 		ret
 	__endasm;
 }
+/** @brief prints a single char
+ * @param[ch] single char to be printed
+ */
 void printc(char ch) __naked{
 	ch;
 	__asm
@@ -110,7 +130,14 @@ void printc(char ch) __naked{
 		ret
 	__endasm;
 }
-#ifdef USE_NUMBER
+
+#if defined(USE_NUMBER) || defined(DOXYGEN)
+
+/** @brief Print a number to the screen
+ * @param[x] number to be printed
+ * 
+ * This function is a bit slow, but it does the job
+ */
 void number(int x){
     int i = 0;
     if (x<0){
@@ -141,10 +168,17 @@ void number(int x){
 }
 #endif
 
-#ifdef USE_HEXDUMP
-// great for debuging, not so great for games
+#if defined(USE_HEXDUMP) || defined(DOXYGEN)
+
+/** hex lookup table */
 const char hexTab[16] = {'0', '1', '2', '3', '4', '5', '6', '7', 
     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', };
+
+
+/** @brief print the hex of a char to the screen
+ *  @param[v] Char to be printed
+ *  This function is great for debuging but not so good for games. Should be quite fast.
+ */ 
 void hexdump(char v)__naked{
 	v;
 	__asm
