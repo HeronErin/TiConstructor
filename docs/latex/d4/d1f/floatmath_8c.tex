@@ -8,7 +8,7 @@ Use the built in calculator floating point math.
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{floatmath_8c_abbff86c80738202c6b2f3109f72f08a0}{PRINT\+\_\+\+OP1}}
+\#define \mbox{\hyperlink{floatmath_8c_a9d3182080a6c5692980ea51f24f1a500}{PRINT\+\_\+\+OP1}}()
 \end{DoxyCompactItemize}
 \begin{Indent}\textbf{ floating point stack stuff}\par
 \begin{DoxyCompactItemize}
@@ -75,7 +75,7 @@ Use the built in calculator floating point math.
 \begin{DoxyCompactList}\small\item\em op1 = ceil(op1) \end{DoxyCompactList}\item 
 \Hypertarget{floatmath_8c_a9a3d1d697824f8930d558ad33e99509e}\label{floatmath_8c_a9a3d1d697824f8930d558ad33e99509e} 
 \#define {\bfseries TEN\+\_\+\+TO\+\_\+\+THE\+\_\+\+POWER\+\_\+\+OF\+\_\+\+OP1}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x40\+B7)
-\begin{DoxyCompactList}\small\item\em 10 \texorpdfstring{$^\wedge$}{\string^} (op1) // not sure the use of this but its here \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em 10 \texorpdfstring{$^\wedge$}{\string^} (op1) not sure the use of this but its here \end{DoxyCompactList}\item 
 \Hypertarget{floatmath_8c_a85a2cc6f3e18dc9267086b9669c719b5}\label{floatmath_8c_a85a2cc6f3e18dc9267086b9669c719b5} 
 \#define {\bfseries INC\+\_\+\+OP1}()~\mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(0x4069)
 \begin{DoxyCompactList}\small\item\em op1 += 1 \end{DoxyCompactList}\item 
@@ -276,28 +276,37 @@ Use the built in calculator floating point math.
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{floatmath_8c_a7786275f549130affc810e217444414c}\label{floatmath_8c_a7786275f549130affc810e217444414c} 
-int {\bfseries OPT1\+\_\+\+TO\+\_\+\+INT} ()
-\item 
-\Hypertarget{floatmath_8c_a6c5336b3e93f0a37ab8e84a4158db269}\label{floatmath_8c_a6c5336b3e93f0a37ab8e84a4158db269} 
-void {\bfseries Move\+To\+Op1} (int v)
-\item 
-\Hypertarget{floatmath_8c_a7a2af65a4e59b08116536a811fea93ea}\label{floatmath_8c_a7a2af65a4e59b08116536a811fea93ea} 
-void {\bfseries Move\+Op1\+To} (unsigned int v)
-\end{DoxyCompactItemize}
+int \mbox{\hyperlink{floatmath_8c_a7786275f549130affc810e217444414c}{OPT1\+\_\+\+TO\+\_\+\+INT}} ()
+\begin{DoxyCompactList}\small\item\em returns int of op1 "{}\+Converts a floating-\/point number in OP1 to a two-\/byte hexadecimal number in DE."{} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{floatmath_8c_af04b91b2a622e6f3d270b11ed57ec846}{Move\+To\+Op1}} (unsigned int v)
+\begin{DoxyCompactList}\small\item\em Sets op1 to the value at a ram locations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{floatmath_8c_a7a2af65a4e59b08116536a811fea93ea}{Move\+Op1\+To}} (unsigned int v)
+\begin{DoxyCompactList}\small\item\em moves op1 to a ram location \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{floatmath_8c_aa60601dbfa7280f2a460cb3185c899bf}{char\+To\+Op1}} (char x)
+\begin{DoxyCompactList}\small\item\em Set op1 equal to a char. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{floatmath_8c_a56db8db6295fead15c7ead9fbc251c50}{int\+To\+Op1}} (int x)
+\begin{DoxyCompactList}\small\item\em set the value of an int to op1 \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 Use the built in calculator floating point math. 
 
-This library interfaces with the full normal calc float rutines. This is highly accurate but not very flexible with asm programs Also everything here is realitivly slow compared to intiger or fixed point math. {\bfseries{ And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable }} See\+: \href{https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html}{\texttt{ https\+://taricorp.\+gitlab.\+io/83pa28d/lesson/week3/day18/index.\+html}} 
+This library interfaces with the full normal calc float rutines. This is highly accurate but not very flexible with asm programs Also everything here is realitivly slow compared to intiger or fixed point math. {\bfseries{ And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable }} See\+: \href{https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html}{\texttt{ https\+://taricorp.\+gitlab.\+io/83pa28d/lesson/week3/day18/index.\+html}}
+
+\doxysubsubsubsection*{Optional \#defines }
+
+
+\begin{DoxyItemize}
+\item {\bfseries{ USE\+\_\+\+CHAR\+\_\+\+TO\+\_\+\+OP1}} -\/ enables \doxylink{floatmath_8c_aa60601dbfa7280f2a460cb3185c899bf}{char\+To\+Op1()}
+\item {\bfseries{ USE\+\_\+\+INT\+\_\+\+TO\+\_\+\+OP1}} -\/ enables \doxylink{floatmath_8c_a56db8db6295fead15c7ead9fbc251c50}{int\+To\+Op1()} 
+\end{DoxyItemize}
 
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{floatmath_8c_abbff86c80738202c6b2f3109f72f08a0}\label{floatmath_8c_abbff86c80738202c6b2f3109f72f08a0} 
+\Hypertarget{floatmath_8c_a9d3182080a6c5692980ea51f24f1a500}\label{floatmath_8c_a9d3182080a6c5692980ea51f24f1a500} 
 \index{floatmath.c@{floatmath.c}!PRINT\_OP1@{PRINT\_OP1}}
 \index{PRINT\_OP1@{PRINT\_OP1}!floatmath.c@{floatmath.c}}
 \doxysubsubsection{\texorpdfstring{PRINT\_OP1}{PRINT\_OP1}}
-{\footnotesize\ttfamily \#define PRINT\+\_\+\+OP1}
+{\footnotesize\ttfamily \#define PRINT\+\_\+\+OP1(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
@@ -306,3 +315,82 @@ This library interfaces with the full normal calc float rutines. This is highly 
 \DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bcall(\_DispOP1A)}
 
 \end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{floatmath_8c_aa60601dbfa7280f2a460cb3185c899bf}\label{floatmath_8c_aa60601dbfa7280f2a460cb3185c899bf} 
+\index{floatmath.c@{floatmath.c}!charToOp1@{charToOp1}}
+\index{charToOp1@{charToOp1}!floatmath.c@{floatmath.c}}
+\doxysubsubsection{\texorpdfstring{charToOp1()}{charToOp1()}}
+{\footnotesize\ttfamily void char\+To\+Op1 (\begin{DoxyParamCaption}\item[{char}]{x }\end{DoxyParamCaption})}
+
+
+
+Set op1 equal to a char. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}x\mbox{]}} & number to be set\\
+\hline
+\end{DoxyParams}
+
+\footnotesize  credit to Xeda112358 whose routine I modifed from \href{https://www.cemetech.net/forum/viewtopic.php?t=1449&postdays=0&postorder=asc&start=126}{\texttt{ https\+://www.\+cemetech.\+net/forum/viewtopic.\+php?t=1449\&postdays=0\&postorder=asc\&start=126}} 
+\normalsize  \Hypertarget{floatmath_8c_a56db8db6295fead15c7ead9fbc251c50}\label{floatmath_8c_a56db8db6295fead15c7ead9fbc251c50} 
+\index{floatmath.c@{floatmath.c}!intToOp1@{intToOp1}}
+\index{intToOp1@{intToOp1}!floatmath.c@{floatmath.c}}
+\doxysubsubsection{\texorpdfstring{intToOp1()}{intToOp1()}}
+{\footnotesize\ttfamily void int\+To\+Op1 (\begin{DoxyParamCaption}\item[{int}]{x }\end{DoxyParamCaption})}
+
+
+
+set the value of an int to op1 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}x\mbox{]}} & Value to be set to op1 \\
+\hline
+\end{DoxyParams}
+\Hypertarget{floatmath_8c_a7a2af65a4e59b08116536a811fea93ea}\label{floatmath_8c_a7a2af65a4e59b08116536a811fea93ea} 
+\index{floatmath.c@{floatmath.c}!MoveOp1To@{MoveOp1To}}
+\index{MoveOp1To@{MoveOp1To}!floatmath.c@{floatmath.c}}
+\doxysubsubsection{\texorpdfstring{MoveOp1To()}{MoveOp1To()}}
+{\footnotesize\ttfamily void Move\+Op1\+To (\begin{DoxyParamCaption}\item[{unsigned int}]{v }\end{DoxyParamCaption})}
+
+
+
+moves op1 to a ram location 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}v\mbox{]}} & Ram location to copy op1 to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{floatmath_8c_af04b91b2a622e6f3d270b11ed57ec846}\label{floatmath_8c_af04b91b2a622e6f3d270b11ed57ec846} 
+\index{floatmath.c@{floatmath.c}!MoveToOp1@{MoveToOp1}}
+\index{MoveToOp1@{MoveToOp1}!floatmath.c@{floatmath.c}}
+\doxysubsubsection{\texorpdfstring{MoveToOp1()}{MoveToOp1()}}
+{\footnotesize\ttfamily void Move\+To\+Op1 (\begin{DoxyParamCaption}\item[{unsigned int}]{v }\end{DoxyParamCaption})}
+
+
+
+Sets op1 to the value at a ram locations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}v\mbox{]}} & Ram location to copy op1 from \\
+\hline
+\end{DoxyParams}
+\Hypertarget{floatmath_8c_a7786275f549130affc810e217444414c}\label{floatmath_8c_a7786275f549130affc810e217444414c} 
+\index{floatmath.c@{floatmath.c}!OPT1\_TO\_INT@{OPT1\_TO\_INT}}
+\index{OPT1\_TO\_INT@{OPT1\_TO\_INT}!floatmath.c@{floatmath.c}}
+\doxysubsubsection{\texorpdfstring{OPT1\_TO\_INT()}{OPT1\_TO\_INT()}}
+{\footnotesize\ttfamily int OPT1\+\_\+\+TO\+\_\+\+INT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+returns int of op1 "{}\+Converts a floating-\/point number in OP1 to a two-\/byte hexadecimal number in DE."{} 
+
+
+\begin{DoxyItemize}
+\item see \href{https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4AEF}{\texttt{ https\+://wikiti.\+brandonw.\+net/index.\+php?title=83\+Plus\+:\+BCALLs\+:4\+AEF}} 
+\end{DoxyItemize}

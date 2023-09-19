@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['printc_0',['printc',['../d2/dba/textio_8c.html#a8f5c92b67e468af24552b8f68baf7fa8',1,'textio.c']]],
-  ['println_1',['println',['../d2/dba/textio_8c.html#a14055334d5f05def8c67b7c98212ab99',1,'textio.c']]]
+  ['opt1_5fto_5fint_0',['OPT1_TO_INT',['../d4/d1f/floatmath_8c.html#a7786275f549130affc810e217444414c',1,'floatmath.c']]]
 ];

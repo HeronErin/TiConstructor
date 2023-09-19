@@ -1,4 +1,10 @@
 #pragma once
+///////////////////// This file is slow and fast_math.c is better
+///////////////////// So I don't think I will be documenting it
+
+
+
+
 typedef int32_t fixedpt;
 typedef int64_t fixedptd;
 

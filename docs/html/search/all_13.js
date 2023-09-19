@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['wait_0',['wait',['../d0/ddb/misc_8c.html#a6bf771f8afb49a0c3aa76993723e72f4',1,'misc.c']]],
-  ['wait_5floc_1',['WAIT_LOC',['../d7/dbc/greyscale_8c.html#acf4ad1993081b85bd9f163e75dd7317d',1,'greyscale.c']]],
-  ['works_2',['How this works',['../index.html#autotoc_md2',1,'']]]
+  ['variables_2ec_0',['variables.c',['../d5/de8/variables_8c.html',1,'']]],
+  ['vertical_5fdotted_5fline_1',['vertical_dotted_line',['../d5/d95/graphics_8c.html#a463706520b4764bf2273330592c8d05c',1,'graphics.c']]],
+  ['vertical_5fline_2',['vertical_line',['../d5/d95/graphics_8c.html#abb95569c1cc36c678574d4ee8486ef65',1,'graphics.c']]]
 ];

@@ -85,8 +85,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:abbff86c80738202c6b2f3109f72f08a0" id="r_abbff86c80738202c6b2f3109f72f08a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#abbff86c80738202c6b2f3109f72f08a0">PRINT_OP1</a></td></tr>
-<tr class="separator:abbff86c80738202c6b2f3109f72f08a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3182080a6c5692980ea51f24f1a500" id="r_a9d3182080a6c5692980ea51f24f1a500"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#a9d3182080a6c5692980ea51f24f1a500">PRINT_OP1</a>()</td></tr>
+<tr class="separator:a9d3182080a6c5692980ea51f24f1a500"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">floating point stack stuff</div></td></tr>
 <tr class="memitem:ac92ca5ab87034a348decad7ee8d4bd1b" id="r_ac92ca5ab87034a348decad7ee8d4bd1b"><td class="memItemLeft" align="right" valign="top"><a id="ac92ca5ab87034a348decad7ee8d4bd1b" name="ac92ca5ab87034a348decad7ee8d4bd1b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>FPS</b>&#160;&#160;&#160;0x9824</td></tr>
@@ -143,7 +143,7 @@ Macros</h2></td></tr>
 <tr class="separator:a36849b796d2daeb1003657d166ce3242"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a3d1d697824f8930d558ad33e99509e" id="r_a9a3d1d697824f8930d558ad33e99509e"><td class="memItemLeft" align="right" valign="top"><a id="a9a3d1d697824f8930d558ad33e99509e" name="a9a3d1d697824f8930d558ad33e99509e"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TEN_TO_THE_POWER_OF_OP1</b>()&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(0x40B7)</td></tr>
-<tr class="memdesc:a9a3d1d697824f8930d558ad33e99509e"><td class="mdescLeft">&#160;</td><td class="mdescRight">10 ^ (op1) // not sure the use of this but its here <br /></td></tr>
+<tr class="memdesc:a9a3d1d697824f8930d558ad33e99509e"><td class="mdescLeft">&#160;</td><td class="mdescRight">10 ^ (op1) not sure the use of this but its here <br /></td></tr>
 <tr class="separator:a9a3d1d697824f8930d558ad33e99509e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85a2cc6f3e18dc9267086b9669c719b5" id="r_a85a2cc6f3e18dc9267086b9669c719b5"><td class="memItemLeft" align="right" valign="top"><a id="a85a2cc6f3e18dc9267086b9669c719b5" name="a85a2cc6f3e18dc9267086b9669c719b5"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>INC_OP1</b>()&#160;&#160;&#160;<a class="el" href="../../d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">bcall</a>(0x4069)</td></tr>
@@ -353,28 +353,42 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7786275f549130affc810e217444414c" id="r_a7786275f549130affc810e217444414c"><td class="memItemLeft" align="right" valign="top"><a id="a7786275f549130affc810e217444414c" name="a7786275f549130affc810e217444414c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>OPT1_TO_INT</b> ()</td></tr>
+<tr class="memitem:a7786275f549130affc810e217444414c" id="r_a7786275f549130affc810e217444414c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#a7786275f549130affc810e217444414c">OPT1_TO_INT</a> ()</td></tr>
+<tr class="memdesc:a7786275f549130affc810e217444414c"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns int of op1 "Converts a floating-point number in OP1 to a two-byte hexadecimal number in DE."  <br /></td></tr>
 <tr class="separator:a7786275f549130affc810e217444414c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c5336b3e93f0a37ab8e84a4158db269" id="r_a6c5336b3e93f0a37ab8e84a4158db269"><td class="memItemLeft" align="right" valign="top"><a id="a6c5336b3e93f0a37ab8e84a4158db269" name="a6c5336b3e93f0a37ab8e84a4158db269"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MoveToOp1</b> (int v)</td></tr>
-<tr class="separator:a6c5336b3e93f0a37ab8e84a4158db269"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a2af65a4e59b08116536a811fea93ea" id="r_a7a2af65a4e59b08116536a811fea93ea"><td class="memItemLeft" align="right" valign="top"><a id="a7a2af65a4e59b08116536a811fea93ea" name="a7a2af65a4e59b08116536a811fea93ea"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MoveOp1To</b> (unsigned int v)</td></tr>
+<tr class="memitem:af04b91b2a622e6f3d270b11ed57ec846" id="r_af04b91b2a622e6f3d270b11ed57ec846"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#af04b91b2a622e6f3d270b11ed57ec846">MoveToOp1</a> (unsigned int v)</td></tr>
+<tr class="memdesc:af04b91b2a622e6f3d270b11ed57ec846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets op1 to the value at a ram locations.  <br /></td></tr>
+<tr class="separator:af04b91b2a622e6f3d270b11ed57ec846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a2af65a4e59b08116536a811fea93ea" id="r_a7a2af65a4e59b08116536a811fea93ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#a7a2af65a4e59b08116536a811fea93ea">MoveOp1To</a> (unsigned int v)</td></tr>
+<tr class="memdesc:a7a2af65a4e59b08116536a811fea93ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">moves op1 to a ram location  <br /></td></tr>
 <tr class="separator:a7a2af65a4e59b08116536a811fea93ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa60601dbfa7280f2a460cb3185c899bf" id="r_aa60601dbfa7280f2a460cb3185c899bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#aa60601dbfa7280f2a460cb3185c899bf">charToOp1</a> (char x)</td></tr>
+<tr class="memdesc:aa60601dbfa7280f2a460cb3185c899bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set op1 equal to a char.  <br /></td></tr>
+<tr class="separator:aa60601dbfa7280f2a460cb3185c899bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56db8db6295fead15c7ead9fbc251c50" id="r_a56db8db6295fead15c7ead9fbc251c50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d1f/floatmath_8c.html#a56db8db6295fead15c7ead9fbc251c50">intToOp1</a> (int x)</td></tr>
+<tr class="memdesc:a56db8db6295fead15c7ead9fbc251c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the value of an int to op1  <br /></td></tr>
+<tr class="separator:a56db8db6295fead15c7ead9fbc251c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Use the built in calculator floating point math. </p>
-<p>This library interfaces with the full normal calc float rutines. This is highly accurate but not very flexible with asm programs Also everything here is realitivly slow compared to intiger or fixed point math. <b> And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable </b> See: <a href="https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html">https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html</a> </p>
+<p>This library interfaces with the full normal calc float rutines. This is highly accurate but not very flexible with asm programs Also everything here is realitivly slow compared to intiger or fixed point math. <b> And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable </b> See: <a href="https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html">https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html</a></p>
+<h3>Optional #defines </h3>
+<ul>
+<li><b> USE_CHAR_TO_OP1</b> - enables <a class="el" href="../../d4/d1f/floatmath_8c.html#aa60601dbfa7280f2a460cb3185c899bf" title="Set op1 equal to a char.">charToOp1()</a></li>
+<li><b> USE_INT_TO_OP1</b> - enables <a class="el" href="../../d4/d1f/floatmath_8c.html#a56db8db6295fead15c7ead9fbc251c50" title="set the value of an int to op1">intToOp1()</a> </li>
+</ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="abbff86c80738202c6b2f3109f72f08a0" name="abbff86c80738202c6b2f3109f72f08a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbff86c80738202c6b2f3109f72f08a0">&#9670;&#160;</a></span>PRINT_OP1</h2>
+<a id="a9d3182080a6c5692980ea51f24f1a500" name="a9d3182080a6c5692980ea51f24f1a500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d3182080a6c5692980ea51f24f1a500">&#9670;&#160;</a></span>PRINT_OP1</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">#define PRINT_OP1</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -382,6 +396,134 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>MoveOp1To</b> (unsign
 <div class="line">                    ld a, #6 __endasm;\</div>
 <div class="line">                    bcall(_DispOP1A)</div>
 </div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="aa60601dbfa7280f2a460cb3185c899bf" name="aa60601dbfa7280f2a460cb3185c899bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa60601dbfa7280f2a460cb3185c899bf">&#9670;&#160;</a></span>charToOp1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void charToOp1 </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set op1 equal to a char. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[x]</td><td>number to be set</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><small> credit to Xeda112358 whose routine I modifed from <a href="https://www.cemetech.net/forum/viewtopic.php?t=1449&postdays=0&postorder=asc&start=126">https://www.cemetech.net/forum/viewtopic.php?t=1449&amp;postdays=0&amp;postorder=asc&amp;start=126</a> </small> </p>
+
+</div>
+</div>
+<a id="a56db8db6295fead15c7ead9fbc251c50" name="a56db8db6295fead15c7ead9fbc251c50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56db8db6295fead15c7ead9fbc251c50">&#9670;&#160;</a></span>intToOp1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void intToOp1 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set the value of an int to op1 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[x]</td><td>Value to be set to op1 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7a2af65a4e59b08116536a811fea93ea" name="a7a2af65a4e59b08116536a811fea93ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a2af65a4e59b08116536a811fea93ea">&#9670;&#160;</a></span>MoveOp1To()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveOp1To </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>moves op1 to a ram location </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[v]</td><td>Ram location to copy op1 to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af04b91b2a622e6f3d270b11ed57ec846" name="af04b91b2a622e6f3d270b11ed57ec846"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af04b91b2a622e6f3d270b11ed57ec846">&#9670;&#160;</a></span>MoveToOp1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveToOp1 </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets op1 to the value at a ram locations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[v]</td><td>Ram location to copy op1 from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7786275f549130affc810e217444414c" name="a7786275f549130affc810e217444414c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7786275f549130affc810e217444414c">&#9670;&#160;</a></span>OPT1_TO_INT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int OPT1_TO_INT </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>returns int of op1 "Converts a floating-point number in OP1 to a two-byte hexadecimal number in DE." </p>
+<ul>
+<li>see <a href="https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4AEF">https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4AEF</a> </li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->

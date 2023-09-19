@@ -6,6 +6,10 @@
  * This library interfaces with the full normal calc float rutines. This is highly accurate but not very flexible with asm programs
  * Also everything here is realitivly slow compared to intiger or fixed point math. <b> And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable </b>
  * See: https://taricorp.gitlab.io/83pa28d/lesson/week3/day18/index.html
+ * 
+ * <h3> Optional #defines </h3>
+ *   + <b> USE_CHAR_TO_OP1</b> - enables charToOp1()
+ *   + <b> USE_INT_TO_OP1</b>  - enables intToOp1()
  */
 
 
@@ -151,14 +155,20 @@ around 150,000 to 200,000 cycles, the base clock is 8 mhz and turbo is 16  */
 
 /** @} */
 
-
+/** @brief returns int of op1
+ * "Converts a floating-point number in OP1 to a two-byte hexadecimal number in DE." 
+ * - see https://wikiti.brandonw.net/index.php?title=83Plus:BCALLs:4AEF
+ */
 int OPT1_TO_INT(){ // if greater than 9999 errors
 	bcall(_ConvOP1);
 	__asm
 		EX DE, HL
 	__endasm;
 }
-void MoveToOp1(int v){
+/** @brief Sets op1 to the value at a ram locations
+ *  @param[v] Ram location to copy op1 from
+ */
+void MoveToOp1(unsigned int v){
 	__asm
 		ld	hl, #0 + 4
 		add	hl, sp
@@ -170,6 +180,9 @@ void MoveToOp1(int v){
 	__endasm;
 	bcall(_Mov9ToOP1);
 }
+/** @brief moves op1 to a ram location
+ * @param[v] Ram location to copy op1 to
+ */
 void MoveOp1To(unsigned int v){
 	unsigned int op =OP1;
 	for (char i = 9; i!=0; i--){
@@ -180,14 +193,18 @@ void MoveOp1To(unsigned int v){
 
 }
 
-#define PRINT_OP1  __asm \
+#define PRINT_OP1()  __asm \
 					ld a, #6 __endasm;\
 					bcall(_DispOP1A)
 
 
-// Taken and moded from Xeda112358
-// https://www.cemetech.net/forum/viewtopic.php?t=1449&postdays=0&postorder=asc&start=126
-#ifdef USE_CHAR_TO_OP1
+
+#if defined(USE_CHAR_TO_OP1) || defined(DOXYGEN)
+/**  @brief Set op1 equal to a char
+ *   @param[x] number to be set
+ * 
+ *   <small> credit to Xeda112358 whose routine I modifed from https://www.cemetech.net/forum/viewtopic.php?t=1449&postdays=0&postorder=asc&start=126 </small>
+ */
 void charToOp1(char x){
 
 
@@ -266,7 +283,10 @@ void charToOp1(char x){
 }
 #endif
 
-#ifdef USE_INT_TO_OP1
+#if defined(USE_INT_TO_OP1) || defined(DOXYGEN)
+/** @brief set the value of an int to op1 
+ *  @param[x] Value to be set to op1
+ */ 
 void intToOp1(int x){
 	__asm
 		ld	hl, #0 + 4
