@@ -63,7 +63,7 @@ def parsefile(fnamein,fnameout,abspath,calctype,oncalcname):
 		fho.write(bytearray(b'**TI83F*'))				#byte 00, length 08
 		fho.write(mybytearray([26,10,0]))					#byte 08, length 03
 	
-	fho.write(bytearray(b'BinPac8x (c)2010 Cemetech.net&Kerm Martian'))
+	fho.write(bytearray(b'                                          '))
 															#byte 11, length 42
 	
 	bincontents = fhi.read();
