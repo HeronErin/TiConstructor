@@ -47,12 +47,12 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;../../lib/textio.c:17: void setPenRow(char row) __naked{
+;../../lib/textio.c:20: void setPenRow(char row) __naked{
 ;	---------------------------------
 ; Function setPenRow
 ; ---------------------------------
 _setPenRow::
-;../../lib/textio.c:29: __endasm;
+;../../lib/textio.c:32: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc
@@ -60,13 +60,13 @@ _setPenRow::
 	ld	a, c
 	ld	(#0x86D8), a
 	ret
-;../../lib/textio.c:30: }
-;../../lib/textio.c:31: void setPenCol(char col) __naked{
+;../../lib/textio.c:33: }
+;../../lib/textio.c:38: void setPenCol(char col) __naked{
 ;	---------------------------------
 ; Function setPenCol
 ; ---------------------------------
 _setPenCol::
-;../../lib/textio.c:43: __endasm;
+;../../lib/textio.c:50: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc
@@ -74,24 +74,24 @@ _setPenCol::
 	ld	a, c
 	ld	(#0x86D7), a
 	ret
-;../../lib/textio.c:44: }
-;../../lib/textio.c:45: void resetPen() __naked{
+;../../lib/textio.c:51: }
+;../../lib/textio.c:54: void resetPen() __naked{
 ;	---------------------------------
 ; Function resetPen
 ; ---------------------------------
 _resetPen::
-;../../lib/textio.c:52: __endasm;
+;../../lib/textio.c:61: __endasm;
 	xor	a, a
 	ld	(#0x86D7), a
 	ld	(#0x86D8), a
 	ret
-;../../lib/textio.c:53: }
-;../../lib/textio.c:55: void fputs(char* loc) __naked {
+;../../lib/textio.c:62: }
+;../../lib/textio.c:67: void fputs(char* loc) __naked {
 ;	---------------------------------
 ; Function fputs
 ; ---------------------------------
 _fputs::
-;../../lib/textio.c:72: __endasm;
+;../../lib/textio.c:84: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc ; ret value
@@ -104,8 +104,8 @@ _fputs::
 	.dw 0x455E
 	inc	bc
 	jr	the_char_loop_i_need_more_good_names_for_labels
-;../../lib/textio.c:73: }
-;../../lib/textio.c:75: void println(char* loc){
+;../../lib/textio.c:85: }
+;../../lib/textio.c:90: void println(char* loc){
 ;	---------------------------------
 ; Function println
 ; ---------------------------------
@@ -113,28 +113,28 @@ _println::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/textio.c:76: fputs(loc);
+;../../lib/textio.c:91: fputs(loc);
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	push	hl
 	call	_fputs
 	pop	af
-;../../lib/textio.c:85: __endasm;
+;../../lib/textio.c:100: __endasm;
 	ld	a, (#0x86D8)
 	ld	b, #6
 	add	b
 	ld	(#0x86D8), a
 	xor	a, a
 	ld	(#0x86D7), a
-;../../lib/textio.c:86: }
+;../../lib/textio.c:101: }
 	pop	ix
 	ret
-;../../lib/textio.c:87: void newline() __naked{
+;../../lib/textio.c:104: void newline() __naked{
 ;	---------------------------------
 ; Function newline
 ; ---------------------------------
 _newline::
-;../../lib/textio.c:97: __endasm;
+;../../lib/textio.c:114: __endasm;
 	ld	a, (#0x86D8)
 	ld	b, #6
 	add	b
@@ -142,13 +142,13 @@ _newline::
 	xor	a, a
 	ld	(#0x86D7), a
 	ret
-;../../lib/textio.c:98: }
-;../../lib/textio.c:99: void printc(char ch) __naked{
+;../../lib/textio.c:115: }
+;../../lib/textio.c:119: void printc(char ch) __naked{
 ;	---------------------------------
 ; Function printc
 ; ---------------------------------
 _printc::
-;../../lib/textio.c:111: __endasm;
+;../../lib/textio.c:131: __endasm;
 	pop	hl ; Get input
 	pop	bc
 	push	bc
@@ -159,7 +159,7 @@ _printc::
 	.dw 0x455E
 	pop	ix
 	ret
-;../../lib/textio.c:112: }
+;../../lib/textio.c:132: }
 ;main.c:5: void main() {
 ;	---------------------------------
 ; Function main
