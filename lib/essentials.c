@@ -23,7 +23,7 @@
 
 /** @brief ex af, af'
  * 
- * Machine code to swap af and shadow af and only takes 4 t-states, only use in asm  */
+ * Machine code to swap af and shadow af and only takes 4 t-states, <b>only use in asm</b>  */
 #define aSaveA .db #0x08
 
 /**  @brief Stack pointer temp
