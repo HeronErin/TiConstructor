@@ -74,12 +74,12 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;../../lib/textio.c:5: void setPenRow(char row) __naked{
+;../../lib/textio.c:20: void setPenRow(char row) __naked{
 ;	---------------------------------
 ; Function setPenRow
 ; ---------------------------------
 _setPenRow::
-;../../lib/textio.c:17: __endasm;
+;../../lib/textio.c:32: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc
@@ -87,13 +87,13 @@ _setPenRow::
 	ld	a, c
 	ld	(#0x86D8), a
 	ret
-;../../lib/textio.c:18: }
-;../../lib/textio.c:19: void setPenCol(char col) __naked{
+;../../lib/textio.c:33: }
+;../../lib/textio.c:38: void setPenCol(char col) __naked{
 ;	---------------------------------
 ; Function setPenCol
 ; ---------------------------------
 _setPenCol::
-;../../lib/textio.c:31: __endasm;
+;../../lib/textio.c:50: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc
@@ -101,24 +101,24 @@ _setPenCol::
 	ld	a, c
 	ld	(#0x86D7), a
 	ret
-;../../lib/textio.c:32: }
-;../../lib/textio.c:33: void resetPen() __naked{
+;../../lib/textio.c:51: }
+;../../lib/textio.c:54: void resetPen() __naked{
 ;	---------------------------------
 ; Function resetPen
 ; ---------------------------------
 _resetPen::
-;../../lib/textio.c:40: __endasm;
+;../../lib/textio.c:61: __endasm;
 	xor	a, a
 	ld	(#0x86D7), a
 	ld	(#0x86D8), a
 	ret
-;../../lib/textio.c:41: }
-;../../lib/textio.c:43: void fputs(char* loc) __naked {
+;../../lib/textio.c:62: }
+;../../lib/textio.c:67: void fputs(char* loc) __naked {
 ;	---------------------------------
 ; Function fputs
 ; ---------------------------------
 _fputs::
-;../../lib/textio.c:60: __endasm;
+;../../lib/textio.c:84: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc ; ret value
@@ -131,8 +131,8 @@ _fputs::
 	.dw 0x455E
 	inc	bc
 	jr	the_char_loop_i_need_more_good_names_for_labels
-;../../lib/textio.c:61: }
-;../../lib/textio.c:63: void println(char* loc){
+;../../lib/textio.c:85: }
+;../../lib/textio.c:90: void println(char* loc){
 ;	---------------------------------
 ; Function println
 ; ---------------------------------
@@ -140,28 +140,28 @@ _println::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/textio.c:64: fputs(loc);
+;../../lib/textio.c:91: fputs(loc);
 	ld	l, 4 (ix)
 	ld	h, 5 (ix)
 	push	hl
 	call	_fputs
 	pop	af
-;../../lib/textio.c:73: __endasm;
+;../../lib/textio.c:100: __endasm;
 	ld	a, (#0x86D8)
 	ld	b, #6
 	add	b
 	ld	(#0x86D8), a
 	xor	a, a
 	ld	(#0x86D7), a
-;../../lib/textio.c:74: }
+;../../lib/textio.c:101: }
 	pop	ix
 	ret
-;../../lib/textio.c:75: void newline() __naked{
+;../../lib/textio.c:104: void newline() __naked{
 ;	---------------------------------
 ; Function newline
 ; ---------------------------------
 _newline::
-;../../lib/textio.c:85: __endasm;
+;../../lib/textio.c:114: __endasm;
 	ld	a, (#0x86D8)
 	ld	b, #6
 	add	b
@@ -169,13 +169,13 @@ _newline::
 	xor	a, a
 	ld	(#0x86D7), a
 	ret
-;../../lib/textio.c:86: }
-;../../lib/textio.c:87: void printc(char ch) __naked{
+;../../lib/textio.c:115: }
+;../../lib/textio.c:119: void printc(char ch) __naked{
 ;	---------------------------------
 ; Function printc
 ; ---------------------------------
 _printc::
-;../../lib/textio.c:99: __endasm;
+;../../lib/textio.c:131: __endasm;
 	pop	hl ; Get input
 	pop	bc
 	push	bc
@@ -186,8 +186,8 @@ _printc::
 	.dw 0x455E
 	pop	ix
 	ret
-;../../lib/textio.c:100: }
-;../../lib/textio.c:102: void number(int x){
+;../../lib/textio.c:132: }
+;../../lib/textio.c:141: void number(int x){
 ;	---------------------------------
 ; Function number
 ; ---------------------------------
@@ -198,23 +198,23 @@ _number::
 	ld	hl, #-29
 	add	hl, sp
 	ld	sp, hl
-;../../lib/textio.c:104: if (x<0){
+;../../lib/textio.c:143: if (x<0){
 	bit	7, 5 (ix)
 	jr	Z, 00113$
-;../../lib/textio.c:105: x=0-x;
+;../../lib/textio.c:144: x=0-x;
 	xor	a, a
 	sub	a, 4 (ix)
 	ld	4 (ix), a
 	ld	a, #0x00
 	sbc	a, 5 (ix)
 	ld	5 (ix), a
-;../../lib/textio.c:106: printc('-');
+;../../lib/textio.c:145: printc('-');
 	ld	a, #0x2d
 	push	af
 	inc	sp
 	call	_printc
 	inc	sp
-;../../lib/textio.c:109: do {
+;../../lib/textio.c:148: do {
 00113$:
 	ld	hl, #0
 	add	hl, sp
@@ -222,7 +222,7 @@ _number::
 	ld	-3 (ix), h
 	ld	bc, #0x0000
 00103$:
-;../../lib/textio.c:110: out[i]=x % 10 + '0';
+;../../lib/textio.c:149: out[i]=x % 10 + '0';
 	ld	a, -4 (ix)
 	add	a, c
 	ld	e, a
@@ -246,9 +246,9 @@ _number::
 	ld	a, -2 (ix)
 	add	a, #0x30
 	ld	(de), a
-;../../lib/textio.c:111: i+=1;
+;../../lib/textio.c:150: i+=1;
 	inc	bc
-;../../lib/textio.c:112: } while((x /= 10) > 0);
+;../../lib/textio.c:151: } while((x /= 10) > 0);
 	push	bc
 	ld	hl, #0x000a
 	push	hl
@@ -269,13 +269,13 @@ _number::
 	xor	a, #0x80
 00139$:
 	jp	M, 00103$
-;../../lib/textio.c:113: i--;
+;../../lib/textio.c:152: i--;
 	dec	bc
 00108$:
-;../../lib/textio.c:114: for(;i>=0; i--){
+;../../lib/textio.c:153: for(;i>=0; i--){
 	bit	7, b
 	jr	NZ, 00110$
-;../../lib/textio.c:125: __endasm;
+;../../lib/textio.c:164: __endasm;
 	ld	l, -4 (ix)
 	ld	h, -3 (ix)
 	add	hl, bc
@@ -284,33 +284,33 @@ _number::
 	rst	40 
 	.dw 0x455E
 	pop	ix
-;../../lib/textio.c:114: for(;i>=0; i--){
+;../../lib/textio.c:153: for(;i>=0; i--){
 	dec	bc
 	jr	00108$
 00110$:
-;../../lib/textio.c:129: }
+;../../lib/textio.c:168: }
 	ld	sp, ix
 	pop	ix
 	ret
-;../../lib/fast_math.c:10: char FX_floor_int(int f)__naked{
+;../../lib/fast_math.c:34: char FX_floor_int(int f)__naked{
 ;	---------------------------------
 ; Function FX_floor_int
 ; ---------------------------------
 _FX_floor_int::
-;../../lib/fast_math.c:18: __endasm;
+;../../lib/fast_math.c:42: __endasm;
 	pop	hl ; Get input
 	pop	af ; and perserve
 	push	af
 	push	hl ; ret value
 	ld	l, a
 	ret
-;../../lib/fast_math.c:19: }
-;../../lib/fast_math.c:20: int FX_floor(int f)__naked{
+;../../lib/fast_math.c:43: }
+;../../lib/fast_math.c:48: int FX_floor(int f)__naked{
 ;	---------------------------------
 ; Function FX_floor
 ; ---------------------------------
 _FX_floor::
-;../../lib/fast_math.c:30: __endasm;
+;../../lib/fast_math.c:58: __endasm;
 	pop	de ; Get input
 	pop	hl ; and perserve
 	push	hl
@@ -318,13 +318,13 @@ _FX_floor::
 	xor	a, a
 	ld	l, a
 	ret
-;../../lib/fast_math.c:31: }
-;../../lib/fast_math.c:34: char sqrt_rounded(int x)__naked{
+;../../lib/fast_math.c:59: }
+;../../lib/fast_math.c:65: char sqrt_rounded(int x)__naked{
 ;	---------------------------------
 ; Function sqrt_rounded
 ; ---------------------------------
 _sqrt_rounded::
-;../../lib/fast_math.c:46: __endasm;
+;../../lib/fast_math.c:77: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc
@@ -334,13 +334,13 @@ _sqrt_rounded::
 	call	___fast_16_bit_sqrt_asm
 	ld	l, d
 	ret
-;../../lib/fast_math.c:47: }
-;../../lib/fast_math.c:48: long mul_int(int x, int y)__naked{
+;../../lib/fast_math.c:78: }
+;../../lib/fast_math.c:84: long mul_int(int x, int y)__naked{
 ;	---------------------------------
 ; Function mul_int
 ; ---------------------------------
 _mul_int::
-;../../lib/fast_math.c:58: __endasm;
+;../../lib/fast_math.c:94: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	pop	de
@@ -348,13 +348,13 @@ _mul_int::
 	push	bc
 	push	hl ; ret value
 	jp	___mult_de_bc ; Jp instead of call saves time due to ___mult_de_bc having the same output as long
-;../../lib/fast_math.c:59: }
-;../../lib/fast_math.c:60: int div_int(int x, int y)__naked{
+;../../lib/fast_math.c:95: }
+;../../lib/fast_math.c:101: int div_int(int x, int y)__naked{
 ;	---------------------------------
 ; Function div_int
 ; ---------------------------------
 _div_int::
-;../../lib/fast_math.c:75: __endasm;
+;../../lib/fast_math.c:116: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	pop	de
@@ -366,13 +366,13 @@ _div_int::
 	ld	h, a
 	ld	l, c
 	ret
-;../../lib/fast_math.c:76: }
-;../../lib/fast_math.c:79: int FX_mul(int x, int y)__naked{
+;../../lib/fast_math.c:117: }
+;../../lib/fast_math.c:124: int FX_mul(int x, int y)__naked{
 ;	---------------------------------
 ; Function FX_mul
 ; ---------------------------------
 _FX_mul::
-;../../lib/fast_math.c:135: __endasm;
+;../../lib/fast_math.c:180: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	pop	de
@@ -418,13 +418,13 @@ _FX_mul::
 	sub	h
 	ld	h,a
 	ret
-;../../lib/fast_math.c:136: }
-;../../lib/fast_math.c:138: int FX_div(int x, int y)__naked{
+;../../lib/fast_math.c:181: }
+;../../lib/fast_math.c:191: int FX_div(int x, int y)__naked{
 ;	---------------------------------
 ; Function FX_div
 ; ---------------------------------
 _FX_div::
-;../../lib/fast_math.c:206: __endasm;
+;../../lib/fast_math.c:259: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	pop	de
@@ -476,13 +476,13 @@ _FX_div::
 	sub	h
 	ld	h,a
 	ret
-;../../lib/fast_math.c:207: }
-;../../lib/fast_math.c:208: int FX_sqrt(int x)__naked{
+;../../lib/fast_math.c:260: }
+;../../lib/fast_math.c:266: int FX_sqrt(int x)__naked{
 ;	---------------------------------
 ; Function FX_sqrt
 ; ---------------------------------
 _FX_sqrt::
-;../../lib/fast_math.c:231: __endasm;
+;../../lib/fast_math.c:289: __endasm;
 	pop	hl ; Get input
 	pop	bc ; and perserve
 	push	bc
@@ -502,13 +502,13 @@ _FX_sqrt::
 	srl	h
 	rr	l
 	ret
-;../../lib/fast_math.c:232: }
-;../../lib/fast_math.c:235: int FX_abs(int x)__naked{
+;../../lib/fast_math.c:290: }
+;../../lib/fast_math.c:299: int FX_abs(int x)__naked{
 ;	---------------------------------
 ; Function FX_abs
 ; ---------------------------------
 _FX_abs::
-;../../lib/fast_math.c:251: __endasm;
+;../../lib/fast_math.c:315: __endasm;
 	pop	de
 	pop	hl
 	push	hl
@@ -522,13 +522,13 @@ _FX_abs::
 	sub	h
 	ld	h,a
 	ret
-;../../lib/fast_math.c:252: }
-;../../lib/fast_math.c:253: void FX_number(int x)__naked{
+;../../lib/fast_math.c:316: }
+;../../lib/fast_math.c:321: void FX_number(int x)__naked{
 ;	---------------------------------
 ; Function FX_number
 ; ---------------------------------
 _FX_number::
-;../../lib/fast_math.c:328: __endasm;
+;../../lib/fast_math.c:396: __endasm;
 	pop	de
 	pop	hl
 	ld	a, h
@@ -588,13 +588,13 @@ _FX_number::
 	jp	nz, _NUM_LOOP_FM
 	POP	AF
 	ret
-;../../lib/fast_math.c:329: }
-;../../lib/fast_math.c:342: void __fast_16_bit_sqrt_asm()__naked{
+;../../lib/fast_math.c:397: }
+;../../lib/fast_math.c:409: void __fast_16_bit_sqrt_asm()__naked{
 ;	---------------------------------
 ; Function __fast_16_bit_sqrt_asm
 ; ---------------------------------
 ___fast_16_bit_sqrt_asm::
-;../../lib/fast_math.c:372: __endasm;
+;../../lib/fast_math.c:439: __endasm;
 	ld	de, #0x0040 ; 40h appends "01" to D
 	ld	h, d
 	ld	b, #7
@@ -616,13 +616,13 @@ ___fast_16_bit_sqrt_asm::
 	ccf
 	rl	d
 	ret
-;../../lib/fast_math.c:374: }
-;../../lib/fast_math.c:378: void __mult_de_bc()__naked{ 
+;../../lib/fast_math.c:441: }
+;../../lib/fast_math.c:451: void __mult_de_bc()__naked{ 
 ;	---------------------------------
 ; Function __mult_de_bc
 ; ---------------------------------
 ___mult_de_bc::
-;../../lib/fast_math.c:402: __endasm;
+;../../lib/fast_math.c:475: __endasm;
 	ld	hl, #0
 	sla	e ; optimised 1st iteration
 	rl	d
@@ -644,13 +644,13 @@ ___mult_de_bc::
 	dec	a
 	jr	nz, _mlloop
 	ret
-;../../lib/fast_math.c:403: }
-;../../lib/fast_math.c:409: void __div_32_by_16()__naked{
+;../../lib/fast_math.c:476: }
+;../../lib/fast_math.c:489: void __div_32_by_16()__naked{
 ;	---------------------------------
 ; Function __div_32_by_16
 ; ---------------------------------
 ___div_32_by_16::
-;../../lib/fast_math.c:431: __endasm;
+;../../lib/fast_math.c:511: __endasm;
 	ld	hl,#0
 	ld	b,#32
 	 Div32By16_Loop:
@@ -671,13 +671,13 @@ ___div_32_by_16::
 	inc	ix
 	djnz	Div32By16_Loop
 	ret
-;../../lib/fast_math.c:432: }
-;../../lib/fast_math.c:438: void __div_ac_de()__naked{
+;../../lib/fast_math.c:512: }
+;../../lib/fast_math.c:523: void __div_ac_de()__naked{
 ;	---------------------------------
 ; Function __div_ac_de
 ; ---------------------------------
 ___div_ac_de::
-;../../lib/fast_math.c:455: __endasm;
+;../../lib/fast_math.c:540: __endasm;
 	ld	hl, #0
 	ld	b, #16
 	 _jqaloop:
@@ -691,8 +691,8 @@ ___div_ac_de::
 	dec	c
 	djnz	_jqaloop
 	ret
-;../../lib/fast_math.c:456: }
-;../../lib/fast_math.c:463: int FX_sine(int deg){
+;../../lib/fast_math.c:541: }
+;../../lib/fast_math.c:555: int FX_sine(int deg){
 ;	---------------------------------
 ; Function FX_sine
 ; ---------------------------------
@@ -700,7 +700,7 @@ _FX_sine::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/fast_math.c:465: int ret = FX_sine_lookup[(deg%360)/2];
+;../../lib/fast_math.c:557: int ret = FX_sine_lookup[(deg%360)/2];
 	ld	hl, #0x0168
 	push	hl
 	ld	l, 4 (ix)
@@ -724,9 +724,9 @@ _FX_sine::
 	ld	e, (hl)
 	inc	hl
 	ld	d, (hl)
-;../../lib/fast_math.c:467: return ret;
+;../../lib/fast_math.c:559: return ret;
 	ex	de, hl
-;../../lib/fast_math.c:468: }
+;../../lib/fast_math.c:560: }
 	pop	ix
 	ret
 _FX_sine_lookup:
@@ -910,7 +910,7 @@ _FX_sine_lookup:
 	.dw #0xffea
 	.dw #0xfff3
 	.dw #0xfffc
-;../../lib/fast_math.c:469: int FX_cos(int deg){
+;../../lib/fast_math.c:565: int FX_cos(int deg){
 ;	---------------------------------
 ; Function FX_cos
 ; ---------------------------------
@@ -918,7 +918,7 @@ _FX_cos::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/fast_math.c:470: return FX_sine(deg+90);
+;../../lib/fast_math.c:566: return FX_sine(deg+90);
 	ld	a, 4 (ix)
 	add	a, #0x5a
 	ld	c, a
@@ -928,10 +928,10 @@ _FX_cos::
 	push	bc
 	call	_FX_sine
 	pop	af
-;../../lib/fast_math.c:471: }
+;../../lib/fast_math.c:567: }
 	pop	ix
 	ret
-;../../lib/fast_math.c:472: int FX_tan(int deg){
+;../../lib/fast_math.c:572: int FX_tan(int deg){
 ;	---------------------------------
 ; Function FX_tan
 ; ---------------------------------
@@ -939,7 +939,7 @@ _FX_tan::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/fast_math.c:473: return FX_div(FX_sine(deg), FX_sine(deg+90));
+;../../lib/fast_math.c:573: return FX_div(FX_sine(deg), FX_sine(deg+90));
 	ld	a, 4 (ix)
 	add	a, #0x5a
 	ld	c, a
@@ -957,15 +957,15 @@ _FX_tan::
 	call	_FX_div
 	pop	af
 	pop	af
-;../../lib/fast_math.c:474: }
+;../../lib/fast_math.c:574: }
 	pop	ix
 	ret
-;../../lib/graphics.c:40: void clearBuffer(){
+;../../lib/graphics.c:86: void clearBuffer(){
 ;	---------------------------------
 ; Function clearBuffer
 ; ---------------------------------
 _clearBuffer::
-;../../lib/graphics.c:61: __endasm;
+;../../lib/graphics.c:107: __endasm;
 	DI
 	LD	(0x980C), SP
 	LD	SP, #0x9340 + 768 ; 768 byte area
@@ -983,14 +983,14 @@ _clearBuffer::
 	DJNZ	CLEAR_LOOP
 	LD	SP, (0x980C)
 	EI
-;../../lib/graphics.c:62: }
+;../../lib/graphics.c:108: }
 	ret
-;../../lib/graphics.c:66: void swap(){
+;../../lib/graphics.c:114: void swap(){
 ;	---------------------------------
 ; Function swap
 ; ---------------------------------
 _swap::
-;../../lib/graphics.c:107: __endasm;
+;../../lib/graphics.c:155: __endasm;
 	di
 	ld	hl, #0x9340
 	CALL	0x000B
@@ -1016,14 +1016,14 @@ _swap::
 	cp	#0xBF
 	jp	nz, YLOOPR__
 	ei
-;../../lib/graphics.c:109: }
+;../../lib/graphics.c:157: }
 	ret
-;../../lib/graphics.c:116: void line(char x, char y, char x2, char y2) __naked{
+;../../lib/graphics.c:174: void line(char x, char y, char x2, char y2) __naked{
 ;	---------------------------------
 ; Function line
 ; ---------------------------------
 _line::
-;../../lib/graphics.c:238: __endasm;
+;../../lib/graphics.c:296: __endasm;
 	pop	bc
 	pop	de
 	pop	hl
@@ -1137,13 +1137,13 @@ _line::
 	djnz	DL_Hloop
 	ld	sp,(0x980C)
 	ret
-;../../lib/graphics.c:239: }
-;../../lib/graphics.c:245: void vertical_line(char x, char start, char height, char not_used)__naked{
+;../../lib/graphics.c:297: }
+;../../lib/graphics.c:312: void vertical_line(char x, char start, char height, char not_used)__naked{
 ;	---------------------------------
 ; Function vertical_line
 ; ---------------------------------
 _vertical_line::
-;../../lib/graphics.c:315: __endasm;
+;../../lib/graphics.c:382: __endasm;
 	pop	bc
 	pop	de
 	pop	hl
@@ -1193,13 +1193,13 @@ _vertical_line::
 	add	hl,de
 	djnz	vertloop2
 	ret
-;../../lib/graphics.c:316: }
-;../../lib/graphics.c:318: void vertical_dotted_line(char x, char start, char height, char not_used)__naked{
+;../../lib/graphics.c:383: }
+;../../lib/graphics.c:395: void vertical_dotted_line(char x, char start, char height, char not_used)__naked{
 ;	---------------------------------
 ; Function vertical_dotted_line
 ; ---------------------------------
 _vertical_dotted_line::
-;../../lib/graphics.c:391: __endasm;
+;../../lib/graphics.c:468: __endasm;
 	pop	bc
 	pop	de
 	pop	hl
@@ -1251,18 +1251,18 @@ _vertical_dotted_line::
 	add	hl,de
 	djnz	_vertloop2
 	ret
-;../../lib/graphics.c:392: }
-;../../lib/misc.c:8: char getCpuSpeed() __naked{
+;../../lib/graphics.c:469: }
+;../../lib/misc.c:28: char getCpuSpeed() __naked{
 ;	---------------------------------
 ; Function getCpuSpeed
 ; ---------------------------------
 _getCpuSpeed::
-;../../lib/misc.c:13: __endasm;
+;../../lib/misc.c:33: __endasm;
 	in	a, (0x20)
 	ld	l, a
 	ret
-;../../lib/misc.c:14: }
-;../../lib/misc.c:15: void setCpuSpeed(char speed){
+;../../lib/misc.c:34: }
+;../../lib/misc.c:41: void setCpuSpeed(char speed){
 ;	---------------------------------
 ; Function setCpuSpeed
 ; ---------------------------------
@@ -1270,10 +1270,10 @@ _setCpuSpeed::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/misc.c:19: __endasm;
+;../../lib/misc.c:45: __endasm;
 	ld	a, 4 (ix)
 	out	(0x20), a
-;../../lib/misc.c:20: }
+;../../lib/misc.c:46: }
 	pop	ix
 	ret
 ;main.c:79: void main() {

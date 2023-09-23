@@ -9,11 +9,10 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
-	.globl _delete
-	.globl _archive
-	.globl _getOrCreateVar
+	.globl ______copied_to_position
+	.globl __________SET_INTERUPTS
+	.globl _interupt
 	.globl _wait
-	.globl _hexdump
 	.globl _printc
 	.globl _newline
 	.globl _println
@@ -21,7 +20,6 @@
 	.globl _resetPen
 	.globl _setPenCol
 	.globl _setPenRow
-	.globl _hexTab
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -166,42 +164,6 @@ _printc::
 	pop	ix
 	ret
 ;../../lib/textio.c:132: }
-;../../lib/textio.c:182: void hexdump(char v)__naked{
-;	---------------------------------
-; Function hexdump
-; ---------------------------------
-_hexdump::
-;../../lib/textio.c:218: __endasm;
-	pop	hl ; Get input
-	pop	bc ; and perserve
-	push	bc
-	push	hl
-	push	ix
-	ld	a, c
-	ld	hl, #_hexTab
-	and	a, #0xF0
-	SRL	a
-	SRL	a
-	SRL	a
-	SRL	a
-	ld	e, a
-	ld	d, #0
-	add	hl, de
-	ld	a, (hl)
-	rst	40 
-	.dw 0x455E
-	ld	a, c
-	ld	hl, #_hexTab
-	and	a, #0x0F
-	ld	e, a
-	ld	d, #0
-	add	hl, de
-	ld	a, (hl)
-	rst	40 
-	.dw 0x455E
-	pop	ix
-	ret
-;../../lib/textio.c:219: }
 ;../../lib/misc.c:70: void wait(unsigned char x){
 ;	---------------------------------
 ; Function wait
@@ -227,225 +189,123 @@ _wait::
 ;../../lib/misc.c:88: }
 	pop	ix
 	ret
-_hexTab:
-	.db #0x30	; 48	'0'
-	.db #0x31	; 49	'1'
-	.db #0x32	; 50	'2'
-	.db #0x33	; 51	'3'
-	.db #0x34	; 52	'4'
-	.db #0x35	; 53	'5'
-	.db #0x36	; 54	'6'
-	.db #0x37	; 55	'7'
-	.db #0x38	; 56	'8'
-	.db #0x39	; 57	'9'
-	.db #0x41	; 65	'A'
-	.db #0x42	; 66	'B'
-	.db #0x43	; 67	'C'
-	.db #0x44	; 68	'D'
-	.db #0x45	; 69	'E'
-	.db #0x46	; 70	'F'
-;../../lib/variables.c:46: char* getOrCreateVar(char* name, int size)__naked{
+;main.c:9: void interupt() __naked{ // Keeps this quick as it may be called 100 times per secound (depending on the interupt mask and cpu clock setting) 
 ;	---------------------------------
-; Function getOrCreateVar
+; Function interupt
 ; ---------------------------------
-_getOrCreateVar::
-;../../lib/variables.c:93: __endasm;
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	rst	0x20
+_interupt::
+;main.c:11: scanKeys();
 	rst	40 
-	.dw 0x42F1
-	jr	c,notfound
-	ex	de,hl
-	xor	a
-	cp	b
-	jr	z,unarchived
+	.dw 0x4015 
+;main.c:29: __endasm;
+	xor	a, a
+	out	(#0x31),a
+	in	a, (4)
+	bit	3, a
+	ret	nz
+	call	#0x000B
+	ld	a, #0xFF
+	out	(0x11), a
+	ret
+;main.c:30: }
+;../../lib/interupts.c:56: void _________SET_INTERUPTS(){
+;	---------------------------------
+; Function _________SET_INTERUPTS
+; ---------------------------------
+__________SET_INTERUPTS::
+;../../lib/interupts.c:98: __endasm;
+;	disable interrupts and set interrupt mode 2
+	di
+	im	2
+;	save whichever page we are on so that we know where to go
+	in	a,(6)
+	ld	(0x8584),a
+;	set the 0x917F byte of the jumptable to $80
+	ld	a,#0x80
+	ld	i,a
+;	now we copy our interrupt loader to ram, we only have to do this once
+	ld	hl,#LoadInterrupt
+	ld	de, #0x8E2C
+	ld	bc,#EndLoadInterupt-LoadInterrupt
+	ldir
+;	create the vector table (do this every time before you enable interrupts, be sure to disable interrupts before archiving / unarchiving stuff)
+	ld	hl, #0x8000
+	ld	de, #0x8001
+	ld	(hl), #0x85
+	ld	bc,#256
+	ldir
+;	setting up the jump handler at $8585
+	ld	hl,#0x8585
+	ld	(hl),#0xc3 ; this is the jp instruction
+	ld	de,#0x8E2C ; where it jumps to
+	inc	hl
+	ld	(hl),e
+	inc	hl
+	ld	(hl),d
+;	time to enable interrupts
+	ei
+;../../lib/interupts.c:99: }
+	ret
+;../../lib/interupts.c:102: void _____copied_to_position()__naked{
+;	---------------------------------
+; Function _____copied_to_position
+; ---------------------------------
+______copied_to_position::
+;../../lib/interupts.c:120: __endasm;
+	  LoadInterrupt:
 	di
 	exx
-	push	ix
-	rst	40 
-	.dw 0x4FD8
-	pop	ix
+	.db	#0x08
+	xor	a, a
+	out	(3),a
+;../../lib/interupts.c:122: DURING_INTERUPT();
+	call	_interupt
+;../../lib/interupts.c:159: __endasm;
+	xor	a, #0b00001011
+	out	(3),a
+	.db	#0x08
 	exx
 	ei
-	jp	_getOrCreateVar
-	  unarchived:
 	ret
-	  notfound:
-	pop	de
-	pop	bc
-	pop	hl
-	push	hl
-	push	bc
-	push	de
-	rst	40 
-	.dw 0x4E6A
-	jp	_getOrCreateVar
-;../../lib/variables.c:94: }
-;../../lib/variables.c:105: void archive(char* name)__naked{
-;	---------------------------------
-; Function archive
-; ---------------------------------
-_archive::
-;../../lib/variables.c:124: __endasm;
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	rst	0x20 ; Mov9ToOP1
+	  ON_EXIT:
 	di
-	exx
-	push	ix
-	rst	40 
-	.dw 0x4FD8
-	pop	ix
-	exx
+	im	1
+	ld	a, # 0b00001011
+	out	(3), a
 	ei
 	ret
-;../../lib/variables.c:126: }
-;../../lib/variables.c:133: void delete(char* name)__naked{
-;	---------------------------------
-; Function delete
-; ---------------------------------
-_delete::
-;../../lib/variables.c:144: __endasm;
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	rst	0x20 ; Mov9ToOP1
-	rst	40 
-	.dw 0x42F1
-	rst	40 
-	.dw 0x4351
-	ret
-;../../lib/variables.c:145: }
-;main.c:15: void main() {
+	  EndLoadInterupt:
+;../../lib/interupts.c:160: }
+;main.c:37: void main() {
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-	push	af
-;main.c:17: clearScreen();
+;main.c:39: SET_INTERUPTS();
+	ld de, # (ON_EXIT-LoadInterrupt+0x8E2C) 
+	push de 
+	call	__________SET_INTERUPTS
+	ld ix,# 0 
+	add ix,sp 
+;main.c:42: clearScreen();
 	rst	40 
 	.dw 0x4540 
-;main.c:18: resetPen();
-	call	_resetPen
-;main.c:22: char* dataLoc=getOrCreateVar(dataName, 20)+2; // 20 bytes long, add 2 to dataLoc because first 2 bytes of appvar is the length
-	ld	hl, #0x0014
-	push	hl
-	ld	hl, #___str_0
-	push	hl
-	call	_getOrCreateVar
-	pop	af
-	pop	af
-	ex	de, hl
-	inc	de
-	inc	de
-	inc	sp
-	inc	sp
-;main.c:24: while (1){
-	ld	c, e
-	ld	b, d
-	push	bc
-	inc	bc
-00116$:
-;main.c:25: wait(2);
-	push	bc
-	ld	a, #0x02
+;main.c:44: while (1){
+00104$:
+;main.c:45: wait(1);
+	ld	a, #0x01
 	push	af
 	inc	sp
 	call	_wait
 	inc	sp
-	pop	bc
-;main.c:27: if (skClear == lastPressedKey())
-	ld	a, (#0x843f)
-	cp	a, #0x0f
-	jr	Z, 00117$
-;main.c:29: else if (skLeft == lastPressedKey()){
-	cp	a, #0x02
-	jr	NZ, 00110$
-;main.c:30: *dataLoc -=1;
-	pop	hl
-	push	hl
+;main.c:47: if (skClear == lastPressedKey())
+	ld	hl, #0x843f
 	ld	a, (hl)
-	dec	a
-	pop	hl
-	push	hl
-	ld	(hl), a
-	jr	00114$
-00110$:
-;main.c:32: else if (skRight == lastPressedKey()){
-	cp	a, #0x03
-	jr	NZ, 00107$
-;main.c:33: *dataLoc +=1;
-	pop	hl
-	push	hl
-	ld	a, (hl)
-	inc	a
-	pop	hl
-	push	hl
-	ld	(hl), a
-	jr	00114$
-00107$:
-;main.c:35: else if (skUp == lastPressedKey()){
-	cp	a, #0x04
+	sub	a, #0x0f
 	jr	NZ, 00104$
-;main.c:36: *(dataLoc+1) +=1;
-	ld	a, (bc)
-	inc	a
-	ld	(bc), a
-	jr	00114$
-00104$:
-;main.c:38: else if (skDown == lastPressedKey()){
-	dec	a
-	jr	NZ, 00114$
-;main.c:39: *(dataLoc+1) -=1;
-	ld	a, (bc)
-	dec	a
-	ld	(bc), a
-00114$:
-;main.c:42: resetPen();
-	push	bc
-	call	_resetPen
-	pop	bc
-;main.c:43: hexdump(*(char*)dataLoc);
-	pop	hl
-	push	hl
-	ld	a, (hl)
-	push	bc
-	push	af
-	inc	sp
-	call	_hexdump
-	inc	sp
-	pop	bc
-;main.c:44: hexdump(*(char*)(dataLoc+1));
-	ld	a, (bc)
-	push	bc
-	push	af
-	inc	sp
-	call	_hexdump
-	inc	sp
-	pop	bc
-	jr	00116$
-00117$:
-;main.c:47: archive(dataName); // this makes the appVar persist after ram clears (also means corrupt settings data will persist)
-	ld	hl, #___str_0
-	push	hl
-	call	_archive
-;main.c:50: }
-	ld	sp,ix
-	pop	ix
+;main.c:48: break;
+;main.c:53: }
 	ret
-___str_0:
-	.db 0x15
-	.ascii "myappdata"
-	.db 0x00
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)
