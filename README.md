@@ -1,6 +1,6 @@
 # TiConstructor
 ---------------------------
-Click [here](https://heronerin.github.io/TiConstructor/files.html) for docs
+Click [here](https://heronerin.github.io/TiConstructor/files.html) for docs. <br>
 Or click [here](https://github.com/HeronErin/TiConstructor) to get back to github from the docs.
 
 
