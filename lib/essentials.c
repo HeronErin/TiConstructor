@@ -59,6 +59,15 @@
     .dw __LABEL__ __endasm
 
 
+/** @brief Junp to System routine
+ * 
+ * Like a bcall() but jumps instead of calls
+ */
+#define bjump(__LABEL__) \
+    __asm call 0x50 \
+    .dw __LABEL__ __endasm
+
+
 
 /** @brief The asm for a bcall
  */
