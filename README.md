@@ -1,6 +1,7 @@
 # TiConstructor
----------
+---------------------------
 Click [here](https://heronerin.github.io/TiConstructor/files.html) for docs
+Or click [here](https://github.com/HeronErin/TiConstructor) to get back to github from the docs.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is a remake of my [LibTi84 project](https://github.com/HeronErin/LibTi84) and aims to provide a means for the construction of games for the ti-84 (NON CE). This is more or less a culmination of all my knowledge in this niche field. I am not an expert. And this is a personal tool I use in my quest for a real-time 3d game for the ti-84. Everything should be capable of being built as an app or as a program (As long as you don't use any non-constant global variables).
@@ -53,6 +54,7 @@ Now that you have a working build system, install tilp (or TI Connect for window
 ## Some useful resources
 * [The documentation for this library](https://heronerin.github.io/TiConstructor/files.html)
 * [Best guide to z80 asm](https://taricorp.gitlab.io/83pa28d/index.html)
+* [Offical ti-84+ sdk](https://archive.org/details/83psdk/83psysroutines/) archive.org page.
 * [Some useful bcalls](http://jgmalcolm.com/z80/intermediate/romc)
 * [Useful table for t-state timing](https://clrhome.org/table/)
 * [wikiti for almost all bcalls and ram addresses](https://wikiti.brandonw.net/index.php?title=Calculator_Documentation)
