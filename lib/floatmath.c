@@ -1,4 +1,4 @@
-
+#pragma once
 
 /** @file floatmath.c @brief Use the built in calculator floating point math
  * 

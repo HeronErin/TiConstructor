@@ -1,3 +1,4 @@
+#pragma once
 /** @file  ti83plus.h
  *  @brief TI-83 Plus Include File
  * 

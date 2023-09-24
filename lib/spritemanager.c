@@ -1,3 +1,5 @@
+#pragma once
+
 // [or, xor, and], because they are valid z80 opcodes
 #ifndef COPY_MODE
 #define COPY_MODE xor 
