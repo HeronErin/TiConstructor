@@ -7,5 +7,6 @@ var searchData=
   ['ti83plus_2eh_4',['ti83plus.h',['../d4/d49/ti83plus_8h.html',1,'']]],
   ['ticonstructor_5',['# TiConstructor',['../index.html',1,'']]],
   ['to_20get_20started_6',['How to get started',['../index.html#autotoc_md0',1,'']]],
-  ['to_20install_7',['How to install',['../index.html#autotoc_md1',1,'']]]
+  ['to_20install_7',['How to install',['../index.html#autotoc_md1',1,'']]],
+  ['tolnotmeterror_8',['TolNotMetError',['../d0/d15/errors_8c.html#aa45676a25e0b6f55e187176d8e9107ec',1,'errors.c']]]
 ];

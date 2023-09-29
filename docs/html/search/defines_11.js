@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xmax_0',['XMAX',['../d5/d95/graphics_8c.html#a0312cb6d6cbc719075d4e5380c387ab3',1,'graphics.c']]]
+  ['undefinederror_0',['UndefinedError',['../d0/d15/errors_8c.html#a5b7174b0f1b45647230811670d5c96dd',1,'errors.c']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ymax_0',['YMAX',['../d5/d95/graphics_8c.html#a610d6ad95b18966b70b6845de2a9c56b',1,'graphics.c']]]
+  ['wait_5floc_0',['WAIT_LOC',['../d7/dbc/greyscale_8c.html#acf4ad1993081b85bd9f163e75dd7317d',1,'greyscale.c']]]
 ];

@@ -9,10 +9,20 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,6 +34,18 @@
    <div id="projectname">Ti Constructor
    </div>
   </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
  </tr>
  </tbody>
 </table>
@@ -35,18 +57,23 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
-});
+$(document).ready(function(){initNavTree('globals.html',''); initResizable(); });
 /* @license-end */
 </script>
-<div id="main-nav"></div>
-</div><!-- top -->
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -88,13 +115,17 @@ $(function() {
 <h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
 <li>abcall&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a129499a7680583fc58a699bbb1aca61d">essentials.c</a></li>
 <li>archive()&#160;:&#160;<a class="el" href="d5/de8/variables_8c.html#a0d3f0d93af7f9eb4419173b24c725343">variables.c</a></li>
+<li>ArgumentError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a1da40dbd85a4026ffd644fd4d6cdb500">errors.c</a></li>
 <li>aSaveA&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a2729ab5166820ef85f4c3a4a50c49c8e">essentials.c</a></li>
 </ul>
 
 
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
+<li>BadGuessError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a853b3468137cde9e1534df9fc8d4f287">errors.c</a></li>
 <li>basepage&#160;:&#160;<a class="el" href="d1/d74/interupts_8c.html#a1f71a76a10c4c9dde3696a69083045f0">interupts.c</a></li>
 <li>bcall&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a68264b1743db602f8233757550b88f09">essentials.c</a></li>
+<li>bjump&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a66980ae5fda680230944e831c7fd0eb4">essentials.c</a></li>
+<li>BreakError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a4d095834c70fa0b66e6a28c87774c79f">errors.c</a></li>
 <li>buff&#160;:&#160;<a class="el" href="d5/d95/graphics_8c.html#a49b4801ec4ecca0932baadffe07d994b">graphics.c</a></li>
 </ul>
 
@@ -109,16 +140,22 @@ $(function() {
 <li>CONTRAST_LOC&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a1b314ca85c938c9352de4512efffd642">greyscale.c</a></li>
 <li>Cos&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#aa08263b0b9c00688f9a5cdca82cc79b6">floatmath.c</a></li>
 <li>CUBE_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#ac9e02920c6da477dd7b479a0e85ef353">floatmath.c</a></li>
+<li>CustomError()&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#ab0eecbc25e8f70fc9dca4f0c904ac9dc">errors.c</a></li>
 </ul>
 
 
 <h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
 <li>DARK_GREY_LOC&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a72ce1600877c91649360dc0786e98f09">greyscale.c</a></li>
+<li>DataTypeError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a95d975c0c67f9865b1ee5b8cafcc2877">errors.c</a></li>
 <li>DEC_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#aaf5e7f4074af358f032c21e87fcd26f3">floatmath.c</a></li>
 <li>DEFAULT_MAX_COL&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a11168a5098e7692094b7b6879558ecc0">greyscale.c</a></li>
 <li>DEG_TO_RAD&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a72f7f3dc385284b222a96b065e560f12">floatmath.c</a></li>
 <li>delete()&#160;:&#160;<a class="el" href="d5/de8/variables_8c.html#a2f62cc8750ffebff2a9eee2d2f732922">variables.c</a></li>
+<li>DimensionError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#aeb70f0a9ac64157d6454e2d27374142d">errors.c</a></li>
+<li>DimensionMismatchError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a36432c538e5ab91a5ddc57cc57137944">errors.c</a></li>
 <li>div_int()&#160;:&#160;<a class="el" href="d7/d31/fast__math_8c.html#a66bc0fe0d2a312e16310040a00402d69">fast_math.c</a></li>
+<li>DivideByZeroError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#adbf3d75c789bf8c5fec97140d9d8c92e">errors.c</a></li>
+<li>DomainError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#acbeed1911f934ec737c895d0d6bb8a7f">errors.c</a></li>
 <li>DOUBLE_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#acc4dc6fcc66e86c8082009bd0104b84e">floatmath.c</a></li>
 </ul>
 
@@ -170,10 +207,13 @@ $(function() {
 
 <h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
 <li>INC_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a85a2cc6f3e18dc9267086b9669c719b5">floatmath.c</a></li>
+<li>IncrementError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a345b3daada30ed269af910bd1cee4363">errors.c</a></li>
 <li>INIT_GREYSCALE&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a533ad373350e15bbee92fb6f790d61a7">greyscale.c</a></li>
 <li>INTRPT_MASK&#160;:&#160;<a class="el" href="d1/d74/interupts_8c.html#a09e68d8e9da5272f666f766a4915875f">interupts.c</a></li>
 <li>intToOp1()&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a56db8db6295fead15c7ead9fbc251c50">floatmath.c</a></li>
+<li>InvalidError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#aa06fc875af34b82ffeedce1ce0702652">errors.c</a></li>
 <li>isqrt()&#160;:&#160;<a class="el" href="d0/ddb/misc_8c.html#aaf41caa61eadef31671cd6b0c31d8d19">misc.c</a></li>
+<li>IterationsError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a9b83e678bf33d7d3d0ee3ef348f5eaf3">errors.c</a></li>
 </ul>
 
 
@@ -181,6 +221,7 @@ $(function() {
 <li>lastPressedKey&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a00779d8b864708d1f7091c47e1e87c64">essentials.c</a></li>
 <li>LIGHT_GREY_LOC&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a422e7cd1a0055b8cac4e90ecafedb1bb">greyscale.c</a></li>
 <li>line()&#160;:&#160;<a class="el" href="d5/d95/graphics_8c.html#af9395be22fea2203f30c59b8be653c14">graphics.c</a></li>
+<li>LinkError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#adffa9c95592e9d459ef5cf11306dc7c7">errors.c</a></li>
 </ul>
 
 
@@ -188,6 +229,7 @@ $(function() {
 <li>MATH_CEIL&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a36849b796d2daeb1003657d166ce3242">floatmath.c</a></li>
 <li>MATH_FLOOR&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a8c48e91626097b47894896e72d6f7bcb">floatmath.c</a></li>
 <li>MAX_COL&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a97e80440b5a5ec2ffc172dead9f8d2ec">greyscale.c</a></li>
+<li>MemoryError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a0dffaf56d5a2a6659ce8d7fade4628fe">errors.c</a></li>
 <li>MoveOp1To()&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a7a2af65a4e59b08116536a811fea93ea">floatmath.c</a></li>
 <li>MoveToOp1()&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#af04b91b2a622e6f3d270b11ed57ec846">floatmath.c</a></li>
 <li>mul_int()&#160;:&#160;<a class="el" href="d7/d31/fast__math_8c.html#a864a6c649cc122b08b911f2065ef02eb">fast_math.c</a></li>
@@ -197,12 +239,15 @@ $(function() {
 <h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
 <li>NEG_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a2aef176fc4a8689c9067cf6a4868e755">floatmath.c</a></li>
 <li>newline()&#160;:&#160;<a class="el" href="d2/dba/textio_8c.html#a7ffed7dceb713fc324f0534bc9152c4b">textio.c</a></li>
+<li>NonRealError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#affbbfe973c221ec7e08beba5dfa6f1c5">errors.c</a></li>
+<li>NoSignChangeError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a99c3a5b362b9f6925bc69304dfdb411a">errors.c</a></li>
 <li>number()&#160;:&#160;<a class="el" href="d2/dba/textio_8c.html#a66a569e51623061dc516f13047a7cd8f">textio.c</a></li>
 </ul>
 
 
 <h3><a id="index_o" name="index_o"></a>- o -</h3><ul>
 <li>OPT1_TO_INT()&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a7786275f549130affc810e217444414c">floatmath.c</a></li>
+<li>OverflowError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#ac8f6c2b1f618a0b15c966991fe764b2d">errors.c</a></li>
 </ul>
 
 
@@ -234,6 +279,7 @@ $(function() {
 <li>setPenRow()&#160;:&#160;<a class="el" href="d2/dba/textio_8c.html#ac8df7968d45a0cc93de680cdd7025cdb">textio.c</a></li>
 <li>setPix()&#160;:&#160;<a class="el" href="d5/d95/graphics_8c.html#a03dd9e1f7e1bbc7f9537acb869b339d7">graphics.c</a></li>
 <li>Sin&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a8660e85f0113a58d6653145cf5d6dfde">floatmath.c</a></li>
+<li>SingularityError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a996a74db211fa08894f4de1438d2397a">errors.c</a></li>
 <li>SP_STORE&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a3f8cba501b7f79c5bb0dad8a633f8f8a">essentials.c</a></li>
 <li>spriteTemp&#160;:&#160;<a class="el" href="d2/d4a/essentials_8c.html#a6a5942c7d60a6c2a59372f8fde03658a">essentials.c</a></li>
 <li>SQ_ROOT_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#ab99e2ae6245648dbf6aa294e5a35cc8c">floatmath.c</a></li>
@@ -241,13 +287,22 @@ $(function() {
 <li>SQUARE_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a7b80e84a37a72997923c0b61db6c1fba">floatmath.c</a></li>
 <li>START_COL&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#a39d4b8bb4368e58868cad71db4842492">greyscale.c</a></li>
 <li>START_ROW&#160;:&#160;<a class="el" href="d7/dbc/greyscale_8c.html#aef84164dbbbf950ffc5da7ffcaf7f91c">greyscale.c</a></li>
+<li>StatError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#aca7cc5268bad829b3f9e1ad1cabf9e6e">errors.c</a></li>
+<li>StatPlotError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a0d2833d214d90fd5220685b3d4f933e3">errors.c</a></li>
 <li>swap()&#160;:&#160;<a class="el" href="d5/d95/graphics_8c.html#a07bca8cc0cfca0e80cac16305cac9f13">graphics.c</a></li>
+<li>SyntaxError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a84feea59f6ea18990f1a80a6914de3ce">errors.c</a></li>
 </ul>
 
 
 <h3><a id="index_t" name="index_t"></a>- t -</h3><ul>
 <li>Tan&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a7a985b1f17f665b3c573497c19b45a82">floatmath.c</a></li>
 <li>TEN_TO_THE_POWER_OF_OP1&#160;:&#160;<a class="el" href="d4/d1f/floatmath_8c.html#a9a3d1d697824f8930d558ad33e99509e">floatmath.c</a></li>
+<li>TolNotMetError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#aa45676a25e0b6f55e187176d8e9107ec">errors.c</a></li>
+</ul>
+
+
+<h3><a id="index_u" name="index_u"></a>- u -</h3><ul>
+<li>UndefinedError&#160;:&#160;<a class="el" href="d0/d15/errors_8c.html#a5b7174b0f1b45647230811670d5c96dd">errors.c</a></li>
 </ul>
 
 
@@ -272,9 +327,12 @@ $(function() {
 <li>YMAX&#160;:&#160;<a class="el" href="d5/d95/graphics_8c.html#a610d6ad95b18966b70b6845de2a9c56b">graphics.c</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
 </body>
 </html>

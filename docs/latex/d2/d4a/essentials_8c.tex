@@ -26,6 +26,8 @@ This should be \#included in all files.
 \begin{DoxyCompactList}\small\item\em Clears the screen. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall}}(\+\_\+\+\_\+\+LABEL\+\_\+\+\_\+)
 \begin{DoxyCompactList}\small\item\em Call System routine. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{essentials_8c_a66980ae5fda680230944e831c7fd0eb4}{bjump}}(\+\_\+\+\_\+\+LABEL\+\_\+\+\_\+)
+\begin{DoxyCompactList}\small\item\em Junp to System routine. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{essentials_8c_a129499a7680583fc58a699bbb1aca61d}{abcall}}(\+\_\+\+\_\+\+LABEL\+\_\+\+\_\+)
 \begin{DoxyCompactList}\small\item\em The asm for a bcall. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{essentials_8c_a00779d8b864708d1f7091c47e1e87c64}{last\+Pressed\+Key}}()~(\texorpdfstring{$\ast$}{*}(char\texorpdfstring{$\ast$}{*})(kbd\+Scan\+Code))
@@ -86,7 +88,7 @@ The asm for a bcall.
 
 ex af, af\textquotesingle{} 
 
-Machine code to swap af and shadow af and only takes 4 t-\/states, only use in asm ~\newline
+Machine code to swap af and shadow af and only takes 4 t-\/states, {\bfseries{only use in asm}} ~\newline
  \Hypertarget{essentials_8c_a68264b1743db602f8233757550b88f09}\label{essentials_8c_a68264b1743db602f8233757550b88f09} 
 \index{essentials.c@{essentials.c}!bcall@{bcall}}
 \index{bcall@{bcall}!essentials.c@{essentials.c}}
@@ -103,7 +105,23 @@ Machine code to swap af and shadow af and only takes 4 t-\/states, only use in a
 
 Call System routine. 
 
-Preforms a \href{https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work}{\texttt{ bcall}} while in C. {\bfseries{ And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable }} For most bcall values click \href{https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name}{\texttt{ here}}, or see \href{https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf}{\texttt{ TI\textquotesingle{}s system routines document}} \Hypertarget{essentials_8c_a00779d8b864708d1f7091c47e1e87c64}\label{essentials_8c_a00779d8b864708d1f7091c47e1e87c64} 
+Preforms a \href{https://wikiti.brandonw.net/index.php?title=83Plus:OS:How_BCALLs_work}{\texttt{ bcall}} while in C. {\bfseries{ And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable }} For most bcall values click \href{https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name}{\texttt{ here}}, or see \href{https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf}{\texttt{ TI\textquotesingle{}s system routines document}} \Hypertarget{essentials_8c_a66980ae5fda680230944e831c7fd0eb4}\label{essentials_8c_a66980ae5fda680230944e831c7fd0eb4} 
+\index{essentials.c@{essentials.c}!bjump@{bjump}}
+\index{bjump@{bjump}!essentials.c@{essentials.c}}
+\doxysubsubsection{\texorpdfstring{bjump}{bjump}}
+{\footnotesize\ttfamily \#define bjump(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+\+LABEL\+\_\+\+\_\+ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \_\_asm\ call\ 0x50\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ .dw\ \_\_LABEL\_\_\ \_\_endasm}
+
+\end{DoxyCode}
+
+
+Junp to System routine. 
+
+Like a \doxylink{essentials_8c_a68264b1743db602f8233757550b88f09}{bcall()} but jumps instead of calls \Hypertarget{essentials_8c_a00779d8b864708d1f7091c47e1e87c64}\label{essentials_8c_a00779d8b864708d1f7091c47e1e87c64} 
 \index{essentials.c@{essentials.c}!lastPressedKey@{lastPressedKey}}
 \index{lastPressedKey@{lastPressedKey}!essentials.c@{essentials.c}}
 \doxysubsubsection{\texorpdfstring{lastPressedKey}{lastPressedKey}}

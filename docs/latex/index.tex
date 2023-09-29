@@ -2,7 +2,8 @@
 \hypertarget{index}{}\label{index}\index{\# TiConstructor@{\# TiConstructor}}
 \label{index_md_README}%
 \Hypertarget{index_md_README}%
-
+ Click \href{https://heronerin.github.io/TiConstructor/files.html}{\texttt{ here}} for docs. ~\newline
+ Or click \href{https://github.com/HeronErin/TiConstructor}{\texttt{ here}} to get back to github from the docs.
 
 ~~~~~~~~This is a remake of my \href{https://github.com/HeronErin/LibTi84}{\texttt{ Lib\+Ti84 project}} and aims to provide a means for the construction of games for the ti-\/84 (NON CE). This is more or less a culmination of all my knowledge in this niche field. I am not an expert. And this is a personal tool I use in my quest for a real-\/time 3d game for the ti-\/84. Everything should be capable of being built as an app or as a program (As long as you don\textquotesingle{}t use any non-\/constant global variables).
 
@@ -44,12 +45,14 @@
 Now that you have a working build system, install tilp (or TI Connect for windows) and send the file to your calc.\hypertarget{index_autotoc_md2}{}\doxysection{\texorpdfstring{How this works}{How this works}}\label{index_autotoc_md2}
 ~~~~~~~~This is not something that was simple to figure out, there is no unified guide to the ti84/ti83+. But here is my explanation of what this toolkit does. SDCC compiles c code to z80 assembly and {\itshape assembles} it into a binary file. Then if you are making a program binpac8x.\+py will pack it into a program file (.8xp). If you are making an app a buildid is generated for you, my script generates a custom header for you, and rabbitsign will sign it with the freeware key and converts it to an app file (.8xk). But thanks to the work of me and the giants whose shoulders I stand on, that is all abstracted away from you with a single line build command.
 
-~~~~~~~~For you, the developer, I gave you a few files in the lib/ forlder, these are some useful tools for what ever you are making. Since you are often trying to keep build sizes down, many functions require you to enable them with {\ttfamily \#define USE\+\_\+\+FUNCTION\+\_\+\+NAME} after you {\ttfamily \#include} the source file. I recommend you look at the source code of the library itself for the exact \#includes you need to use.
+~~~~~~~~For you, the developer, I gave you a few files in the lib/ forlder, these are some useful tools for what ever you are making. Since you are often trying to keep build sizes down, many functions require you to enable them with {\ttfamily \#define USE\+\_\+\+FUNCTION\+\_\+\+NAME} after you {\ttfamily \#include} the source file. I recommend you look at the source code of the library itself for the exact \#includes you need to use. And now there exists some documentation for this toolkit over \href{https://heronerin.github.io/TiConstructor/files.html}{\texttt{ here.}}
 
 {\itshape Ps. Don\textquotesingle{}t remove the .buildid files, you need to keep the same .buildid everytime you update an app on your calculator}\hypertarget{index_autotoc_md3}{}\doxysection{\texorpdfstring{Some useful resources}{Some useful resources}}\label{index_autotoc_md3}
 
 \begin{DoxyItemize}
+\item \href{https://heronerin.github.io/TiConstructor/files.html}{\texttt{ The documentation for this library}}
 \item \href{https://taricorp.gitlab.io/83pa28d/index.html}{\texttt{ Best guide to z80 asm}}
+\item \href{https://archive.org/details/83psdk/83psysroutines/}{\texttt{ Offical ti-\/84+ sdk}} archive.\+org page.
 \item \href{http://jgmalcolm.com/z80/intermediate/romc}{\texttt{ Some useful bcalls}}
 \item \href{https://clrhome.org/table/}{\texttt{ Useful table for t-\/state timing}}
 \item \href{https://wikiti.brandonw.net/index.php?title=Calculator_Documentation}{\texttt{ wikiti for almost all bcalls and ram addresses}}
