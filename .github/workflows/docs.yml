@@ -17,7 +17,8 @@ jobs:
         with:
           submodules: true
       - name: Add padding to project title text
-        run: echo '#projectalign {padding-right: 1em;}' >> docs/doxygen-awesome-css/doxygen-awesome.css
+        run: |
+         echo '#projectalign {padding-right: 1em;}' >> docs/doxygen-awesome-css/doxygen-awesome.css
       - name: Run Doxygen
         uses: mattnotmitt/doxygen-action@v1.2.1
         with:
