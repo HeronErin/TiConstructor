@@ -12,6 +12,8 @@
  * HEAP_SIZE you might run into some error. <b>So always call purge_heap()
  * or make use of auto_purge_heap() !</b>
  * 
+ * <small> It should be noted that auto_purge_heap() seems not to run correctly in programs </small>
+ * 
  * 
  * 
  * <h3> Optional #defines </h3>
@@ -78,6 +80,9 @@ struct HeapItem
  * If you call auto_purge_heap() in main before any
  * variables are set, it will automaticlly call purge_heap()
  * for you as main returns. 
+ * 
+ * 
+ * Also doesn't seem to run currectly programs.
  * 
  */
 #define auto_purge_heap() __asm                  \
