@@ -51,7 +51,7 @@
 const char HEAP_VAR_NAME[] =  addAppVarObj(CUSTOM_HEAP_NAME); 
 
 
-/** @breif general structure of the a HeapItem */
+/** General structure of the a HeapItem */
 struct HeapItem
 {
 	char HeapItemBitmap;  ///< Bitmap of atributes of heap item. bit 0: isfreed,  OR set to 0xFF if not items exit

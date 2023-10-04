@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Run Doxygen
         uses: mattnotmitt/doxygen-action@v1.2.1
         with:
