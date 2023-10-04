@@ -77,7 +77,9 @@ void fputs(char* loc) __naked {
 		ld	a, (bc)
 		or a, a
 		ret z
+		push ix
 		abcall(_VPutMap)
+		pop ix
 		inc bc
 		jr the_char_loop_i_need_more_good_names_for_labels
 
@@ -217,4 +219,27 @@ void hexdump(char v)__naked{
 		ret
 	__endasm;
 }
+/** @brief Prints a 16-bit int to the screen
+ * 	@param[v] Int to be printed
+ * 
+ *  Basicly just calls hexdump() twice.
+ */ 
+void doubleHexdump(int v) __naked{
+	__asm
+		pop hl
+		pop bc
+		push bc
+		push hl
+
+		push bc
+		push bc
+		inc sp
+		call _hexdump
+		inc sp
+		call _hexdump
+		pop bc
+		ret
+	__endasm;
+}
+
 #endif

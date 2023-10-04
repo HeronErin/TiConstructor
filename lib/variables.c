@@ -52,7 +52,7 @@ char* getOrCreateVar(char* name, int size)__naked{
 
 
 
-		rst 0x20 //  Mov9ToOP1
+		rst rMOV9TOOP1
 		abcall(_ChkFindSym)
 		jr c,notfound  
 		ex de,hl  
@@ -84,8 +84,9 @@ char* getOrCreateVar(char* name, int size)__naked{
 			push hl
 			push bc
 			push de
-
-			abcall(_CreateAppVar)
+			
+			ld a, (bc)
+			abcall(_CreateVar) // old _CreateAppVar
 			jp _getOrCreateVar
 
 
