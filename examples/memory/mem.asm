@@ -328,12 +328,12 @@ _CustomError::
 	.dw 0x4D41
 	ret
 ;../../lib/errors.c:25: }
-;../../lib/memory.c:100: void initHeap(){
+;../../lib/memory.c:105: void initHeap(){
 ;	---------------------------------
 ; Function initHeap
 ; ---------------------------------
 _initHeap::
-;../../lib/memory.c:135: __endasm;
+;../../lib/memory.c:140: __endasm;
 	ld	hl, #0x83E5
 	ld	a, #0xFE
 	ld	(hl), a
@@ -356,7 +356,7 @@ _initHeap::
 	inc	hl
 	inc	hl
 	ld	(hl), #0xFF
-;../../lib/memory.c:136: }
+;../../lib/memory.c:141: }
 	ret
 _hexTab:
 	.db #0x30	; 48	'0'
@@ -379,12 +379,12 @@ _HEAP_VAR_NAME:
 	.db 0x15
 	.ascii "ConHeap"
 	.db 0x00
-;../../lib/memory.c:145: void _malloc() __naked{
+;../../lib/memory.c:150: void _malloc() __naked{
 ;	---------------------------------
 ; Function _malloc
 ; ---------------------------------
 __malloc::
-;../../lib/memory.c:155: __endasm; MemoryError(); __asm
+;../../lib/memory.c:160: __endasm; MemoryError(); __asm
 	xor	a, a
 	ld	hl, #0
 	sbc	hl, bc
@@ -392,7 +392,7 @@ __malloc::
 	jp	nz, NOT_A_ZERO
 	call	0x50 
 	.dw 0x44B9 
-;../../lib/memory.c:287: __endasm; MemoryError(); __asm
+;../../lib/memory.c:302: __endasm; MemoryError(); __asm
 	ret
 	 NOT_A_ZERO:
 	ld	hl, ((( 0x83E5 +1)+1))
@@ -429,13 +429,17 @@ __malloc::
 	or	a
 	sbc	hl,de
 	pop	hl
-	ld	b, d
-	ld	c, e
 	ex	de, hl
 	pop	hl
 	jp	c, PREP_NEXT
 	ld	hl, (((( 0x83E5 +1)+1)+2))
-	jp	GROW_HEAP
+	xor	a, a
+	ld	(hl), a
+	inc	hl
+	ld	(hl), d
+	inc	hl
+	ld	(hl), e
+	ret
 	 MALLOC_NOT_FREED_ITEM:
 	inc	hl
 	ld	de, #0
@@ -475,7 +479,7 @@ __malloc::
 	jp	nc, MALLOC_SUCCESS
 	call	0x50 
 	.dw 0x44B9 
-;../../lib/memory.c:314: __endasm;
+;../../lib/memory.c:329: __endasm;
 	 MALLOC_SUCCESS:
 	pop	hl
 	dec	hl
@@ -485,25 +489,25 @@ __malloc::
 	pop	hl
 	inc	hl
 	ret
-;../../lib/memory.c:316: }
-;../../lib/memory.c:331: void* malloc(int size)__naked{
+;../../lib/memory.c:331: }
+;../../lib/memory.c:346: void* malloc(int size)__naked{
 ;	---------------------------------
 ; Function malloc
 ; ---------------------------------
 _malloc::
-;../../lib/memory.c:339: __endasm;
+;../../lib/memory.c:354: __endasm;
 	pop	hl
 	pop	bc
 	push	bc
 	push	hl
 	jp	__malloc
-;../../lib/memory.c:340: }
-;../../lib/memory.c:349: void _free() __naked{
+;../../lib/memory.c:355: }
+;../../lib/memory.c:364: void _free() __naked{
 ;	---------------------------------
 ; Function _free
 ; ---------------------------------
 __free::
-;../../lib/memory.c:397: __endasm;
+;../../lib/memory.c:412: __endasm;
 	dec	hl
 	dec	hl
 	dec	hl
@@ -530,31 +534,31 @@ __free::
 	set	0, (hl)
 	ret
 	 FREE_ERROR:
-;../../lib/memory.c:399: MemoryError(); 
+;../../lib/memory.c:414: MemoryError(); 
 	call	0x50 
 	.dw 0x44B9 
-;../../lib/memory.c:404: __endasm;
+;../../lib/memory.c:419: __endasm;
 	pop	af
 	ret
-;../../lib/memory.c:405: }
-;../../lib/memory.c:410: void free(void* ptr)__naked{
+;../../lib/memory.c:420: }
+;../../lib/memory.c:425: void free(void* ptr)__naked{
 ;	---------------------------------
 ; Function free
 ; ---------------------------------
 _free::
-;../../lib/memory.c:417: __endasm;
+;../../lib/memory.c:432: __endasm;
 	pop	bc
 	pop	hl
 	push	hl
 	push	bc
 	jp	__free
-;../../lib/memory.c:418: }
-;../../lib/memory.c:425: void _calloc()__naked{
+;../../lib/memory.c:433: }
+;../../lib/memory.c:440: void _calloc()__naked{
 ;	---------------------------------
 ; Function _calloc
 ; ---------------------------------
 __calloc::
-;../../lib/memory.c:460: __endasm;
+;../../lib/memory.c:475: __endasm;
 	push	bc
 	call	__malloc
 	ld	bc, #0
@@ -580,19 +584,19 @@ __calloc::
 	ldir
 	pop	hl
 	ret
-;../../lib/memory.c:461: }
-;../../lib/memory.c:468: void* calloc(int size)__naked{
+;../../lib/memory.c:476: }
+;../../lib/memory.c:483: void* calloc(int size)__naked{
 ;	---------------------------------
 ; Function calloc
 ; ---------------------------------
 _calloc::
-;../../lib/memory.c:476: __endasm;
+;../../lib/memory.c:491: __endasm;
 	pop	hl
 	pop	bc
 	push	bc
 	push	hl
 	jp	__calloc
-;../../lib/memory.c:477: }
+;../../lib/memory.c:492: }
 ;main.c:11: void main() {
 ;	---------------------------------
 ; Function main
@@ -660,28 +664,39 @@ _main::
 	push	hl
 	push	hl
 	call	_free
-;main.c:35: fputs("Here is 50 more bytes: ");
+;main.c:35: fputs("Here is 2 sets of 20 bytes: ");
 	ld	hl, #___str_4
 	ex	(sp),hl
 	call	_fputs
-;main.c:36: void* temp3 = malloc(50);
-	ld	hl, #0x0032
-	ex	(sp),hl
+	pop	af
+;main.c:36: newline();
+	call	_newline
+;main.c:37: void* temp4 = malloc(20);
+	ld	hl, #0x0014
+	push	hl
 	call	_malloc
-;main.c:37: doubleHexdump((int)temp3);
+;main.c:38: doubleHexdump((int)temp4);
 	ex	(sp),hl
 	call	_doubleHexdump
 	pop	af
-;main.c:38: newline();
+;main.c:39: newline();
 	call	_newline
-;main.c:45: PressAnyKey();
+;main.c:40: void* temp5 = malloc(20);
+	ld	hl, #0x0014
+	push	hl
+	call	_malloc
+;main.c:41: doubleHexdump((int)temp5);
+	ex	(sp),hl
+	call	_doubleHexdump
+	pop	af
+;main.c:47: PressAnyKey();
 	rst	40 
 	.dw 0x4972 
-;main.c:46: purge_heap();
+;main.c:48: purge_heap();         // Resets the heap for the next person
 	ld	hl, #_HEAP_VAR_NAME
 	push	hl
 	call	_delete
-;main.c:47: }
+;main.c:49: }
 	ld	sp,ix
 	pop	ix
 	ret
@@ -695,7 +710,7 @@ ___str_3:
 	.ascii "Lets free the first 50."
 	.db 0x00
 ___str_4:
-	.ascii "Here is 50 more bytes: "
+	.ascii "Here is 2 sets of 20 bytes: "
 	.db 0x00
 	.area _CODE
 	.area _INITIALIZER

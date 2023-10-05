@@ -9,7 +9,7 @@
 
 
 void main() {
-
+	
 	clearScreen();
 	resetPen();
 
@@ -32,16 +32,14 @@ void main() {
 	newline();
 	free(temp);
 
-	fputs("Here is 50 more bytes: ");
-	void* temp3 = malloc(50);
-	doubleHexdump((int)temp3);
+	fputs("Here is 2 sets of 20 bytes: ");
 	newline();
+	void* temp4 = malloc(20);
+	doubleHexdump((int)temp4);
+	newline();
+	void* temp5 = malloc(20);
+	doubleHexdump((int)temp5);
 
-
-
-
-
-	
 	PressAnyKey();
-	purge_heap();
+	purge_heap();         // Resets the heap for the next person
 }

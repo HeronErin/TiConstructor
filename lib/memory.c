@@ -224,14 +224,22 @@ void _malloc() __naked{
 		  pop hl
 
 
-		ld b, d
-		ld c, e
+
 		ex de, hl
 		pop hl
 		jp c, PREP_NEXT
 
 		ld hl, (HEAP_TEMP)
-		jp GROW_HEAP
+
+
+		xor a, a
+		ld (hl), a
+		inc hl
+		ld (hl), d
+		inc hl
+		ld (hl), e
+		ret
+
 
 
 	MALLOC_NOT_FREED_ITEM:
@@ -254,6 +262,8 @@ void _malloc() __naked{
 
 
 	GROW_HEAP:
+
+
 		inc bc
 		inc bc
 		inc bc
