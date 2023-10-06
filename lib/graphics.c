@@ -7,6 +7,8 @@
  *    + <b> USE_LINE</b> - enables line()
  *    + <b> USE_SET_PIX</b> - enables setPix() 
  *    + <b> USE_CIRCLE</b> - enables circle()
+ *    + <b> USE_VERTICAL_LINE</b> - enable vertical_line()
+ *    + <b> USE_VERTICAL_LINE_DOTTED</b> - enables vertical_dotted_line()
  * 	 <h4>Functions Disables </h4>
  * 
  *    + <b> NO_USE_CLEAR</b> - Disables clearBuffer()
@@ -171,6 +173,8 @@ void swap(){
  * <small>taken from https://wikiti.brandonw.net/index.php?title=Z80_Routines:Graphic:LineDraw and
  *  adapted for sdcc, should be quite fast</small>
  */ 
+
+
 void line(char x, char y, char x2, char y2) __naked{
 	__asm
 	// Argument loader
@@ -180,6 +184,15 @@ void line(char x, char y, char x2, char y2) __naked{
 		push hl
 		push de
 		push bc
+
+		ld a, d      // Somehow this routine started to have issues confusting x and y? Fliping it solved that (?????)
+		ld d, e
+		ld e, a
+
+		ld a, h
+		ld h, l
+		ld l, a
+
 
 		push ix
 		ld ix, #G_SCREEN_BUFFER
@@ -299,7 +312,8 @@ void line(char x, char y, char x2, char y2) __naked{
 
 
 
-	
+#if defined(USE_VERTICAL_LINE) || defined(DOXYGEN)
+
 /** @brief Quick verticle line drawing routine
  * @param[x] the x value to draw at (0-XMAX)
  * @param[start] the y value to start at (0-YMAX-1)
@@ -381,6 +395,9 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 
 	__endasm;
 }
+#endif
+
+#if defined(USE_VERTICAL_LINE_DOTTED) || defined(DOXYGEN)
 
 /** @brief Quick dotted verticle line drawing routine
  * @param[x] the x value to draw at (0-XMAX)
@@ -467,6 +484,56 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 
 	__endasm;
 }
+#endif
+
+
+
+
+
+
+/** @brief <b>ASM</b> Routine to get the memory location of a pixel based
+ * 	@param[A] The x coord
+ * 	@param[L] The y coord
+ * 	@return HL = memory location & A = bitmask
+ * 
+ * Only call this from assembly
+ *  <small> Taken from https://taricorp.gitlab.io/83pa28d/lesson/week4/day24/index.html </small>
+ */
+void ___GetPixel() __naked{
+	__asm
+		// inc a
+
+	    LD     H, #0
+	    LD     D, H
+	    LD     E, L
+	    ADD    HL, HL
+	    ADD    HL, DE
+	    ADD    HL, HL
+	    ADD    HL, HL
+
+	    LD     E, A
+	    SRL    E
+	    SRL    E
+	    SRL    E
+	    ADD    HL, DE
+
+	    LD     DE, #G_SCREEN_BUFFER
+	    ADD    HL, DE
+
+	    and a, #7
+	    LD     B, A
+	    LD     A, #0x80
+	    RET    Z
+	    
+	    
+	    or a, a
+	Get_Pix_Loop:
+	    RRCA
+	    DJNZ   Get_Pix_Loop
+	    RET
+	    
+	__endasm;
+}
 
 
 
@@ -479,12 +546,25 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 /** @brief Set a pixel on the screen
  * @param[x] the x value to draw at (0-XMAX)
  * @param[y] the y value to draw at (0-YMAX)
- * It ain't fast, and it ain't pretty, but it works. 
  * 
- * TODO: rewite in a quicker asm implementation
+ * This is a routine that works, but is overall not the most efficient way to draw on the screen.
  */
-void setPix(char x, char y){
-	*(char*)((((int)y)* (XMAX/8) )+(x/8)+G_SCREEN_BUFFER)|=128>>(x%8);
+void setPix(char x, char y)__naked{
+	__asm
+		pop bc
+		pop hl
+		push hl
+		push bc
+
+		ld a, l
+		ld l, h
+		call ____GetPixel
+		or (hl)
+		ld (hl), a
+
+		ret
+
+	__endasm;
 }
 #endif
 

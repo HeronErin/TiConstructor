@@ -29,12 +29,12 @@ Or click [here](https://github.com/HeronErin/TiConstructor) to get back to githu
 5.  Test it out
 
 ```bash
-bash build_prog.sh examples/helloworld/ helloWorld
+ build_prog.sh examples/helloworld/ helloWorld
 ```
 or
 
 ```bash
-bash build_app.sh examples/helloworld/ helloWorld
+ build_app.sh examples/helloworld/ helloWorld
 ```
 
 
@@ -77,7 +77,7 @@ Now that you have a working build system, install tilp (or TI Connect for window
 I did take some code from others, I just can't do it all myself. 
 
 * Thanks _Xeda112358_ for the [routine for converting registers to op values](https://www.cemetech.net/forum/viewtopic.php?t=1449&postdays=0&postorder=asc&start=126)
-* Thanks to whoever wrote the TI-83 Plus calculator in 28 days guide for the [fast clear buffer routine](https://taricorp.gitlab.io/83pa28d/lesson/day10.html#cb11)
+* Thanks to whoever wrote the TI-83 Plus calculator in 28 days guide for the [fast clear buffer routine](https://taricorp.gitlab.io/83pa28d/lesson/day10.html#cb11) and the [GetPixel routine](https://taricorp.gitlab.io/83pa28d/lesson/week4/day24/index.html)
 * Thanks _James Montelongo Jr_, who wrote the fast [dline routine](https://www.ticalc.org/pub/83plus/asm/source/routines/dline.zip)
 * Thanks to the _geeksforgeeks_ authors for the [circle function](https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/)
 * Thanks to _Sorunome_ for the [flash app interupt loader](https://www.omnimaga.org/asm-language/interrupt-routine-not-returning/msg404756/#msg404756)
