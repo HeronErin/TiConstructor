@@ -387,7 +387,7 @@ void* malloc(int size)__naked{
 		pop bc
 		push bc
 		push hl
-
+		inc bc
 		jp __malloc
 	__endasm;
 }
@@ -534,7 +534,13 @@ void* calloc(int size)__naked{
 	__endasm;
 }
 
-
+/** @brief Copy a region of memory
+ * @param[dst] Location to copy to
+ * @param[source] Location to copy from
+ * @param[size] Amount of ram to copy.
+ * 
+ * This is <b>not</b> strncpy and will disregard null termination.
+ */
 void copy(void* dst, void* source, int size)__naked{
 	__asm
 		pop af
@@ -545,7 +551,7 @@ void copy(void* dst, void* source, int size)__naked{
 		push hl
 		push de
 		push af
-		
+
 		ldir
 		ret
 	__endasm;
