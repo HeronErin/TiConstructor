@@ -123,6 +123,8 @@ void initHeap(){
 		pop	af
 	// set HEAP_LOCATION_PTR 
 		ex de, hl
+
+		#ifndef MALLOC_TURBO
 		ld hl, #HEAP_LOCATION_PTR
 		ld (hl), e
 		inc hl
@@ -136,11 +138,25 @@ void initHeap(){
 
 		// Set first byte to 0xFF 
 		ld (hl), #0xFF
+		#endif
+
+		#ifdef MALLOC_TURBO
+		inc de
+		inc de
+
+		ld hl, #HEAP_LOCATION_PTR
+		ld (hl), e
+		inc hl
+		ld (hl), d
+
+
+		#endif
+
 
 	__endasm;
 }
 
-
+#ifndef MALLOC_TURBO
 /** @brief Assembly malloc implementation
  *  @param[bc] Size of memory to be requested 
  * 	@return hl = memory location
@@ -327,8 +343,30 @@ void _malloc() __naked{
 
 
 	__endasm;
-
 }
+#endif
+#ifdef MALLOC_TURBO
+void _malloc() __naked{
+	__asm
+		ld hl, (HEAP_LOCATION_PTR)
+		push hl
+		add hl, bc
+		ex de, hl
+
+		ld hl, #HEAP_LOCATION_PTR
+		ld (hl), e
+		inc hl
+		ld (hl), d
+
+		pop hl
+		ret
+
+	__endasm;
+}
+
+
+#endif
+
 
 /** @brief Request to allocate an amount of memory from the heap (filled undefined random data)
  *  @param[size] Amount of memory to be allocated
@@ -363,6 +401,7 @@ void* malloc(int size)__naked{
  */ 
 void _free() __naked{
 	__asm
+#ifndef MALLOC_TURBO
 		dec hl // Hl = header of Heap Item (assuming it is valid)
 		dec hl
 		dec hl
@@ -405,6 +444,8 @@ void _free() __naked{
 		pop hl
 
 		set 0, (hl)
+
+#endif
 		ret
 
 
@@ -416,6 +457,7 @@ void _free() __naked{
 	__asm
 		pop af
 		ret
+
 	__endasm;
 }
 
@@ -424,6 +466,7 @@ void _free() __naked{
  */
 void free(void* ptr)__naked{
 	__asm
+	
 		pop bc
 		pop hl
 		push hl
@@ -488,5 +531,22 @@ void* calloc(int size)__naked{
 		push hl
 
 		jp __calloc
+	__endasm;
+}
+
+
+void copy(void* dst, void* source, int size)__naked{
+	__asm
+		pop af
+		pop de
+		pop hl
+		pop bc
+		push bc
+		push hl
+		push de
+		push af
+		
+		ldir
+		ret
 	__endasm;
 }
