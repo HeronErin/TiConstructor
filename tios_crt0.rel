@@ -1,0 +1,33 @@
+XL3
+H A areas 4 global symbols
+M crt
+S _main Ref000000
+S .__.ABS. Def000000
+A _CODE size 3 flags 0 addr 0
+S __clock Def000000
+A _HEADER size 0 flags 8 addr 0
+A _HEADER0 size F flags 8 addr 9D93
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+S gsinit Def000000
+A _GSFINAL size 1 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _BSEG size 0 flags 0 addr 0
+A _BSS size 0 flags 0 addr 0
+A _HEAP size 0 flags 0 addr 0
+T 93 9D 00
+R 00 00 02 00
+T 93 9D 00 BB 6D 21 9F 9D E5 CD 00 00 C3 00 00
+R 00 00 02 00 00 06 02 00 00 0A 04 00 02 0D 00 00
+T 9F 9D 00
+R 00 00 02 00
+T 9F 9D 00 ED 56 C9
+R 00 00 02 00
+T 00 00 00
+R 00 00 00 00
+T 00 00 00 3E 02 C9
+R 00 00 00 00
+T 00 00 00
+R 00 00 04 00
+T 00 00 00 C9
+R 00 00 05 00

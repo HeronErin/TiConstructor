@@ -13,8 +13,6 @@
 	.globl ___drawCircleSegment
 	.globl _setPix
 	.globl ____GetPixel
-	.globl _vertical_dotted_line
-	.globl _vertical_line
 	.globl _line
 	.globl _swap
 	.globl _clearBuffer
@@ -171,12 +169,12 @@ _printc::
 	pop	ix
 	ret
 ;../../lib/textio.c:134: }
-;../../lib/graphics.c:86: void clearBuffer(){
+;../../lib/graphics.c:88: void clearBuffer(){
 ;	---------------------------------
 ; Function clearBuffer
 ; ---------------------------------
 _clearBuffer::
-;../../lib/graphics.c:107: __endasm;
+;../../lib/graphics.c:109: __endasm;
 	DI
 	LD	(0x980C), SP
 	LD	SP, #0x9340 + 768 ; 768 byte area
@@ -194,14 +192,14 @@ _clearBuffer::
 	DJNZ	CLEAR_LOOP
 	LD	SP, (0x980C)
 	EI
-;../../lib/graphics.c:108: }
+;../../lib/graphics.c:110: }
 	ret
-;../../lib/graphics.c:114: void swap(){
+;../../lib/graphics.c:116: void swap(){
 ;	---------------------------------
 ; Function swap
 ; ---------------------------------
 _swap::
-;../../lib/graphics.c:155: __endasm;
+;../../lib/graphics.c:157: __endasm;
 	di
 	ld	hl, #0x9340
 	CALL	0x000B
@@ -227,14 +225,14 @@ _swap::
 	cp	#0xBF
 	jp	nz, YLOOPR__
 	ei
-;../../lib/graphics.c:157: }
+;../../lib/graphics.c:159: }
 	ret
-;../../lib/graphics.c:176: void line(char x, char y, char x2, char y2) __naked{
+;../../lib/graphics.c:178: void line(char x, char y, char x2, char y2) __naked{
 ;	---------------------------------
 ; Function line
 ; ---------------------------------
 _line::
-;../../lib/graphics.c:307: __endasm;
+;../../lib/graphics.c:309: __endasm;
 	pop	bc
 	pop	de
 	pop	hl
@@ -354,127 +352,13 @@ _line::
 	djnz	DL_Hloop
 	ld	sp,(0x980C)
 	ret
-;../../lib/graphics.c:308: }
-;../../lib/graphics.c:323: void vertical_line(char x, char start, char height, char not_used)__naked{
-;	---------------------------------
-; Function vertical_line
-; ---------------------------------
-_vertical_line::
-;../../lib/graphics.c:393: __endasm;
-	pop	bc
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	push	bc
-	ld	h, l
-	push	hl
-	ld	b, #0
-	ld	c, d
-	ld	h, b
-	ld	l, c
-	add	hl, bc
-	ld	b, h
-	ld	c, l
-	add	hl, bc
-	ld	b, h
-	ld	c, l
-	add	hl, bc
-	add	hl, bc
-	ld	b, h
-	ld	c, l
-	ld	a, e
-	ld	hl,#0x9340
-	add	hl, bc
-	ld	d,#0
-	ld	e,a
-	srl	e
-	srl	e
-	srl	e
-	add	hl,de
-	and	a, #0x07
-	ld	b,a
-	inc	b
-	ld	a,#1
-	  vertloop1:
-	rrca
-	djnz	vertloop1
-	ld	c,a
-	pop	af
-	ld	b,a
-	ld	e,#12
-	  vertloop2:
-	ld	a,c
-	or	(hl)
-	ld	(hl),a
-	add	hl,de
-	djnz	vertloop2
-	ret
-;../../lib/graphics.c:394: }
-;../../lib/graphics.c:406: void vertical_dotted_line(char x, char start, char height, char not_used)__naked{
-;	---------------------------------
-; Function vertical_dotted_line
-; ---------------------------------
-_vertical_dotted_line::
-;../../lib/graphics.c:479: __endasm;
-	pop	bc
-	pop	de
-	pop	hl
-	push	hl
-	push	de
-	push	bc
-	ld	h, l
-	push	hl
-	ld	b, #0
-	ld	c, d
-	ld	h, b
-	ld	l, c
-	add	hl, bc
-	ld	b, h
-	ld	c, l
-	add	hl, bc
-	ld	b, h
-	ld	c, l
-	add	hl, bc
-	add	hl, bc
-	ld	b, h
-	ld	c, l
-	ld	a, e
-	ld	hl,#0x9340
-	add	hl, bc
-	ld	d,#0
-	ld	e,a
-	srl	e
-	srl	e
-	srl	e
-	add	hl,de
-	and	a, #0x07
-	ld	b,a
-	inc	b
-	ld	a,#1
-	  _vertloop1:
-	rrca
-	djnz	_vertloop1
-	ld	c,a
-	pop	af
-	rra
-	ld	b,a
-	ld	e,#12
-	  _vertloop2:
-	ld	a,c
-	or	(hl)
-	ld	(hl),a
-	add	hl,de
-	add	hl,de
-	djnz	_vertloop2
-	ret
-;../../lib/graphics.c:480: }
-;../../lib/graphics.c:498: void ___GetPixel() __naked{
+;../../lib/graphics.c:310: }
+;../../lib/graphics.c:502: void ___GetPixel() __naked{
 ;	---------------------------------
 ; Function ___GetPixel
 ; ---------------------------------
 ____GetPixel::
-;../../lib/graphics.c:531: __endasm;
+;../../lib/graphics.c:535: __endasm;
 	LD	H, #0
 	LD	D, H
 	LD	E, L
@@ -498,13 +382,13 @@ ____GetPixel::
 	RRCA
 	DJNZ	Get_Pix_Loop
 	RET
-;../../lib/graphics.c:532: }
-;../../lib/graphics.c:544: void setPix(char x, char y)__naked{
+;../../lib/graphics.c:536: }
+;../../lib/graphics.c:552: void setPix(char x, char y)__naked{
 ;	---------------------------------
 ; Function setPix
 ; ---------------------------------
 _setPix::
-;../../lib/graphics.c:559: __endasm;
+;../../lib/graphics.c:567: __endasm;
 	pop	bc
 	pop	hl
 	push	hl
@@ -515,8 +399,8 @@ _setPix::
 	or	(hl)
 	ld	(hl), a
 	ret
-;../../lib/graphics.c:560: }
-;../../lib/graphics.c:575: void __drawCircleSegment(char xc, char yc, char x, char y)
+;../../lib/graphics.c:568: }
+;../../lib/graphics.c:583: void __drawCircleSegment(char xc, char yc, char x, char y)
 ;	---------------------------------
 ; Function __drawCircleSegment
 ; ---------------------------------
@@ -524,7 +408,7 @@ ___drawCircleSegment::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;../../lib/graphics.c:577: setPix(xc+x, yc+y);
+;../../lib/graphics.c:585: setPix(xc+x, yc+y);
 	ld	a, 5 (ix)
 	add	a, 7 (ix)
 	ld	d, a
@@ -536,7 +420,7 @@ ___drawCircleSegment::
 	call	_setPix
 	pop	af
 	pop	de
-;../../lib/graphics.c:578: setPix(xc-x, yc+y);
+;../../lib/graphics.c:586: setPix(xc-x, yc+y);
 	ld	a, 4 (ix)
 	sub	a, 6 (ix)
 	ld	c, a
@@ -548,7 +432,7 @@ ___drawCircleSegment::
 	pop	af
 	pop	de
 	pop	bc
-;../../lib/graphics.c:579: setPix(xc+x, yc-y);
+;../../lib/graphics.c:587: setPix(xc+x, yc-y);
 	ld	a, 5 (ix)
 	sub	a, 7 (ix)
 	ld	b, a
@@ -559,7 +443,7 @@ ___drawCircleSegment::
 	pop	af
 	call	_setPix
 	pop	af
-;../../lib/graphics.c:581: setPix(xc+y, yc+x);
+;../../lib/graphics.c:589: setPix(xc+y, yc+x);
 	ld	a, 5 (ix)
 	add	a, 6 (ix)
 	ld	d, a
@@ -571,7 +455,7 @@ ___drawCircleSegment::
 	call	_setPix
 	pop	af
 	pop	de
-;../../lib/graphics.c:582: setPix(xc-y, yc+x);
+;../../lib/graphics.c:590: setPix(xc-y, yc+x);
 	ld	a, 4 (ix)
 	sub	a, 7 (ix)
 	ld	c, a
@@ -583,7 +467,7 @@ ___drawCircleSegment::
 	pop	af
 	pop	de
 	pop	bc
-;../../lib/graphics.c:583: setPix(xc+y, yc-x);
+;../../lib/graphics.c:591: setPix(xc+y, yc-x);
 	ld	a, 5 (ix)
 	sub	a, 6 (ix)
 	ld	b, a
@@ -594,10 +478,10 @@ ___drawCircleSegment::
 	pop	af
 	call	_setPix
 	pop	af
-;../../lib/graphics.c:585: }
+;../../lib/graphics.c:593: }
 	pop	ix
 	ret
-;../../lib/graphics.c:596: void circle(char xc, char yc, char r)
+;../../lib/graphics.c:604: void circle(char xc, char yc, char r)
 ;	---------------------------------
 ; Function circle
 ; ---------------------------------
@@ -606,9 +490,9 @@ _circle::
 	ld	ix,#0
 	add	ix,sp
 	push	af
-;../../lib/graphics.c:598: char x = 0, y = r;
+;../../lib/graphics.c:606: char x = 0, y = r;
 	ld	b, 6 (ix)
-;../../lib/graphics.c:599: __drawCircleSegment(xc, yc, x, y);
+;../../lib/graphics.c:607: __drawCircleSegment(xc, yc, x, y);
 	push	bc
 	push	bc
 	inc	sp
@@ -622,7 +506,7 @@ _circle::
 	pop	af
 	pop	af
 	pop	bc
-;../../lib/graphics.c:600: int d = 3 - 2 * r;
+;../../lib/graphics.c:608: int d = 3 - 2 * r;
 	ld	l, b
 	ld	h, #0x00
 	add	hl, hl
@@ -632,18 +516,18 @@ _circle::
 	ld	a, #0x00
 	sbc	a, h
 	ld	d, a
-;../../lib/graphics.c:601: while (y >= x)
+;../../lib/graphics.c:609: while (y >= x)
 	ld	e, #0x00
 00104$:
 	ld	a, b
 	sub	a, e
 	jr	C, 00107$
-;../../lib/graphics.c:606: x++;
+;../../lib/graphics.c:614: x++;
 	inc	e
-;../../lib/graphics.c:614: d = d + 4 * (x - y) + 10;
+;../../lib/graphics.c:622: d = d + 4 * (x - y) + 10;
 	ld	-2 (ix), e
 	ld	-1 (ix), #0
-;../../lib/graphics.c:611: if (d > 0)
+;../../lib/graphics.c:619: if (d > 0)
 	xor	a, a
 	cp	a, c
 	sbc	a, d
@@ -651,9 +535,9 @@ _circle::
 	xor	a, #0x80
 00125$:
 	jp	P, 00102$
-;../../lib/graphics.c:613: y--;
+;../../lib/graphics.c:621: y--;
 	dec	b
-;../../lib/graphics.c:614: d = d + 4 * (x - y) + 10;
+;../../lib/graphics.c:622: d = d + 4 * (x - y) + 10;
 	ld	l, b
 	ld	h, #0x00
 	ld	a, -2 (ix)
@@ -677,7 +561,7 @@ _circle::
 	inc	d
 	jr	00103$
 00102$:
-;../../lib/graphics.c:617: d = d + 4 * x + 6;
+;../../lib/graphics.c:625: d = d + 4 * x + 6;
 	pop	hl
 	push	hl
 	add	hl, hl
@@ -695,7 +579,7 @@ _circle::
 	inc	d
 00127$:
 00103$:
-;../../lib/graphics.c:618: __drawCircleSegment(xc, yc, x, y);
+;../../lib/graphics.c:626: __drawCircleSegment(xc, yc, x, y);
 	push	bc
 	push	de
 	ld	c, e
@@ -710,7 +594,7 @@ _circle::
 	pop	bc
 	jr	00104$
 00107$:
-;../../lib/graphics.c:620: }
+;../../lib/graphics.c:628: }
 	ld	sp, ix
 	pop	ix
 	ret
@@ -748,7 +632,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:19: line(3, 5, 3, 20);
+;main.c:19: line(3, 5, 3, 20); 
 	ld	de, #0x1403
 	push	de
 	ld	de, #0x0503
@@ -756,7 +640,7 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:20: line(10, 5, 10, 20);
+;main.c:20: line(10, 5, 10, 20); // Using vertical_line() would be faster...
 	ld	de, #0x140a
 	push	de
 	ld	de, #0x050a
@@ -919,17 +803,17 @@ _main::
 	call	_line
 	pop	af
 	pop	af
-;main.c:66: __endasm;
+;main.c:65: __endasm;
 	ld	a, #10
 	ld	l, #1
 	call	____GetPixel
 	ld	(hl), a
-;main.c:69: swap();
+;main.c:68: swap();
 	call	_swap
-;main.c:75: PressAnyKey();
+;main.c:74: PressAnyKey();
 	rst	40 
 	.dw 0x4972 
-;main.c:77: }
+;main.c:76: }
 	ret
 	.area _CODE
 	.area _INITIALIZER

@@ -1,13 +1,15 @@
 DIRECTORY=$(cd `dirname $0` && pwd)
 
-cd $1
+cd x
 
-export MAINC="main.c"
-export OUT_NAME=$2
+export MAINC="../hello.c"
+export OUT_NAME="testtex"
 
 
 sdasz80 -p -g -o tios_crt0.rel $DIRECTORY/other_files/tios_crt0.s
-sdcc -DRAM_PROG --no-std-crt0 --code-loc 40347 --data-loc 0 --std-sdcc99 -mz80 --reserve-regs-iy -o $OUT_NAME.ihx tios_crt0.rel $MAINC
+
+
+sdcc -DSDCC --no-std-crt0 --code-loc 40347 --data-loc 0 --std-sdcc99 -mz80 --reserve-regs-iy -o $OUT_NAME.ihx tios_crt0.rel $MAINC
 
 
 objcopy -Iihex -Obinary $OUT_NAME.ihx $OUT_NAME.bin
