@@ -6,6 +6,8 @@ name: Deploy Documentation
 # Controls when the action will run. 
 on:
   push:
+    branches:
+      -master
   workflow_dispatch:
     
 jobs:
