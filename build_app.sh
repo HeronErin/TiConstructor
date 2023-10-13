@@ -13,23 +13,29 @@ echo $BC
 export MAINC="main.c"
 export OUT_NAME=$2
 
-trunkName=$(printf '%-8s' "$(head -c 8 <<<$2)") # truncate name and pad with extra spaces to make sure it is 8 char long
+trunkName=$(head -c 8 <<<$2) # truncate name to make sure it is no more than 8 char long
 
-crt="$DIRECTORY/other_files/tios_crt0_app.s" # just got path to crt0
+# Compile with custom crt0
+docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC -crt0 other_files/ti83p_crt0_app.asm
 
-sed "s/qwertyui/$trunkName/" $crt > TEMP_crt0.s # fill in name in crt0
-sed "s/0x6969/$BC/" TEMP_crt0.s > TEMP_crt0.s.s
+# Now we need to rebuild the .bin with our custom name
 
-sdasz80 -p -g -o tios_crt0.rel TEMP_crt0.s.s
-sdcc -DFLASH_APP --no-std-crt0 --code-loc 16429 --data-loc 0 --std-sdcc99 -mz80 --reserve-regs-iy -o $OUT_NAME.ihx tios_crt0.rel $MAINC
+nameLn=${#trunkName} #length of trunkName
 
+cat $OUT_NAME.bin | head -c 18 > x.bin # Write bytes before name in header
+echo -n $trunkName >> x.bin # Write your name
 
-objcopy -Iihex -Obinary $OUT_NAME.ihx $OUT_NAME.bin
+# Pad name (if needed)
+while [ $nameLn -lt 8 ]
+do
+  echo -n " " >> x.bin
+  ((nameLn++))
+done
 
-
-rm $OUT_NAME.ihx $OUT_NAME.lk $OUT_NAME.lst $OUT_NAME.map $OUT_NAME.noi $OUT_NAME.rel $OUT_NAME.sym tios_crt0.rel TEMP_crt0.s TEMP_crt0.s.s
-
+# Write rest of app
+cat $OUT_NAME.bin | tail -c+27 >> x.bin
+mv x.bin $OUT_NAME.bin
 
 $DIRECTORY/other_files/rabbitsign -t 8xk -g -f $OUT_NAME.bin
 
-rm $OUT_NAME.bin
+# rm $OUT_NAME.bin
