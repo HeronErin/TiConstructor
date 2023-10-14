@@ -25,12 +25,12 @@
  * 0 for 8 mhz and 3 for 14.99 mhz
  * for more info: https://wikiti.brandonw.net/index.php?title=83Plus:Ports:20 
  */ 
-char getCpuSpeed() __naked{
-    __asm
+char getCpuSpeed() __naked __z88dk_sdccdecl{
+    #asm
         in a, (0x20)
         ld l, a
         ret
-    __endasm;
+    #endasm
 }
 
 /** @brief Set the current cpu speed
@@ -38,11 +38,12 @@ char getCpuSpeed() __naked{
  * 0 for 8 mhz and 3 for 14.99 mhz
  * for more info: https://wikiti.brandonw.net/index.php?title=83Plus:Ports:20 
  */ 
-void setCpuSpeed(char speed){
-    __asm
-        ld a, 4 (ix)
+void setCpuSpeed(char speed) __naked __z88dk_fastcall{
+    #asm
+        ld a, l
         out (0x20), a
-    __endasm;
+        ret
+    #endasm
 }
 #endif
 
@@ -51,13 +52,14 @@ void setCpuSpeed(char speed){
  * See: https://wikiti.brandonw.net/index.php?title=83Plus:Ports:45 and https://wikiti.brandonw.net/index.php?title=83Plus:Ports:40
  */ 
 #if defined(USE_GET_TIME) || defined(DOXYGEN)
-unsigned int getTime(){ 
-    __asm
+unsigned int getTime() __naked __z88dk_sdccdecl{ 
+    #asm
         in a, (0x45)
         ld l, a
         in a, (0x46)
         ld h, a
-    __endasm;
+        ret
+    #endasm
 }
 #endif
 
@@ -67,24 +69,26 @@ unsigned int getTime(){
  *  @param[x] Amount of time to wait in intervals of 1/8th of a secound
  * 
  */
-void wait(unsigned char x){
+void wait(unsigned char x) __naked __z88dk_fastcall{
     x;
-    __asm
-       ld a,#0x47      ;8 hz
-       out (#0x30),a
-       ld a,#0x00        ; no loop, no interrupt
-       out (#0x31),a
-       ld a,4(ix)       ;16 ticks / 8 hz equals 2 seconds
-       out (#0x32),a
+    #asm
+       ld a,0x47      ;8 hz
+       out (0x30),a
+       ld a,0x00        ; no loop, no interrupt
+       out (0x31),a
+       ld a,l       ;16 ticks / 8 hz equals 2 seconds
+       out (0x32),a
     wait:
        in a,(4)
        bit 5,a       ;bit 5 tells if timer 1
        jr z,wait     ;is done
        xor a
-       out (#0x30),a   ;Turn off the timer.
-       out (#0x31),a
+       out (0x30),a   ;Turn off the timer.
+       out (0x31),a
 
-   __endasm;
+       ret
+
+   #endasm
 }
 #endif
 

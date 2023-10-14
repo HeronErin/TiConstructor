@@ -44,7 +44,7 @@
 */
 
 char* getOrCreateVar(char* name, int size)__naked{
-	__asm
+	#asm
 		pop de
 		pop hl
 		push hl
@@ -91,7 +91,7 @@ char* getOrCreateVar(char* name, int size)__naked{
 
 
 		
-	__endasm;
+	#endasm
 }
 
 /** 
@@ -104,7 +104,7 @@ char* getOrCreateVar(char* name, int size)__naked{
 
 // took me 7 hours to figure out, but _Arc_Unarc destroys everything and it is better off to let it destroy the shadow registers instead, otherwise everything crashes
 void archive(char* name)__naked{
-	__asm
+	#asm
 		pop de
 		pop hl
 		push hl
@@ -122,7 +122,7 @@ void archive(char* name)__naked{
 		ei
 		ret
 
-	__endasm;
+	#endasm
 
 }
 
@@ -132,7 +132,7 @@ void archive(char* name)__naked{
  */ 
 
 void delete(char* name)__naked{
-	__asm
+	#asm
 		pop de
 		pop hl
 		push hl
@@ -142,5 +142,5 @@ void delete(char* name)__naked{
 		abcall(_ChkFindSym)
 		abcall(_DelVar)
 		ret
-	__endasm;
+	#endasm
 }

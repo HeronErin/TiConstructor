@@ -8,15 +8,14 @@
  * 
  * 	This error uses a bcall so it should return
  */ 
-void CustomError(char* error_text) __naked{
-	__asm
+void CustomError(char* error_text) __naked __z88dk_callee{
+	#asm
 		pop de
 		pop hl
-		push hl
 		push de
 
-		ld de, #appErr1
-		ld bc, #11
+		ld de, appErr1
+		ld bc, 11
 		ldir
 
 		abcall(_ErrCustom1)

@@ -32,21 +32,21 @@
  *  @return char
  */
 char FX_floor_int(int f)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop af      ; and perserve
 		push af
 		push hl     ; ret value
 		ld l, a
 		ret
-	__endasm;
+	#endasm
 }
 /** @brief Round fixed point number
  *  @param[f] Number to be rounded
  *  @return Another fixed point number
  */
 int FX_floor(int f)__naked{
-	__asm
+	#asm
 		pop de      ; Get input
 		pop hl      ; and perserve
 		push hl
@@ -55,7 +55,7 @@ int FX_floor(int f)__naked{
 		xor a, a
 		ld l, a
 		ret
-	__endasm;
+	#endasm
 }
  
 /** @brief Gets the square root of a 16-bit intager to a 8 bit char
@@ -63,7 +63,7 @@ int FX_floor(int f)__naked{
  *  @return A rounded char of the sqrt(x) 
  */ 
 char sqrt_rounded(int x)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		push bc
@@ -74,7 +74,7 @@ char sqrt_rounded(int x)__naked{
 		call ___fast_16_bit_sqrt_asm
 		ld l, d
 		ret
-	__endasm;
+	#endasm
 }
 /** @brief Multiple two 16-bit ints together
  *  @param[x] A 16-bit int (<b>NOT</b> fixed point number) 
@@ -82,7 +82,7 @@ char sqrt_rounded(int x)__naked{
  *  @return A long(32-bit) value of x*y
  */ 
 long mul_int(int x, int y)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		pop de
@@ -91,7 +91,7 @@ long mul_int(int x, int y)__naked{
 		push hl     ; ret value
 
 		jp ___mult_de_bc ; Jp instead of call saves time due to ___mult_de_bc having the same output as long
-	__endasm;
+	#endasm
 }
 /** @brief Divide two 16-bit ints together
  *  @param[x] A 16-bit int (<b>NOT</b> fixed point number) 
@@ -99,7 +99,7 @@ long mul_int(int x, int y)__naked{
  *  @return A 16-bit int of x/y
  */ 
 int div_int(int x, int y)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		pop de
@@ -113,7 +113,7 @@ int div_int(int x, int y)__naked{
 		ld h, a
 		ld l, c
 		ret
-	__endasm;
+	#endasm
 }
 
 /** @brief Multiple two 16-bit fixed point numbers
@@ -122,7 +122,7 @@ int div_int(int x, int y)__naked{
  *  @return The fixed point result of x*y
  */ 
 int FX_mul(int x, int y)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		pop de
@@ -177,7 +177,7 @@ int FX_mul(int x, int y)__naked{
 					  ld h,a
 		#endif
 		ret
-	__endasm;
+	#endasm
 }
 
 
@@ -189,7 +189,7 @@ int FX_mul(int x, int y)__naked{
  *  <small>Takes about 1800 t-states (+-500)</small>
  */ 
 int FX_div(int x, int y)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		pop de
@@ -230,9 +230,9 @@ int FX_div(int x, int y)__naked{
 
 
 		push ix
-		ld ix, #0
-		.db 0xDD, 0x61 ; ld ixh, c
-		ld a, #0
+		ld ix, 0
+		defb 0xDD, 0x61 ; ld ixh, c
+		ld a, 0
 		ld c, b
 
 		// ld de, #0x0700
@@ -256,7 +256,7 @@ int FX_div(int x, int y)__naked{
 					  ld h,a
 		#endif
 		ret
-	__endasm;
+	#endasm
 }
 
 /** @brief Take the sqrt of a fixed point number
@@ -264,7 +264,7 @@ int FX_div(int x, int y)__naked{
  *  @return The fixed point result of sqrt(x)
  */ 
 int FX_sqrt(int x)__naked{
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		push bc
@@ -274,7 +274,7 @@ int FX_sqrt(int x)__naked{
 		ld a, c
 		call ___fast_16_bit_sqrt_asm
 		ld h, d
-		ld l, #0
+		ld l, 0
 		; Bit shift by 4
 			srl    h
 			rr     l
@@ -286,7 +286,7 @@ int FX_sqrt(int x)__naked{
 			rr     l
 
 		ret
-	__endasm;
+	#endasm
 }
 
 
@@ -297,7 +297,7 @@ int FX_sqrt(int x)__naked{
  * <small> Taken from https://learn.cemetech.net/index.php?title=Z80:Math_Routines#absHL </small>
  */ 
 int FX_abs(int x)__naked{
-	__asm
+	#asm
 			pop de
 			pop hl
 			push hl
@@ -312,14 +312,14 @@ int FX_abs(int x)__naked{
        sub h 
         ld h,a
 			ret
-	__endasm;
+	#endasm
 }
 
 /** @brief Print a fixed point number to the screen
  *  @param[x] A 16-bit fixed point number
  */ 
 void FX_number(int x)__naked{
-	__asm
+	#asm
 		pop de
 		pop hl
 		
@@ -337,7 +337,7 @@ void FX_number(int x)__naked{
 			push hl 
 			push de
 			push ix
-			ld a, #'-'
+			ld a, '-'
 			abcall(_VPutMap)
 			pop ix
 			pop de
@@ -350,21 +350,21 @@ void FX_number(int x)__naked{
 		push hl
 	_NUM_LOOP_FM:
 		ld l, h
-		ld h, #0
+		ld h, 0
 		push hl
 		call	_number
 		pop af
 
 		bit 0, asm_Flag1(iy)
 		jp z, AFTR_DEC
-		ld a, #'.'
+		ld a, '.'
 		push ix
 		abcall(_VPutMap)
 		pop ix
 	AFTR_DEC:
 
 		pop hl
-		ld h, #0
+		ld h, 0
 
 
 		ld c, l
@@ -393,7 +393,7 @@ void FX_number(int x)__naked{
 		POP AF	
 
 		ret
-	__endasm;
+	#endasm
 }
 
 
@@ -407,19 +407,19 @@ void FX_number(int x)__naked{
  * <b>la</b> is the 16-bit operand and <b>D</b> is the 8-bit result.
  */
 void __fast_16_bit_sqrt_asm()__naked{
-	__asm
+	#asm
 
-	ld	de, #0x0040	; 40h appends "01" to D
+	ld	de, 0x0040	; 40h appends "01" to D
 	ld	h, d
 	
-	ld	b, #7
+	ld	b, 7
 	
 	; need to clear the carry beforehand
 	or	a, a
 	
 _loop:
 	sbc	hl, de
-jrpt:	jr	nc, #jrpt+3
+jrpt:	jr	nc, jrpt+3
 	add	hl, de
 	ccf
 	rl	d
@@ -436,7 +436,7 @@ jrpt:	jr	nc, #jrpt+3
 	
 	ret
  
-	__endasm;
+	#endasm
 
 }
 
@@ -449,30 +449,30 @@ jrpt:	jr	nc, #jrpt+3
  * <b>bc</b> by <b>de</b> and places the result in <b>dehl.</b>
  */
 void __mult_de_bc()__naked{ 
-	__asm
-		ld	hl, #0
+	#asm
+		ld	hl, 0
 
 		sla	e		; optimised 1st iteration
 		rl	d
-gyaq:	jr	nc, #gyaq+4
+gyaq:	jr	nc, gyaq+4
 		ld	h, b
 		ld	l, c
 
-		ld	a, #15
+		ld	a, 15
 	_mlloop:
 		add	hl, hl
 		rl	e
 		rl	d
-umgp:	jr	nc, #umgp+6
+umgp:	jr	nc, umgp+6
 		add	hl, bc
-lrjp:	jr	nc, #lrjp+3
+lrjp:	jr	nc, lrjp+3
 		inc	de
 
 		dec	a
 		jr	nz, _mlloop
 
 		ret
-	__endasm;
+	#endasm
 }
 
 
@@ -487,9 +487,9 @@ lrjp:	jr	nc, #lrjp+3
  * 
  */
 void __div_32_by_16()__naked{
-	__asm
-		ld	hl,#0
-		ld	b,#32
+	#asm
+		ld	hl,0
+		ld	b,32
 	Div32By16_Loop:
 		add	ix,ix
 		rl	c
@@ -508,7 +508,7 @@ void __div_32_by_16()__naked{
 		inc ix // .db	0xDD,0x2C		; inc ixl, change to inc ix to avoid undocumented
 		djnz	Div32By16_Loop
 		ret
-	__endasm;
+	#endasm
 }
 
 
@@ -521,23 +521,23 @@ void __div_32_by_16()__naked{
  * This <b>assembly</b> routine divides <b>ac</b> by <b>de</b> and places the quotient in <b>ac</b> and the remainder in <b>hl</b>
  */
 void __div_ac_de()__naked{
-	__asm
-	ld	hl, #0
-	ld	b, #16
+	#asm
+		ld	hl, 0
+		ld	b, 16
 
-	_jqaloop:
-		.db 0xCB, 0x31  ; sll	c
-		rla
-		adc	hl, hl
-		sbc	hl, de
-ijyq:	jr	nc, #ijyq+4
-		add	hl, de
-		dec	c
+		_jqaloop:
+			defb 0xCB, 0x31  ; sll	c
+			rla
+			adc	hl, hl
+			sbc	hl, de
+	ijyq:	jr	nc, ijyq+4
+			add	hl, de
+			dec	c
 
-	djnz	_jqaloop
+		djnz	_jqaloop
 
-	ret
-	__endasm;
+		ret
+	#endasm
 }
 
 

@@ -36,11 +36,11 @@
 
 // NEVER CALL FROM C 
 void ionPutSprite()__naked{    
-	__asm
+	#asm
 		
 		putSprite:
 		   	ld	e,l
-		   	ld	h,#00
+		   	ld	h,00
 		   	ld	d,h
 		   	
 		   	// hl, de = 16 bit y. Must mult by X_LINE
@@ -48,17 +48,17 @@ void ionPutSprite()__naked{
 
 
 		   	ld	e,a
-		   	and	#07               ;Find the bit number
+		   	and	07               ;Find the bit number
 		   	ld	c,a
 		   	srl	e
 		   	srl	e
 		   	srl	e
 		   	add	hl,de             ;Find the X displacement offset
-		   	ld	de,#plotSScreen
+		   	ld	de,plotSScreen
 		   	add	hl,de
 		   putSpriteLoop1:
 		   sl1:	ld	d,(ix)             ;loads image byte into D
-		   	ld	e,#00
+		   	ld	e,00
 		   	ld	a,c
 		   	or	a
 		   	jr	z,putSpriteSkip1
@@ -75,22 +75,22 @@ void ionPutSprite()__naked{
 		   	ld	a,(hl)
 		   	COPY_MODE	e
 		   	ld	(hl),a              ;copy to buffer using XOR logic
-		   	ld	de,#X_LINE-1
+		   	ld	de,X_LINE-1
 		   	add	hl,de
 		   	inc	ix                   ;Set for next byte of image
 		   	djnz	putSpriteLoop1 
 
 		   	ret
 
-	__endasm;
+	#endasm
 }
 #ifdef USE_APPBACKUP_ION
 void appBackupIonPutSprite()__naked{      ///////// 4 5 6 (7, 8)
-	__asm
+	#asm
 		
 		_putSprite:
 		   	ld	e,l
-		   	ld	h,#00
+		   	ld	h,00
 		   	ld	d,h
 
 		   	// hl, de = 16 bit y. Must mult by X_LINE
@@ -98,17 +98,17 @@ void appBackupIonPutSprite()__naked{      ///////// 4 5 6 (7, 8)
 
 
 		   	ld	e,a
-		   	and	#07               ;Find the bit number
+		   	and	07               ;Find the bit number
 		   	ld	c,a
 		   	srl	e
 		   	srl	e
 		   	srl	e
 		   	add	hl,de             ;Find the X displacement offset
-		   	ld	de,#appBackUpScreen
+		   	ld	de,appBackUpScreen
 		   	add	hl,de
 		   _putSpriteLoop1:
 		   _sl1:	ld	d,(ix)             ;loads image byte into D
-		   	ld	e,#00
+		   	ld	e,00
 		   	ld	a,c
 		   	or	a
 		   	jr	z,_putSpriteSkip1
@@ -125,20 +125,20 @@ void appBackupIonPutSprite()__naked{      ///////// 4 5 6 (7, 8)
 		   	ld	a,(hl)
 		   	COPY_MODE	e
 		   	ld	(hl),a              ;copy to buffer using XOR logic
-		   	ld	de,#X_LINE-1
+		   	ld	de,X_LINE-1
 		   	add	hl,de
 		   	inc	ix                   ;Set for next byte of image
 		   	djnz	_putSpriteLoop1 
 
 		   	ret
 
-	__endasm;
+	#endasm
 }
 #endif
 
 // Not too slow, images must be encoded a special way
 void fullPutSprite(char x, char y, char width, char height, char* sprite){  //4, 5, 6, 7 (8, 9)
-	__asm
+	#asm
 		ld	l, 8 (ix)
 		ld	h, 9 (ix)
 		push hl
@@ -163,12 +163,12 @@ void fullPutSprite(char x, char y, char width, char height, char* sprite){  //4,
 			add a, #8
 			dec c
 			jp nz, X_DRAW_LOOP
-	__endasm;
+	#endasm
 }
 
 #ifdef GREYSCALE_SPRITES
 void greyPutSprite(char x, char y, char width, char height, char* sprite){  //4, 5, 6, 7 (8, 9) (10, 11)
-		__asm
+		#asm
 		ld	l, 8 (ix)
 		ld	h, 9 (ix)
 		push hl
@@ -227,7 +227,7 @@ void greyPutSprite(char x, char y, char width, char height, char* sprite){  //4,
 
 	
 
-	__endasm;
+	#endasm
 }
 
 #endif

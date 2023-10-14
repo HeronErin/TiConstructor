@@ -161,15 +161,15 @@ around 150,000 to 200,000 cycles, the base clock is 8 mhz and turbo is 16  */
  */
 int OPT1_TO_INT(){ // if greater than 9999 errors
 	bcall(_ConvOP1);
-	__asm
+	#asm
 		EX DE, HL
-	__endasm;
+	#endasm
 }
 /** @brief Sets op1 to the value at a ram locations
  *  @param[v] Ram location to copy op1 from
  */
 void MoveToOp1(unsigned int v){
-	__asm
+	#asm
 		ld	hl, #0 + 4
 		add	hl, sp
 		ld	e, (hl)
@@ -177,7 +177,7 @@ void MoveToOp1(unsigned int v){
 		ld	d, (hl)
 
 		EX DE, HL
-	__endasm;
+	#endasm
 	bcall(_Mov9ToOP1);
 }
 /** @brief moves op1 to a ram location
@@ -193,8 +193,8 @@ void MoveOp1To(unsigned int v){
 
 }
 
-#define PRINT_OP1()  __asm \
-					ld a, #6 __endasm;\
+#define PRINT_OP1()  #asm \
+					ld a, 6 #endasm\
 					bcall(_DispOP1A)
 
 
@@ -208,24 +208,24 @@ void MoveOp1To(unsigned int v){
 void charToOp1(char x){
 
 
-    __asm
-        ld  hl, #0 + 4
+    #asm
+        ld  hl, 0 + 4
         add hl, sp
         ld  a, (hl)
 
-        ld hl,#OP1
+        ld hl,OP1
 
 
-        ld bc,#0x0700
+        ld bc,0x0700
         ld (hl),c
         inc hl
-        ld (hl),#0x83
+        ld (hl),0x83
         ld d,h
         ld e,l
 
         inc hl
         ld (hl),c
-        $00000:djnz $00000-2
+        juhiuiujn:djnz juhiuiujn-2
 
 
         or a
@@ -258,10 +258,10 @@ void charToOp1(char x){
 
         ex de,hl
 
-        $00001:jr nz,$00001+6 
+        kmjiuytfft:jr nz,kmjiuytfft+6 
         ld e,a
         xor a
-        ld (hl),#0x81    ;+(21+4/85)cc
+        ld (hl),0x81    ;+(21+4/85)cc
 
 
         inc hl
@@ -269,7 +269,7 @@ void charToOp1(char x){
         inc hl
         ld (hl),a
         ld a,e
-        and #0xF0
+        and 0xF0
         jp nz, EOFFF      ;+48cc
         rld         ;\ Rotate up 1 digit
         dec hl      ; |
@@ -279,7 +279,7 @@ void charToOp1(char x){
 
 
         EOFFF:
-    __endasm;
+    #endasm
 }
 #endif
 
@@ -288,8 +288,8 @@ void charToOp1(char x){
  *  @param[x] Value to be set to op1
  */ 
 void intToOp1(int x){
-	__asm
-		ld	hl, #0 + 4
+	#asm
+		ld	hl, 0 + 4
 		add	hl, sp
 		ld	c, (hl)
 		inc	hl
@@ -299,12 +299,12 @@ void intToOp1(int x){
 
 
 		; loads 128 to op1
-		ld	a, #128
+		ld	a, 128
 		push	af
 		inc	sp
 		call	_charToOp1
 		inc	sp
-	__endasm;
+	#endasm
 		DOUBLE_OP1();
 
 		OP1ToOP2();
@@ -313,7 +313,7 @@ void intToOp1(int x){
 
 		// upper byte to op1
 
-	__asm
+	#asm
 		pop bc
 		push bc
 
@@ -322,7 +322,7 @@ void intToOp1(int x){
 		inc	sp
 		call	_charToOp1
 		inc	sp
-	__endasm;
+	#endasm
 	// op1 now upper byte
 	FP_MULT();
 	
@@ -330,7 +330,7 @@ void intToOp1(int x){
 
 
 	// add lower byte
-	__asm
+	#asm
 		pop bc
 
 		ld	a, c
@@ -338,7 +338,7 @@ void intToOp1(int x){
 		inc	sp
 		call	_charToOp1
 		inc	sp
-	__endasm;
+	#endasm
 
 	FP_ADD();
 	if (0 > x)
