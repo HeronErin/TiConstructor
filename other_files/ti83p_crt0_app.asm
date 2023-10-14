@@ -143,6 +143,12 @@ ELSE
 ENDIF
 
 	im	2		; enable IM2 interrupt
+
+	rst 0x28 ; bcall(_ForceFullScreen)
+	DEFW 0x508F
+	rst 0x28 ; bcall(_ClrLCDFull)
+	DEFW 0x4540
+	
 	call	_main		; call main()
 cleanup:			; exit() jumps to this point
 	ld	iy,_IY_TABLE	; Restore flag pointer

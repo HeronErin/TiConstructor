@@ -53,16 +53,16 @@ void main() {
 	line(70-8, 10, XMAX-10-9, 40);
 
 
-	__asm
-		ld a, #10  // X = 10
-		ld l, #1   // Y = 1
+	#asm
+		ld a, 10  // X = 10
+		ld l, 1   // Y = 1
 
 		call ____GetPixel   // Hl = location of pixel in ram; a = bitmask of pixel
 		ld (hl), a  // Set the bitmask at the ram location, this will overide all other pixels at that region of 8 bits. 
 
 
 
-	__endasm;
+	#endasm
 
 
 	swap();

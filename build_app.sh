@@ -2,11 +2,6 @@ DIRECTORY=$(cd `dirname $0` && pwd)
 
 cd $1
 
-if [ ! -f .buildid ]; then
-    echo 0x$(openssl rand -hex 2) > .buildid
-fi
-BC="$(cat .buildid)"
-echo $BC
 
 
 
@@ -16,7 +11,7 @@ export OUT_NAME=$2
 trunkName=$(head -c 8 <<<$2) # truncate name to make sure it is no more than 8 char long
 
 # Compile with custom crt0
-docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC -crt0 other_files/ti83p_crt0_app.asm
+docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC -crt0 other_files/ti83p_crt0_app.asm $3
 
 # Now we need to rebuild the .bin with our custom name
 

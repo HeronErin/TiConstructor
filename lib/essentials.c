@@ -24,7 +24,7 @@
 /** @brief ex af, af'
  * 
  * Machine code to swap af and shadow af and only takes 4 t-states, <b>only use in asm</b>  */
-#define aSaveA .db #0x08
+#define aSaveA DEFB 0x08
 
 /**  @brief Stack pointer temp
  * 
@@ -44,7 +44,7 @@
 
 
 /** @brief Clears the screen */
-#define clearScreen() bcall(_ClrLCDFull)
+#define clearScreen() bcall(0x4540) // _ClrLCDFull
 
 
 
@@ -54,26 +54,23 @@
  *  while in C. <b> And keep in mind that a bcall might modify registers, meaning that any bcall can corrupt any C variable </b>
  *  For most bcall values click [here](https://wikiti.brandonw.net/index.php?title=Category:83Plus:BCALLs:By_Name),
  *  or see [TI's system routines document](https://ia600606.us.archive.org/16/items/83psdk/83psysroutines.pdf)*/
-#define bcall(__LABEL__) \
-    __asm rst 40 \
-    .dw __LABEL__ __endasm
+#define bcall(__LABEL__) __asm__("rst 40") ; __asm__("defw\t"#__LABEL__)
+
 
 
 /** @brief Junp to System routine
  * 
  * Like a bcall() but jumps instead of calls
  */
-#define bjump(__LABEL__) \
-    __asm call 0x50 \
-    .dw __LABEL__ __endasm
+#define bjump(__LABEL__)  __asm__("call 0x50") ; __asm__("defw\t"#__LABEL__)
 
 
 
 /** @brief The asm for a bcall
  */
 #define abcall(__LABEL__) \
-    rst 40 \
-    .dw __LABEL__
+    rst 40 \ \
+    defw __LABEL__
 
 
 /** @brief Get last pressed key 

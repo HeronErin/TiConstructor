@@ -17,120 +17,99 @@
  *  @param[row] char to move the pen to
  * See https://wikiti.brandonw.net/index.php?title=83Plus:RAM:86D8
  */
-void setPenRow(char row) __naked{
-	row;
-	__asm
-		pop hl      ; Get input
-		pop bc      ; and perserve
-		push bc
-		push hl     ; ret value
-		ld a, c
-
-		ld (#penRow), a
+void setPenRow(char row) __naked __z88dk_fastcall __preserves_regs(bc, de){
+	#asm
+		ld a, l
+		ld (penRow), a
 
 		ret
-	__endasm;
+	#endasm
 }
 /** @brief set the column that is currently selectd
  *  @param[col] char to move the pen to
  * See https://wikiti.brandonw.net/index.php?title=83Plus:RAM:86D7 
  */
-void setPenCol(char col) __naked{
-	col;
-	__asm
-		pop hl      ; Get input
-		pop bc      ; and perserve
-		push bc
-		push hl     ; ret value
-		ld a, c
+void setPenCol(char col) __naked __z88dk_fastcall __preserves_regs(bc, de){
+	#asm
+		ld a, l
 
-		ld (#penCol), a
+		ld (penCol), a
 
 		ret
-	__endasm;
+	#endasm
 }
 /** @brief Set the pen back to 0,0
  */
-void resetPen() __naked{
-	__asm
+void resetPen() __naked __preserves_regs(bc, de, hl){
+	#asm
 		xor a, a
 
-		ld (#penCol), a
-		ld (#penRow), a
+		ld (penCol), a
+		ld (penRow), a
 		ret
-	__endasm;
+	#endasm;
 }
 /** @brief print a string to the screen
  *  @param[loc] string to be printed
  * Normal text output will not work in apps, this should though by repeatedly printing single chars to the string. 
  */ 
-void fputs(char* loc) __naked {
-	loc;
-	__asm
-		pop hl      ; Get input
-		pop bc      ; and perserve
-		push bc     ; ret value
-		push hl     
-
-
-	the_char_loop_i_need_more_good_names_for_labels:
-		ld	a, (bc)
-		or a, a
-		ret z
-		push ix
+void fputs(char* loc) __naked __z88dk_fastcall{
+	#asm
+	push ix
+	fputs_char_loop:
+		ld a, (hl)
+		or a
+		jp z, fputs_end
 		abcall(_VPutMap)
-		pop ix
-		inc bc
-		jr the_char_loop_i_need_more_good_names_for_labels
+		inc hl
+		jp fputs_char_loop
 
-	__endasm;
+	fputs_end:
+		pop ix
+		ret
+	#endasm
 }
 /** @brief print a string to the screen, move down a line, and reset the pen col
  *  @param[loc] string to be printed
  * Calls fputs() and moves the pen for you
  */ 
-void println(char* loc){
+void println(char* loc) __z88dk_fastcall{
 	fputs(loc);
-	__asm
-		ld a, (#penRow)
-		ld b, #6
+	#asm
+		ld a, (penRow)
+		ld b, 6
 		add b
-		ld (#penRow), a
+		ld (penRow), a
 
 		xor a, a
-		ld (#penCol), a
-	__endasm;
+		ld (penCol), a
+	#endasm;
 }
 /** @brief Go to the next line go back to the first col
  */
 void newline() __naked{
-	__asm
-		ld a, (#penRow)
-		ld b, #6
+	#asm
+		ld a, (penRow)
+		ld b, 6
 		add b
-		ld (#penRow), a
+		ld (penRow), a
 
 		xor a, a
-		ld (#penCol), a
+		ld (penCol), a
 		ret
-	__endasm;
+	#endasm
 }
 /** @brief prints a single char
  * @param[ch] single char to be printed
  */
-void printc(char ch) __naked{
-	ch;
-	__asm
-		pop hl      ; Get input
-		pop bc
-		push bc
-		push hl 
-		ld a, c
+void printc(char ch) __naked __z88dk_fastcall{
+	#asm
+		ld a, l
 		push ix
 		abcall(_VPutMap)
 		pop ix
 		ret
-	__endasm;
+	#endasm
 }
 
 #if defined(USE_NUMBER) || defined(DOXYGEN)
@@ -138,35 +117,39 @@ void printc(char ch) __naked{
 /** @brief Print a number to the screen
  * @param[x] number to be printed
  * 
- * This function is a bit slow, but it does the job
+ * Should be quite fast. Ironicly might be faster than hexdump.
+ * 
+ * <small> Adaped from https://stackoverflow.com/questions/38666119/converting-an-unsigned-16-bit-integer-from-hl-into-text-using-my-own-non-ascii-c</small>
  */
-void number(int x){
-    int i = 0;
-    if (x<0){
-        x=0-x;
-        printc('-');
-    }
-    char out[25];
-    do {
-        out[i]=x % 10 + '0';
-        i+=1;
-    } while((x /= 10) > 0);
-    i--;
-    for(;i>=0; i--){
-    	__asm
-			ld	l, -4 (ix)
-			ld	h, -3 (ix)
-			add	hl, bc
-			ld	a, (hl)
 
-			push ix
-			abcall(_VPutMap)
-			pop ix
-			
-    	__endasm;
 
-    }
+void number(int num) __naked __z88dk_fastcall	{
+	#asm
 
+			ld   bc,55536
+            call OneDigit_
+            ld   bc,64536
+            call OneDigit_
+            ld   bc,65436
+            call OneDigit_
+            ld   c,-10
+            call OneDigit_
+            ld   c,b
+OneDigit_:   ld   a,47         ;replace with $16 (for $17-$20)
+DivideMe_:   inc  a
+            add  hl,bc
+            jr   c,DivideMe_
+            sbc  hl,bc
+            
+            cp '0'
+            ret z
+            push ix
+            abcall(_VPutMap)
+            pop ix
+            ret
+
+
+	#endasm
 }
 #endif
 
@@ -181,9 +164,9 @@ const char hexTab[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
  *  @param[v] Char to be printed
  *  This function is great for debuging but not so good for games. Should be quite fast.
  */ 
-void hexdump(char v)__naked{
+void hexdump(char v)__naked { 
 	v;
-	__asm
+	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve
 		push bc
@@ -192,24 +175,24 @@ void hexdump(char v)__naked{
 		push ix
 
 		ld a, c
-		ld	hl, #_hexTab
-		and a, #0xF0
+		ld	hl, _hexTab
+		and a, 0xF0
 		SRL a
 		SRL a
 		SRL a
 		SRL a
 
 		ld e, a
-		ld d, #0
+		ld d, 0
 		add hl, de
 		ld a, (hl)
 		abcall(_VPutMap)
 
 		ld a, c
-		ld	hl, #_hexTab
-		and a, #0x0F
+		ld	hl, _hexTab
+		and a, 0x0F
 		ld e, a
-		ld d, #0
+		ld d, 0
 		add hl, de
 		ld a, (hl)
 		abcall(_VPutMap)
@@ -217,29 +200,25 @@ void hexdump(char v)__naked{
 
 		pop ix
 		ret
-	__endasm;
+	#endasm
 }
 /** @brief Prints a 16-bit int to the screen
  * 	@param[v] Int to be printed
  * 
  *  Basicly just calls hexdump() twice.
  */ 
-void doubleHexdump(int v) __naked{
-	__asm
-		pop hl
-		pop bc
-		push bc
-		push hl
+void doubleHexdump(int v) __naked __z88dk_fastcall{
+	#asm
 
-		push bc
-		push bc
+		push hl
+		push hl
 		inc sp
 		call _hexdump
 		inc sp
 		call _hexdump
-		pop bc
+		pop hl
 		ret
-	__endasm;
+	#endasm
 }
 
 #endif

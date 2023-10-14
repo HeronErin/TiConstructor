@@ -86,12 +86,12 @@
  * <small>Taken from https://taricorp.gitlab.io/83pa28d/lesson/day10.html</small>
  */
 void clearBuffer(){
-    __asm
+    #asm
             DI
             LD    (SP_STORE), SP
-            LD    SP, #G_SCREEN_BUFFER + G_BLOB_END    ; 768 byte area
-            LD    HL, #0x0000
-            LD    B, #G_CLEAR_BUFFER_CO        ; PUSH 48*8=384 times, @ 2 bytes a PUSH = 768 bytes
+            LD    SP, G_SCREEN_BUFFER + G_BLOB_END    ; 768 byte area
+            LD    HL, 0
+            LD    B, G_CLEAR_BUFFER_CO        ; PUSH 48*8=384 times, @ 2 bytes a PUSH = 768 bytes
         CLEAR_LOOP:
             PUSH  HL          ; Do multiple PUSHes in the loop to save cycles
             PUSH  HL
@@ -106,7 +106,7 @@ void clearBuffer(){
             LD    SP, (SP_STORE)
             EI
 
-    __endasm;
+    #endasm
 }
 #endif
 #ifndef NO_USE_SWAP
@@ -114,16 +114,16 @@ void clearBuffer(){
  * See the scoreboard in examples/2048/main.c for redefining the location of the screen
  */
 void swap(){
-    __asm
+    #asm
 	    di
-	    ld hl, #G_SCREEN_BUFFER
+	    ld hl, G_SCREEN_BUFFER
 
 	    CALL   _LCD_BUSY_QUICK  
-	    LD     A, #0x07           ; set y inc moce
+	    LD     A, 0x07           ; set y inc moce
 	    OUT    (0x10), A
 
 
-	    LD     c, #G_START_ROW
+	    LD     c, G_START_ROW
 
 	    
 	YLOOPR__:
@@ -132,7 +132,7 @@ void swap(){
 	    OUT    (0x10), A
 
 	    CALL   _LCD_BUSY_QUICK
-	    LD     A, #G_COL_START          ; reset col
+	    LD     A, G_COL_START          ; reset col
 	    OUT    (0x10), A
 
 
@@ -151,10 +151,10 @@ void swap(){
 
 	    inc c
 	    ld a, c
-	    cp #G_ROW_END
+	    cp G_ROW_END
 	    jp nz, YLOOPR__
 	    ei
-    __endasm;
+    #endasm
     
 }
 
@@ -176,7 +176,7 @@ void swap(){
 
 
 void line(char x, char y, char x2, char y2) __naked{
-	__asm
+	#asm
 	// Argument loader
 		pop bc
 		pop de
@@ -306,7 +306,7 @@ void line(char x, char y, char x2, char y2) __naked{
 		 ld sp,(SP_STORE)
  ret
 
-	__endasm;
+	#endasm
 }
 #endif
 
@@ -324,7 +324,7 @@ void line(char x, char y, char x2, char y2) __naked{
  */
 //                    e        d            l          h	
 void vertical_line(char x, char start, char height, char not_used)__naked{
-	__asm
+	#asm
 		pop bc
 		pop de
 		pop hl
@@ -393,7 +393,7 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 
 
 
-	__endasm;
+	#endasm
 }
 #endif
 
@@ -410,7 +410,7 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 
 //                           e        d            l          h		
 void vertical_dotted_line(char x, char start, char height, char not_used)__naked{
-	__asm
+	#asm
 		pop bc
 		pop de
 		pop hl
@@ -482,7 +482,7 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 
 
 
-	__endasm;
+	#endasm
 }
 #endif
 
@@ -500,7 +500,7 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
  *  <small> Taken from https://taricorp.gitlab.io/83pa28d/lesson/week4/day24/index.html </small>
  */
 void ___GetPixel() __naked{
-	__asm
+	#asm
 		// inc a
 
 	    LD     H, #0
@@ -532,7 +532,7 @@ void ___GetPixel() __naked{
 	    DJNZ   Get_Pix_Loop
 	    RET
 	    
-	__endasm;
+	#endasm
 }
 
 
@@ -550,7 +550,7 @@ void ___GetPixel() __naked{
  * This is a routine that works, but is overall not the most efficient way to draw on the screen.
  */
 void setPix(char x, char y)__naked{
-	__asm
+	#asm
 		pop bc
 		pop hl
 		push hl
@@ -564,7 +564,7 @@ void setPix(char x, char y)__naked{
 
 		ret
 
-	__endasm;
+	#endasm
 }
 #endif
 

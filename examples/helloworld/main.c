@@ -2,6 +2,9 @@
 #include "../../lib/textio.c"
 #include "../../lib/userinput.c"
 
+
+
+
 void main() {
 
 	clearScreen();
@@ -10,5 +13,7 @@ void main() {
 	println("Hello 8-bit World!");
 
 	PressAnyKey();
+	
+	return;
 
 }
