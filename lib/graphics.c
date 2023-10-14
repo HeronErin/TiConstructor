@@ -136,7 +136,7 @@ void swap(){
 	    OUT    (0x10), A
 
 
-	    ld b, #G_MAX_ROW
+	    ld b, G_MAX_ROW
 
 
 	XLOOPR__:
@@ -175,14 +175,12 @@ void swap(){
  */ 
 
 
-void line(char x, char y, char x2, char y2) __naked{
+void line(char x, char y, char x2, char y2) __naked __z88dk_sdccdecl __z88dk_callee{
 	#asm
 	// Argument loader
 		pop bc
 		pop de
 		pop hl
-		push hl
-		push de
 		push bc
 
 		ld a, d      // Somehow this routine started to have issues confusting x and y? Fliping it solved that (?????)
@@ -195,7 +193,7 @@ void line(char x, char y, char x2, char y2) __naked{
 
 
 		push ix
-		ld ix, #G_SCREEN_BUFFER
+		ld ix, G_SCREEN_BUFFER
 		call DrawLineCompact
 		pop ix
 		ret
@@ -215,7 +213,7 @@ void line(char x, char y, char x2, char y2) __naked{
 		 neg
 		DL_okaydx:
 		 push af		; Saving DX (it will be popped into DE below)
-		 ld b,#0			; Calculating the position of the first pixel to be drawn
+		 ld b,0			; Calculating the position of the first pixel to be drawn
 		 ld c,d			; IX+=D/8+E*12 (actually E*4+E*4+E*4)
 		 srl c
 		 srl c
@@ -228,8 +226,8 @@ void line(char x, char y, char x2, char y2) __naked{
 		 add ix,bc
 		 add ix,bc
 		 ld a,d			; Calculating the starting pixel mask
-		 ld c,#0x80
-		 and a, #7
+		 ld c,0x80
+		 and a, 7
 		 jp z,DL_okaymask
 		DL_calcmask:
 		 srl c
@@ -238,15 +236,15 @@ void line(char x, char y, char x2, char y2) __naked{
 		DL_okaymask:
 		 ld a,l			; Calculating delta Y and negating the Y increment if necessary
 		 sub e			; This is the last instruction for which we need the original data
-		 ld hl,#12
+		 ld hl,12
 		 jp nc,DL_okaydy
-		 ld hl,#-12
+		 ld hl,-12
 		 neg
 		DL_okaydy:
 		 pop de			; Recalling DX
 		 ld e,a			; D=DX, E=DY
 		 cp d
-		 jp c,#DL_horizontal	; Line is rather horizontal than vertical
+		 jp c,DL_horizontal	; Line is rather horizontal than vertical
 		 ld (SP_STORE),hl	; Modifying y increment
 		 push ix		; //Loading IX to HL for speed; we don't need the old value of HL any more
 		 pop hl
@@ -258,11 +256,11 @@ void line(char x, char y, char x2, char y2) __naked{
 		DL_VLinc:
 		 ld sp, (SP_STORE)		; This value is replaced by +/- 12
 		DL_Vloop:
-		 .db 0x08 //ex af,af'		; Saving A to alternative register
+		 DEFB  0x08 //ex af,af'		; Saving A to alternative register
 		 ld a,(hl)
 		 or c			; Writing pixel to current position
 		 ld (hl),a
-		 .db 0x08 // ex af,af'		; Recalling A (faster than push-pop, and there's no need for SP)
+		 DEFB  0x08 // ex af,af'		; Recalling A (faster than push-pop, and there's no need for SP)
 		 add hl,sp
 		 sub d			; Handling gradient
 		 jp nc,DL_VnoSideStep
@@ -288,11 +286,11 @@ void line(char x, char y, char x2, char y2) __naked{
 		DL_HLinc:
 		 ld sp,(spriteTemp)		; This value is replaced by +/- 12
 		DL_Hloop:
-		 .db 0x08 //ex af,af'		; Saving A to alternative register
+		 DEFB  0x08 //ex af,af'		; Saving A to alternative register
 		 ld a,(hl)
 		 or c			; Writing pixel to current position
 		 ld (hl),a
-		 .db 0x08 // ex af,af'		; Recalling A
+		 DEFB  0x08 // ex af,af'		; Recalling A
 		 rrc c			; Rotating mask
 		 jp nc,DL_HnoByte	; Handling byte boundary
 		 inc hl
@@ -337,7 +335,7 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 
 
 
-		ld b, #0
+		ld b, 0
 		ld c, d
 
 		ld h, b
@@ -361,19 +359,19 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 
 
 		ld a, e // X pos
-		ld hl,#G_SCREEN_BUFFER
+		ld hl,G_SCREEN_BUFFER
 		add hl, bc
 
-		ld d,#0
+		ld d,0
 		ld e,a
 		srl e
 		srl e
 		srl e
 		add hl,de
-		and a, #0x07
+		and a, 0x07
 		ld b,a
 		inc b
-		ld a,#1
+		ld a,1
 		vertloop1:
 		rrca
 		djnz vertloop1
@@ -382,7 +380,7 @@ void vertical_line(char x, char start, char height, char not_used)__naked{
 		pop af
 		ld b,a
 
-		ld e,#12
+		ld e,12
 		vertloop2:
 		ld a,c
 		or (hl)
@@ -423,7 +421,7 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 
 
 
-		ld b, #0
+		ld b, 0
 		ld c, d
 
 		ld h, b
@@ -448,19 +446,19 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 
 		ld a, e // X pos
 
-		ld hl,#G_SCREEN_BUFFER
+		ld hl,G_SCREEN_BUFFER
 		add hl, bc
 
-		ld d,#0
+		ld d,0
 		ld e,a
 		srl e
 		srl e
 		srl e
 		add hl,de
-		and a, #0x07
+		and a, 0x07
 		ld b,a
 		inc b
-		ld a,#1
+		ld a,1
 		_vertloop1:
 		rrca
 		djnz _vertloop1
@@ -470,7 +468,7 @@ void vertical_dotted_line(char x, char start, char height, char not_used)__naked
 		rra
 		ld b,a
 
-		ld e,#12
+		ld e,12
 		_vertloop2:
 		ld a,c
 		or (hl)
@@ -503,7 +501,7 @@ void ___GetPixel() __naked{
 	#asm
 		// inc a
 
-	    LD     H, #0
+	    LD     H, 0
 	    LD     D, H
 	    LD     E, L
 	    ADD    HL, HL
@@ -517,12 +515,12 @@ void ___GetPixel() __naked{
 	    SRL    E
 	    ADD    HL, DE
 
-	    LD     DE, #G_SCREEN_BUFFER
+	    LD     DE, G_SCREEN_BUFFER
 	    ADD    HL, DE
 
-	    and a, #7
+	    and a, 7
 	    LD     B, A
-	    LD     A, #0x80
+	    LD     A, 0x80
 	    RET    Z
 	    
 	    
@@ -549,11 +547,10 @@ void ___GetPixel() __naked{
  * 
  * This is a routine that works, but is overall not the most efficient way to draw on the screen.
  */
-void setPix(char x, char y)__naked{
+void setPix(char x, char y)__naked __z88dk_callee __z88dk_sdccdecl{
 	#asm
 		pop bc
 		pop hl
-		push hl
 		push bc
 
 		ld a, l

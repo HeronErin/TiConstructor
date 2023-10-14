@@ -10,7 +10,8 @@ void main() {
 	clearScreen(); // prepare screen
 	clearBuffer(); // clear drawing buffer
 	
-	// triangle 
+	
+	// // triangle 
 	line(15, 20, 5, 40);
 	line(15, 20, 25, 40);
 	line(5, 40, 25, 40);
@@ -42,11 +43,11 @@ void main() {
 	line(X2, Y1, X2+OF, Y1+OF);
 	line(X2, Y2, X2+OF, Y2+OF);
 	
-	// single circle
+	// // single circle
 	circle(40, 10, 10);
 
 
-	// cylinder
+	// // cylinder
 	circle(70, 10, 8);
 	circle(XMAX-10, 40, 8);
 	line(70+8, 10, XMAX-10+9, 40);
