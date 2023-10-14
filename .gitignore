@@ -1,2 +1,4 @@
 docs/html
 docs/latex
+examples/*/*.bin
+examples/*/*.bin2
