@@ -160,7 +160,7 @@ void fullPutSprite(char x, char y, char width, char height, char* sprite){  //4,
 			pop hl
 			pop af
 
-			add a, #8
+			add a, 8
 			dec c
 			jp nz, X_DRAW_LOOP
 	#endasm
@@ -204,7 +204,7 @@ void greyPutSprite(char x, char y, char width, char height, char* sprite){  //4,
 			pop hl
 			pop af
 
-			add a, #8
+			add a, 8
 			dec c
 			jp nz, __X_DRAW_LOOP
 
@@ -221,7 +221,7 @@ void greyPutSprite(char x, char y, char width, char height, char* sprite){  //4,
 			pop hl
 			pop af
 
-			add a, #8
+			add a, 8
 			dec c
 			jp nz, __Xa_DRAW_LOOP
 

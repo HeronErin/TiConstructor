@@ -74,7 +74,7 @@ void wait(unsigned char x) __naked __z88dk_fastcall{
     #asm
        ld a,0x47      ;8 hz
        out (0x30),a
-       ld a,0x00        ; no loop, no interrupt
+       xor a, a        ; no loop, no interrupt
        out (0x31),a
        ld a,l       ;16 ticks / 8 hz equals 2 seconds
        out (0x32),a
