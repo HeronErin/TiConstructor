@@ -10,9 +10,9 @@
 #endif
 
 #ifndef Y_MULT // asm to multiply hl by X_LINE
-#define Y_MULT 		add	hl,de \
-				   	add	hl,de \
-				   	add	hl,hl \
+#define Y_MULT 		add	hl,de \ \
+				   	add	hl,de \ \
+				   	add	hl,hl \ \
 				   	add	hl,hl 
 #endif
 
@@ -137,59 +137,67 @@ void appBackupIonPutSprite()__naked{      ///////// 4 5 6 (7, 8)
 #endif
 
 // Not too slow, images must be encoded a special way
-void fullPutSprite(char x, char y, char width, char height, char* sprite){  //4, 5, 6, 7 (8, 9)
+void fullPutSprite(char x, char y, char width, char height, char* sprite) __z88dk_sdccdecl __z88dk_callee __naked{  //4, 5, 6, 7 (8, 9)
 	#asm
-		ld	l, 8 (ix)
-		ld	h, 9 (ix)
-		push hl
-		
 
-		ld a,  4(ix)
-		ld l, 5(ix)
-		ld b, 7(ix)
+		di
+		ld d, ixh
+		ld e, ixl
 
-		ld c, 6(ix)
+		pop af
+		pop hl  ; y, x
+		pop bc  ; height, width
+		pop ix ; char* sprite
+		push af
 
-		pop ix
-		X_DRAW_LOOP: // 101 t-states
+		ld a, l
+		ld l, h
+		push de
+
+
+		SPRITE_LOOP:
 			push af
-			push hl
 			push bc
+			push hl
 			call _ionPutSprite
-			pop bc
 			pop hl
+			pop bc
 			pop af
 
 			add a, 8
 			dec c
-			jp nz, X_DRAW_LOOP
+			jp nz, SPRITE_LOOP
+
+
+
+		pop ix
+
+
+		ei
+		ret
+
+
 	#endasm
 }
 
 #ifdef GREYSCALE_SPRITES
-void greyPutSprite(char x, char y, char width, char height, char* sprite){  //4, 5, 6, 7 (8, 9) (10, 11)
+void greyPutSprite(char x, char y, char width, char height, char* sprite) __z88dk_sdccdecl __z88dk_callee __naked{  \
+//4, 5, 6, 7 (8, 9) (10, 11)
 		#asm
-		ld	l, 8 (ix)
-		ld	h, 9 (ix)
-		push hl
+		di
+		ld d, ixh
+		ld e, ixl
 
-		// add hl, de
-		// ex de, hl
-		// pop hl
-		// push de
-		// push hl
+		pop af
+		pop hl  ; y, x
+		pop bc  ; height, width
+		pop ix ; char* sprite
+		push af
 
+		ld a, l
+		ld l, h
+		push de
 
-		ld a,  4(ix)
-		ld l, 5(ix)
-
-		ld h, 6(ix)
-
-		ld b, 7(ix)
-
-		ld c, 6(ix)
-
-		pop ix
 
 		push af
 		push hl
@@ -224,6 +232,11 @@ void greyPutSprite(char x, char y, char width, char height, char* sprite){  //4,
 			add a, 8
 			dec c
 			jp nz, __Xa_DRAW_LOOP
+
+
+		pop ix
+		ret
+
 
 	
 

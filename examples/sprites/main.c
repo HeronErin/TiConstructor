@@ -17,6 +17,7 @@ const char cross_DATA[] ={0b11000000, 0b01000001, 0b00100001, 0b00010011, 0b0000
 #define cross_HEIGHT 32
 void main() {
 
+
 	clearScreen(); // prepare screen
 	signed char x = 20, y = 20;
 	while (1){
