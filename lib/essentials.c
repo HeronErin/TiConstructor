@@ -3,7 +3,7 @@
  *  
  * @brief This should be #included in all files.
  * 
- * This file #defines all required constants, and loads in "ti83plus.h" for other constantss that are needed. Only defines stuff at compile time, no real function, no extra bytes.
+ * This file #defines all required constants, and loads in "ti83plus.h" for other constants that are needed. Only defines stuff at compile time, no real functions, no extra bytes.
  */
 
 #ifndef SHOW_WARNINGS
@@ -58,7 +58,7 @@
 
 
 
-/** @brief Junp to System routine
+/** @brief Jump to System routine
  * 
  * Like a bcall() but jumps instead of calls
  */
@@ -81,7 +81,7 @@
 /** @brief Scan for pressed keys
  * 
  *  Manually scan for pressed key, only needed with custom interupts */
-#define scanKeys() bcall(_kdbScan)
+#define scanKeys() bcall(0x4015)
 
 
 /* @} */
@@ -106,8 +106,11 @@
 /* @} */
 
 
+// #define SET_GREYLIB() pragma output GRAYlib
+// #define SET_SPEED() pragma output GimmeSpeed
 
-
+// #define LIGHT_GREY_LOC plotSScreen
+// #define DARK_GREY_LOC appBackUpScreen
 
 
 

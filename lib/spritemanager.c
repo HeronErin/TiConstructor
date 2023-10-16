@@ -21,20 +21,24 @@
 #define USE_APPBACKUP_ION
 #endif
 
-// only can render 8 wide sprites, DO NOT CALL FROM C 
-
-// ionPutSprite:
-// Draw a sprite to the graph buffer (XOR).
-// Input: b=sprite height
-// a=x coordinate
-// l=y coordinate
-// ix->sprite
-// Output: Sprite is XORed to the graph buffer.
-// ix->next sprite
-// Destroys: af bc de hl ix
-
-
-// NEVER CALL FROM C 
+/**
+* @brief Only can render 8 wide sprites, <b>DO NOT CALL FROM C </b>
+* 
+* IonPutSprite:
+* Draw a sprite to the graph buffer (XOR).
+* Inputs: 
+* b=sprite height
+* a=x coordinate
+* l=y coordinate
+* ix->sprite
+* 
+* Output: 
+* Sprite is XORed to the graph buffer.
+* ix->next sprite
+* Destroys: af bc de hl ix
+* 
+* <b> NEVER CALL FROM C </b>
+*/
 void ionPutSprite()__naked{    
 	#asm
 		
@@ -136,7 +140,16 @@ void appBackupIonPutSprite()__naked{      ///////// 4 5 6 (7, 8)
 }
 #endif
 
-// Not too slow, images must be encoded a special way
+/** @brief Render a sprite
+ * 	@param[x] X coord to be drawn
+ *  @param[y] Y coord to be drawn
+ *  @param[width] Amount of 8-bit long segments to draw (2 for 8 pixels wide)
+ *  @param[height] Height of image to be drawn (in pixels)
+ * 	@param[sprite] Location to be drawn
+ * 
+ * Not too slow, images must be encoded with png2sprite.py in the root of the TiConstructor git folder. 
+ * `python png2sprite.py IMAGE.png mono`
+ */ 
 void fullPutSprite(char x, char y, char width, char height, char* sprite) __z88dk_sdccdecl __z88dk_callee __naked{  //4, 5, 6, 7 (8, 9)
 	#asm
 
@@ -181,6 +194,16 @@ void fullPutSprite(char x, char y, char width, char height, char* sprite) __z88d
 }
 
 #ifdef GREYSCALE_SPRITES
+/** @brief Render a sprite for greyscale
+ * 	@param[x] X coord to be drawn
+ *  @param[y] Y coord to be drawn
+ *  @param[width] Amount of 8-bit long segments to draw (2 for 8 pixels wide)
+ *  @param[height] Height of image to be drawn (in pixels)
+ * 	@param[sprite] Location to be drawn
+ * 
+ * Not too slow, images must be encoded with png2sprite.py in the root of the TiConstructor git folder. 
+ * `python png2sprite.py IMAGE.png grey`
+ */ 
 void greyPutSprite(char x, char y, char width, char height, char* sprite) __z88dk_sdccdecl __z88dk_callee __naked{  \
 //4, 5, 6, 7 (8, 9) (10, 11)
 		#asm
@@ -197,6 +220,7 @@ void greyPutSprite(char x, char y, char width, char height, char* sprite) __z88d
 		ld a, l
 		ld l, h
 		push de
+
 
 
 		push af

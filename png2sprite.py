@@ -1,3 +1,19 @@
+# Part if the TiConstructor project
+#
+# Convert png files into sprite data for the ti-84p / ti-83p
+# In gimp (or equivelent) create an image with dimentions equal to the desired size
+# for on the Calc. For best results draw with black pixels (or grey for grey scale) 
+# and set to black and white for black and white images.
+# Using "monolog" is also a valid option, this is used copying directly
+# to the screen buffer, this is used for 2048 where a box (widget of sorts)
+# is drawn for the score box, and a seperate box is used for grey scale.
+#
+#
+# Then run: python png2sprite.py IMAGE.png [mono, grey, or monolog]
+# 
+#
+#
+
 from PIL import Image
 import sys, os
 

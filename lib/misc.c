@@ -70,7 +70,6 @@ unsigned int getTime() __naked __z88dk_sdccdecl{
  * 
  */
 void wait(unsigned char x) __naked __z88dk_fastcall{
-    x;
     #asm
        ld a,0x47      ;8 hz
        out (0x30),a

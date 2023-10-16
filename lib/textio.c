@@ -165,7 +165,6 @@ const char hexTab[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
  *  This function is great for debuging but not so good for games. Should be quite fast.
  */ 
 void hexdump(char v)__naked { 
-	v;
 	#asm
 		pop hl      ; Get input
 		pop bc      ; and perserve

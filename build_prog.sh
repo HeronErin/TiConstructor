@@ -6,7 +6,7 @@ export MAINC="main.c"
 export OUT_NAME=$2
 
 
-docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC $3
+docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -DRAM_PROG -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC $3
 cat <( echo -ne "\xbb\x6d" ) $1/$OUT_NAME.bin > $1/$OUT_NAME.bin2
 
 cd $1

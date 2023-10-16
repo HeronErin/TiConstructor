@@ -5,47 +5,59 @@
 #include "../../lib/userinput.c"
 #include "../../lib/misc.c"
 
-// called during interupts
-void interupt() __naked{ // Keeps this quick as it may be called 100 times per secound (depending on the interupt mask and cpu clock setting) 
-  						 // and the z80 only has ome core
-	scanKeys();
-	__asm
-		xor a, a
-		out (#0x31),a
+
+// Called from inside interupt after page is swapped back (in apps)
+#define USER_INTERUPT _my_interupt
+
+#include "../../lib/interupt_loader.c"
 
 
+#define safepoint 0xFFFF // 0xFFFF is a free byte apparently
+
+void my_interupt()__naked{
+	#asm
 		in a, (4) // port 4 bit 3 tests if on button is pressed
 		bit 3, a
 
-		ret nz
-		
-		call #0x000B // wait for lcd to be ready
-		
-		ld a, #0xFF // draws black line on current screen pos
-		out (0x11), a
+		ret nz // Return if on button is not pressed
+	
+	#endasm 
+		scanKeys(); // Scan for pressed keys since we are not using system interupts
+	#asm
 
-		ret
+		inc (iy+asm_Flag3) // Only happen every 256 interupts
+		jp z, AFTER_RET_OF_INTERUPT
+		
+		CI_RET
+		AFTER_RET_OF_INTERUPT:
 
-	__endasm;
+		ld a, (safepoint) // Pattern byte
+		rrca // Rotate right
+		ld (safepoint), a // Save back
+		out (0x11), a // Output to screen
+
+
+		CI_RET // Custom return that overides system interupts
+	#endasm
 }
 
 
-#define DURING_INTERUPT() interupt() // runs every interupt
-
-#include "../../lib/interupts.c"
-
 void main() {
-
-	SET_INTERUPTS();
-
-
+	bcall((0x4570)); // Disable the annoying "busy" indicator so it won't interfear with the drawing.
+	*(unsigned char*)(safepoint) = 0b11001100;
+	patch_ram();
+	#asm
+	xor a, a
+	ld (iy+asm_Flag3), a
+	#endasm
+	
 	clearScreen();
 
 	while (1){
-		wait(1);
+		wait(2);
 		
 		if (skClear == lastPressedKey())
-			break;
+			return;
 	}
 
 

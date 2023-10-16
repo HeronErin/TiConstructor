@@ -11,7 +11,7 @@ export OUT_NAME=$2
 trunkName=$(head -c 8 <<<$2) # truncate name to make sure it is no more than 8 char long
 
 # Compile with custom crt0
-docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC -crt0 other_files/ti83p_crt0_app.asm $3
+docker run -v ${DIRECTORY}:/src/ z88dk/z88dk zcc +ti83p -DFLASH_APP -subtype=asm -o $1/$OUT_NAME.bin $1/$MAINC -crt0 other_files/ti83p_crt0_app.asm $3
 
 # Now we need to rebuild the .bin with our custom name
 
@@ -29,6 +29,7 @@ done
 
 # Write rest of app
 cat $OUT_NAME.bin | tail -c+27 >> x.bin
+rm -f $OUT_NAME.bin # Could be write protected 
 mv x.bin $OUT_NAME.bin
 
 $DIRECTORY/other_files/rabbitsign -t 8xk -g -f $OUT_NAME.bin
