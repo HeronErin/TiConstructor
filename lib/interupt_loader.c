@@ -1,4 +1,4 @@
-
+#pragma once
 
 
 // Location of line 45 at:
@@ -11,16 +11,50 @@
 // Only have 69 bytes to work with
 #define loader_point 48 + 0x8A8A
 
-#define INTRPT_MASK  0b00001011
+#define interrupt_mask  0b00001011
+#define interrupt_acknowledge 0b00001000
 
 
-
-// Effectivly "ret" but to +4 of normal value, and acknowledges that interupt ran
-#define CI_RET pop de \ ld hl, 4 \ add hl, de \\
-		 ld a, INTRPT_MASK \ out (3), a \
+// Effectivly "ret" but to +3 of normal value, and acknowledges that interupt ran
+#define CI_RET pop de \ ld hl, 7 \ add hl, de \\
+		 ld a, interrupt_mask \ out (3), a \
 		 \ jp (hl) 
 
 
+// Restore old opcodes to the interupt ram
+void unpatch_ram() __naked{
+	#asm
+	di
+#ifdef FLASH_APP
+	ld hl, interrupt_rst38-2
+#else
+	ld hl, 0x8A8A+1
+	ld e, (hl)
+	inc hl
+	ld d, (hl)
+	ld hl, 24-2 // Calculate where location based on the jp instruction 
+	add hl, de  // created by the interupt loader	
+#endif
+	ld (hl), $D9 // Exx
+	inc hl
+	ld (hl), $08 // ex af, af
+	inc hl
+	ld (hl), $FF // rst 38h
+	inc hl
+	ld (hl), $F3 // di
+	inc hl
+	ld (hl), $F3 // di
+	inc hl
+	ld (hl), $08 // ex af, af
+	inc hl
+	ld (hl), $D9 // Exx
+	
+
+	ret
+
+
+	#endasm
+}
 
 void patch_ram() __naked{
 	#asm
@@ -41,9 +75,10 @@ void patch_ram() __naked{
 	add hl, de  // created by the interupt loader
 	
 #endif
-	xor a, a
-	ld (hl), a // Replace "exx" with "nop"
+	ld a, 0xF3
+	ld (hl), a // Replace "exx" with "di"
 	inc hl
+	xor a, a
 	ld (hl), a // Replace "ex af,af" with "nop"
 	inc hl
 
@@ -100,6 +135,9 @@ USER_INTERUPT_LOADER:
 	di
 	exx
 	ex af, af
+
+	// Effectivly rets here on CI_RET by adding to the return value
+
 #ifdef FLASH_APP
 	pop af
 	out (6),a

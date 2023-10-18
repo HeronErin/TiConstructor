@@ -13,6 +13,7 @@
 
 
 #define safepoint 0xFFFF // 0xFFFF is a free byte apparently
+#define safepoint2 0x8000 // Another free place to use
 
 void my_interupt()__naked{
 	#asm
@@ -21,22 +22,28 @@ void my_interupt()__naked{
 
 		ret nz // Return if on button is not pressed
 	
+
+		ld a, interrupt_acknowledge
+		out (3), a // Tell the calc we handled the interupt (since now we are overiding the default)
+
+
 	#endasm 
 		scanKeys(); // Scan for pressed keys since we are not using system interupts
 	#asm
 
-		inc (iy+asm_Flag3) // Only happen every 256 interupts
-		jp z, AFTER_RET_OF_INTERUPT
 		
-		CI_RET
-		AFTER_RET_OF_INTERUPT:
+		ld a, (safepoint2)
+		inc a
+		ld (safepoint2), a
+		bit 3, a // Only happen a couple times per secound instead of hundreds
+		jp nz, EXIT_INTER
 
 		ld a, (safepoint) // Pattern byte
 		rrca // Rotate right
 		ld (safepoint), a // Save back
 		out (0x11), a // Output to screen
 
-
+	EXIT_INTER:
 		CI_RET // Custom return that overides system interupts
 	#endasm
 }
@@ -45,11 +52,9 @@ void my_interupt()__naked{
 void main() {
 	bcall((0x4570)); // Disable the annoying "busy" indicator so it won't interfear with the drawing.
 	*(unsigned char*)(safepoint) = 0b11001100;
+	*(unsigned char*)(safepoint2) = 0;
 	patch_ram();
-	#asm
-	xor a, a
-	ld (iy+asm_Flag3), a
-	#endasm
+
 	
 	clearScreen();
 
