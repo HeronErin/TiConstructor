@@ -63,7 +63,7 @@ def parsefile(fnamein,fnameout,abspath,calctype,oncalcname):
 		fho.write(bytearray(b'**TI83F*'))				#byte 00, length 08
 		fho.write(mybytearray([26,10,0]))					#byte 08, length 03
 	
-	fho.write(bytearray(b'Made with TIConstructor&packed by BinPac8x'))
+	fho.write(bytearray(b"                                          "))
 															#byte 11, length 42
 	
 	bincontents = fhi.read();
@@ -100,6 +100,7 @@ def parsefile(fnamein,fnameout,abspath,calctype,oncalcname):
 		headersize = 17										# 17-byte header
 	
 	datasize = binsize + headersize
+
 	size_hb = math.floor(datasize/256);
 	size_lb = datasize - 256*size_hb;
 	fho.write(mybytearray([size_lb,size_hb]));				#byte 53, length 02
@@ -107,6 +108,10 @@ def parsefile(fnamein,fnameout,abspath,calctype,oncalcname):
 	oncalcname.encode()
 	bsize_hb = math.floor(binsize/256);
 	bsize_lb = binsize - 256*bsize_hb;
+	print(bsize_lb, bsize_hb)
+	print("bin b", binsize)
+	# print("bin bb", bbinsize)
+	print("data", datasize)
 
 	# Construct the header in the data field
 	if calctype=="2" or calctype=="3":
@@ -157,9 +162,10 @@ def parsefile(fnamein,fnameout,abspath,calctype,oncalcname):
 		chksum = 2*bsize_lb + 2*bsize_hb + 12 + 0 + 12 + 8;
 	else:
 		chksum = 2*bsize_lb + 2*bsize_hb + 6 + 0 + 0 + 13 + 0;	#including [13,0]
-
+	print("Headsum", chksum% 65536)
 	for c in oncalcname:
 		chksum += ord(c);
+	print("name", chksum% 65536)
 	if sys.version[0] == '2':
 		for c in bincontents:
 			chksum += ord(c);
@@ -167,6 +173,7 @@ def parsefile(fnamein,fnameout,abspath,calctype,oncalcname):
 		for c in bincontents:
 			chksum += c;
 	chksum = chksum % 65536
+	print("bod", chksum% 65536)
 	cs_hb = math.floor(chksum/256);
 	cs_lb = chksum - 256*cs_hb;
 	fho.write(mybytearray([cs_lb,cs_hb]));					#byte 63, length 02
