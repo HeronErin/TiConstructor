@@ -28,14 +28,13 @@ Or click [here](https://github.com/HeronErin/TiConstructor) to get back to githu
 4. If you are using Ubuntu you need to use the rabbitsign ubuntu versing `rm other_files/rabbitsign && mv other_files/rabbitsign_ubuntu_build other_files/rabbitsign && chmod +x other_files/rabbitsign`
 5.  Test it out
 
-```bash
- build_prog.sh examples/helloworld/ helloWorld
-```
-or
-
-```bash
- build_app.sh examples/helloworld/ helloWorld
-```
+	~~~bash
+		bash build_prog.sh examples/helloworld/ helloWorld
+	~~~
+	or
+	~~~bash
+	bash build_app.sh examples/helloworld/ helloWorld
+	~~~
 
 
 
