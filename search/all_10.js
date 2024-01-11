@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['saferam1_0',['saferam1',['../d2/d4a/essentials_8c.html#a96109672f0e8545baf4faf9ab4574343',1,'essentials.c']]],
+  ['saferam2_1',['saferam2',['../d2/d4a/essentials_8c.html#ac16ec4c70efc5252f43679ed11a348b8',1,'essentials.c']]],
+  ['saferam3_2',['saferam3',['../d2/d4a/essentials_8c.html#aaed5ef70437a2d0bbf4aad296521e8d3',1,'essentials.c']]],
+  ['saferam4_3',['saferam4',['../d2/d4a/essentials_8c.html#a068b742df6def2627d3fa3275f84dc8d',1,'essentials.c']]],
+  ['saferam5_4',['saferam5',['../d2/d4a/essentials_8c.html#a9099cbf3a5987f95a0f104c9f170cfc9',1,'essentials.c']]],
+  ['scankeys_5',['scanKeys',['../d2/d4a/essentials_8c.html#a5b6c33a910bc2747fbf14cfec775f11c',1,'essentials.c']]],
+  ['setcpuspeed_6',['setCpuSpeed',['../d0/ddb/misc_8c.html#aeff67a8b32fadb75194084b20ba3c882',1,'misc.c']]],
+  ['setpenrow_7',['setPenRow',['../d2/dba/textio_8c.html#af2384459e15b821e2395d971d80d915b',1,'textio.c']]],
+  ['setpix_8',['setPix',['../d5/d95/graphics_8c.html#a91b8226bbc4c5dd6f09903c278f8b952',1,'graphics.c']]],
+  ['sin_9',['Sin',['../d4/d1f/floatmath_8c.html#a8660e85f0113a58d6653145cf5d6dfde',1,'floatmath.c']]],
+  ['singularityerror_10',['SingularityError',['../d0/d15/errors_8c.html#a996a74db211fa08894f4de1438d2397a',1,'errors.c']]],
+  ['some_20useful_20resources_11',['Some useful resources',['../index.html#autotoc_md3',1,'']]],
+  ['sp_5fstore_12',['SP_STORE',['../d2/d4a/essentials_8c.html#a3f8cba501b7f79c5bb0dad8a633f8f8a',1,'essentials.c']]],
+  ['spritetemp_13',['spriteTemp',['../d2/d4a/essentials_8c.html#a6a5942c7d60a6c2a59372f8fde03658a',1,'essentials.c']]],
+  ['sq_5froot_5fop1_14',['SQ_ROOT_OP1',['../d4/d1f/floatmath_8c.html#ab99e2ae6245648dbf6aa294e5a35cc8c',1,'floatmath.c']]],
+  ['sqrt_5frounded_15',['sqrt_rounded',['../d7/d31/fast__math_8c.html#a596724bfaacd207eb1ee760887a5546a',1,'fast_math.c']]],
+  ['square_5fop1_16',['SQUARE_OP1',['../d4/d1f/floatmath_8c.html#a7b80e84a37a72997923c0b61db6c1fba',1,'floatmath.c']]],
+  ['started_17',['How to get started',['../index.html#autotoc_md0',1,'']]],
+  ['staterror_18',['StatError',['../d0/d15/errors_8c.html#aca7cc5268bad829b3f9e1ad1cabf9e6e',1,'errors.c']]],
+  ['statploterror_19',['StatPlotError',['../d0/d15/errors_8c.html#a0d2833d214d90fd5220685b3d4f933e3',1,'errors.c']]],
+  ['swap_20',['swap',['../d5/d95/graphics_8c.html#a07bca8cc0cfca0e80cac16305cac9f13',1,'graphics.c']]],
+  ['syntaxerror_21',['SyntaxError',['../d0/d15/errors_8c.html#a84feea59f6ea18990f1a80a6914de3ce',1,'errors.c']]]
+];

@@ -1,0 +1,26 @@
+var errors_8c =
+[
+    [ "ArgumentError", "d0/d15/errors_8c.html#a1da40dbd85a4026ffd644fd4d6cdb500", null ],
+    [ "BadGuessError", "d0/d15/errors_8c.html#a853b3468137cde9e1534df9fc8d4f287", null ],
+    [ "BreakError", "d0/d15/errors_8c.html#a4d095834c70fa0b66e6a28c87774c79f", null ],
+    [ "DataTypeError", "d0/d15/errors_8c.html#a95d975c0c67f9865b1ee5b8cafcc2877", null ],
+    [ "DimensionError", "d0/d15/errors_8c.html#aeb70f0a9ac64157d6454e2d27374142d", null ],
+    [ "DimensionMismatchError", "d0/d15/errors_8c.html#a36432c538e5ab91a5ddc57cc57137944", null ],
+    [ "DivideByZeroError", "d0/d15/errors_8c.html#adbf3d75c789bf8c5fec97140d9d8c92e", null ],
+    [ "DomainError", "d0/d15/errors_8c.html#acbeed1911f934ec737c895d0d6bb8a7f", null ],
+    [ "IncrementError", "d0/d15/errors_8c.html#a345b3daada30ed269af910bd1cee4363", null ],
+    [ "InvalidError", "d0/d15/errors_8c.html#aa06fc875af34b82ffeedce1ce0702652", null ],
+    [ "IterationsError", "d0/d15/errors_8c.html#a9b83e678bf33d7d3d0ee3ef348f5eaf3", null ],
+    [ "LinkError", "d0/d15/errors_8c.html#adffa9c95592e9d459ef5cf11306dc7c7", null ],
+    [ "MemoryError", "d0/d15/errors_8c.html#a0dffaf56d5a2a6659ce8d7fade4628fe", null ],
+    [ "NonRealError", "d0/d15/errors_8c.html#affbbfe973c221ec7e08beba5dfa6f1c5", null ],
+    [ "NoSignChangeError", "d0/d15/errors_8c.html#a99c3a5b362b9f6925bc69304dfdb411a", null ],
+    [ "OverflowError", "d0/d15/errors_8c.html#ac8f6c2b1f618a0b15c966991fe764b2d", null ],
+    [ "SingularityError", "d0/d15/errors_8c.html#a996a74db211fa08894f4de1438d2397a", null ],
+    [ "StatError", "d0/d15/errors_8c.html#aca7cc5268bad829b3f9e1ad1cabf9e6e", null ],
+    [ "StatPlotError", "d0/d15/errors_8c.html#a0d2833d214d90fd5220685b3d4f933e3", null ],
+    [ "SyntaxError", "d0/d15/errors_8c.html#a84feea59f6ea18990f1a80a6914de3ce", null ],
+    [ "TolNotMetError", "d0/d15/errors_8c.html#aa45676a25e0b6f55e187176d8e9107ec", null ],
+    [ "UndefinedError", "d0/d15/errors_8c.html#a5b7174b0f1b45647230811670d5c96dd", null ],
+    [ "CustomError", "d0/d15/errors_8c.html#af725551dbe1531762d442b114a19bcfb", null ]
+];
